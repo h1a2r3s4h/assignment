@@ -10,7 +10,7 @@ const products = [
     originalPrice: "Rs. 300,000",
     image: "/images/products/Images.png",
     badge: "-30%",
-    badgeType: "discount",
+    badgeType: "discount" as const,
     isNew: false,
   },
   {
@@ -38,7 +38,7 @@ const products = [
     price: "Rs. 15,000",
     image: "/images/products/image 2.png",
   },
-];
+] as const satisfies readonly any[];
 
 export default function RelatedProducts() {
   return (
