@@ -7,7 +7,7 @@ export default function HeroSection() {
       <section className="mx-auto max-w-[1440px]">
         <div className="relative h-[716px] w-full overflow-hidden">
           <Image
-            src="/images/home/Mask Group.png"
+            src="/images/home/modern-furniture-hero.jpg"
             alt="Modern interior furniture"
             fill
             priority
