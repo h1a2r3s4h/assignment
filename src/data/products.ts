@@ -1,0 +1,45 @@
+import type { Product } from "@/types/product";
+
+export const products: Product[] = [
+  {
+    id: 1,
+    slug: "syltherine",
+    name: "Syltherine",
+    shortDescription: "Stylish cafe chair",
+    price: "Rp 2.500.000",
+    originalPrice: "Rp 3.500.000",
+    image: "/images/products/Images2.png",
+    badge: "-30%",
+    badgeType: "discount",
+  },
+  {
+    id: 2,
+    slug: "leviosa",
+    name: "Leviosa",
+    shortDescription: "Stylish cafe chair",
+    price: "Rp 2.500.000",
+    image: "/images/products/Images (2).png",
+  },
+  {
+    id: 3,
+    slug: "lolito",
+    name: "Lolito",
+    shortDescription: "Luxury big sofa",
+    price: "Rp 7.000.000",
+    originalPrice: "Rp 14.000.000",
+    image: "/images/products/Images1.png",
+    badge: "-50%",
+    badgeType: "discount",
+  },
+  {
+    id: 4,
+    slug: "respira",
+    name: "Respira",
+    shortDescription: "Outdoor bar table and stool",
+    price: "Rp 500.000",
+    image: "/images/products/Images (3).png",
+    badge: "New",
+    badgeType: "new",
+    isNew: true,
+  },
+];
