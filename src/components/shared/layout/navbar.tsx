@@ -14,6 +14,8 @@ export default function Navbar() {
   return (
     <header className="w-full border-b border-[#E8E0D8] bg-white">
       <div className="mx-auto flex h-[80px] max-w-[1440px] items-center justify-between px-[54px]">
+        
+        {/* Logo */}
         <Link href="/" className="flex items-center gap-[8px]">
           <Image
             src="/images/logo/Meubel House_Logos-05.svg"
@@ -28,6 +30,7 @@ export default function Navbar() {
           </span>
         </Link>
 
+        {/* Nav Links */}
         <nav className="hidden items-center gap-[60px] md:flex">
           {navLinks.map((item) => (
             <Link
@@ -40,9 +43,12 @@ export default function Navbar() {
           ))}
         </nav>
 
+        {/* Icons */}
         <div className="flex items-center gap-[36px]">
-          <button
-            type="button"
+          
+          {/* Account → /login */}
+          <Link
+            href="/login"
             aria-label="Account"
             className="transition-opacity hover:opacity-60"
           >
@@ -53,8 +59,9 @@ export default function Navbar() {
               height={24}
               className="h-6 w-6"
             />
-          </button>
+          </Link>
 
+          {/* Search */}
           <button
             type="button"
             aria-label="Search"
@@ -69,6 +76,7 @@ export default function Navbar() {
             />
           </button>
 
+          {/* Wishlist */}
           <button
             type="button"
             aria-label="Wishlist"
@@ -83,8 +91,9 @@ export default function Navbar() {
             />
           </button>
 
-          <button
-            type="button"
+          {/* Cart → /cart */}
+          <Link
+            href="/cart"
             aria-label="Cart"
             className="transition-opacity hover:opacity-60"
           >
@@ -95,7 +104,8 @@ export default function Navbar() {
               height={24}
               className="h-6 w-6"
             />
-          </button>
+          </Link>
+
         </div>
       </div>
     </header>

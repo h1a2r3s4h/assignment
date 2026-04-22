@@ -101,11 +101,11 @@ export default function HomeProductsSection() {
               >
                 <div className="relative h-[301px] w-full">
                   <Image
-  src={product.image}
-  alt={`${product.name} - ${product.subtitle}`}
-  fill
-  className="object-cover"
-/>
+                    src={product.image}
+                    alt={`${product.name} - ${product.subtitle}`}
+                    fill
+                    className="object-cover"
+                  />
 
                   {product.badge && (
                     <div
