@@ -75,7 +75,9 @@ export default function ProductDetails() {
         <div className="flex-1 space-y-5">
           <h1 className="text-[32px] font-semibold">Asgaard sofa</h1>
 
-          <p className="text-[20px] text-[#9F9F9F]">{formatPrice(totalPrice)}</p>
+          <p className="text-[20px] text-[#9F9F9F]">
+            {formatPrice(totalPrice)}
+          </p>
 
           <div className="flex items-center gap-3 text-sm text-gray-500">
             <div className="text-yellow-500">★★★★★</div>
@@ -96,9 +98,10 @@ export default function ProductDetails() {
                   key={size}
                   onClick={() => setSelectedSize(size)}
                   className={`w-8 h-8 border rounded-md text-sm transition-colors
-                    ${selectedSize === size
-                      ? "bg-black text-white border-black"
-                      : "hover:bg-black hover:text-white"
+                    ${
+                      selectedSize === size
+                        ? "bg-black text-white border-black"
+                        : "hover:bg-black hover:text-white"
                     }`}
                 >
                   {size}
@@ -120,9 +123,10 @@ export default function ProductDetails() {
                   key={color.name}
                   onClick={() => setSelectedColor(color.name)}
                   className={`w-6 h-6 rounded-full ${color.bg} transition-all
-                    ${selectedColor === color.name
-                      ? "ring-2 ring-offset-2 ring-black scale-110"
-                      : ""
+                    ${
+                      selectedColor === color.name
+                        ? "ring-2 ring-offset-2 ring-black scale-110"
+                        : ""
                     }`}
                 />
               ))}
@@ -131,30 +135,17 @@ export default function ProductDetails() {
 
           {/* Quantity + Buttons */}
           <div className="flex items-center gap-4 mt-4">
-            <div className="flex items-center border rounded-md">
-              <button
-                onClick={() => setQty(Math.max(1, qty - 1))}
-                className="px-3 py-2"
-              >
-                -
-              </button>
-              <span className="px-4">{qty}</span>
-              <button onClick={() => setQty(qty + 1)} className="px-3 py-2">
-                +
-              </button>
+            <div className="flex items-center justify-between border rounded-md px-6 py-3 w-[150px]">
+              <button onClick={() => setQty(Math.max(1, qty - 1))}>-</button>
+              <span>{qty}</span>
+              <button onClick={() => setQty(qty + 1)}>+</button>
             </div>
 
-            <button
-              onClick={() => setOpenCart(true)}
-              className="px-8 py-3 border rounded-md hover:bg-black hover:text-white"
-            >
+            <button className="w-[180px] py-3 border rounded-md hover:bg-black hover:text-white">
               Add To Cart
             </button>
 
-            <button
-              onClick={() => router.push("/compare")}
-              className="px-8 py-3 border rounded-md hover:bg-black hover:text-white"
-            >
+            <button className="w-[180px] py-3 border rounded-md hover:bg-black hover:text-white">
               + Compare
             </button>
           </div>

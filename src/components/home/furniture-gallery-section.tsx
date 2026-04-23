@@ -87,7 +87,7 @@ const images = [
   },
   {
     id: 8,
-    src: "/images/home/wall-frame-decor.png",
+    src: "/images/home/test.png",
     alt: "Wall frame decor for modern interiors",
     style: {
       position: "absolute" as const,

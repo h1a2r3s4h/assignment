@@ -54,7 +54,7 @@ export function LoginForm({
               <Field>
                 <Button
                   type="submit"
-                  className="w-full h-11 text-base font-medium rounded-md bg-black text-white hover:bg-black/90"
+                  className="w-full h-11 cursor-pointer text-base font-medium rounded-md bg-black text-white hover:bg-black/90"
                 >
                   Login
                 </Button>
@@ -70,7 +70,7 @@ export function LoginForm({
                 <Button
                   variant="outline"
                   type="button"
-                  className="col-span-3 w-full h-11 flex items-center justify-center gap-2 rounded-md border-gray-300 hover:bg-gray-50"
+                  className="col-span-3 cursor-pointer w-full h-11 flex items-center justify-center gap-2 rounded-md border-gray-300 hover:bg-gray-50"
                 >
                   <svg className="h-5 w-5" viewBox="0 0 48 48">
                     <path fill="#EA4335" d="M24 9.5c3.15 0 5.98 1.08 8.2 3.2l6.1-6.1C34.2 2.5 29.5 0 24 0 14.7 0 6.6 5.4 2.7 13.3l7.1 5.5C11.5 13.2 17.2 9.5 24 9.5z"/>

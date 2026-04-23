@@ -1,10 +1,9 @@
 import Image from "next/image";
 import { Star } from "lucide-react";
 
-export default function CompareProducts() {
+export default function Compare() {
   return (
     <div className="grid grid-cols-4 gap-10 px-16 py-14 bg-white items-start">
-
       {/* Left Text */}
       <div className="pt-6">
         <p className="text-2xl font-semibold leading-snug">
@@ -25,7 +24,6 @@ export default function CompareProducts() {
             width={300}
             height={200}
             className="object-cover w-[90%] h-full"
-            
           />
         </div>
 
@@ -82,7 +80,6 @@ export default function CompareProducts() {
           <span className="ml-2">⌄</span>
         </button>
       </div>
-
     </div>
   );
 }
