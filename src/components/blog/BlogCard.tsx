@@ -1,75 +1,122 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { MapPin, Phone, Clock } from "lucide-react";
-import { Skeleton } from "@/components/ui/skeleton";
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { Blog } from "@/types/blog";
+import { Button } from "@/components/ui/button";
 
-export default function ContactInfo() {
+export default function BlogCard({ blog }: { blog: Blog }) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // 🔴 SKELETON (FULL REPLACEMENT)
+  // SKELETON (FULL REPLACEMENT)
   if (!mounted) {
     return (
-      <div className="flex flex-col gap-12 pt-4">
-        {[1, 2, 3].map((i) => (
-          <div key={i} className="flex items-start gap-5">
-            <Skeleton className="w-6 h-6 mt-1 bg-gray-300" />
+      <div className="space-y-5">
 
-            <div className="space-y-2">
-              <Skeleton className="h-5 w-28 bg-gray-300" />
-              <Skeleton className="h-4 w-56 bg-gray-300" />
-              <Skeleton className="h-4 w-44 bg-gray-300" />
-            </div>
-          </div>
-        ))}
+        {/* IMAGE */}
+        <div className="w-full h-[420px] bg-gray-300 rounded-2xl" />
+
+        {/* META */}
+        <div className="flex items-center gap-5">
+          <div className="h-[14px] w-[80px] bg-gray-300 rounded" />
+          <div className="h-[14px] w-[100px] bg-gray-300 rounded" />
+          <div className="h-[14px] w-[90px] bg-gray-300 rounded" />
+        </div>
+
+        {/* TITLE */}
+        <div className="h-[24px] w-[70%] bg-gray-300 rounded" />
+
+        {/* DESCRIPTION */}
+        <div className="space-y-2">
+          <div className="h-[15px] w-[90%] bg-gray-300 rounded" />
+          <div className="h-[15px] w-[80%] bg-gray-300 rounded" />
+        </div>
+
+        {/* BUTTON */}
+        <div className="h-[18px] w-[100px] bg-gray-300 rounded" />
+
       </div>
     );
   }
 
-  // 🟢 ORIGINAL UI
   return (
-    <div className="flex flex-col gap-12 pt-4">
-      {/* ADDRESS */}
-      <div className="flex items-start gap-5">
-        <MapPin className="w-6 h-6 mt-1" />
+    <div className="space-y-5">
 
-        <div>
-          <h3 className="text-lg font-semibold mb-1">Address</h3>
-          <p className="text-[15px] text-gray-500 leading-6 max-w-[240px]">
-            236 5th SE Avenue, New York NY10000, United States
-          </p>
-        </div>
+      {/* IMAGE */}
+      <div className="w-full h-[420px] relative rounded-2xl overflow-hidden">
+        <Image
+          src={blog.image}
+          alt={blog.title}
+          fill
+          sizes="(max-width: 768px) 100vw, 800px"
+          className="object-cover"
+        />
       </div>
 
-      {/* PHONE */}
-      <div className="flex items-start gap-5">
-        <Phone className="w-6 h-6 mt-1" />
-
-        <div>
-          <h3 className="text-lg font-semibold mb-1">Phone</h3>
-          <p className="text-[15px] text-gray-500 leading-6">
-            Mobile: (+84) 546-6789 <br />
-            Hotline: (+84) 456-6789
-          </p>
+      {/* META */}
+      <div className="flex items-center gap-5 text-sm text-gray-400">
+        
+        {/* USER */}
+        <div className="flex items-center gap-2">
+          <Image
+            src="/images/icons/user.svg"
+            alt="user"
+            width={16}
+            height={16}
+          />
+          <span>Admin</span>
         </div>
+
+        {/* DATE */}
+        <div className="flex items-center gap-2">
+          <Image
+            src="/images/icons/calender1.svg"
+            alt="calendar"
+            width={16}
+            height={16}
+          />
+          <span>{blog.date}</span>
+        </div>
+
+        {/* CATEGORY */}
+        <div className="flex items-center gap-2">
+          <Image
+            src="/images/icons/tag.svg"
+            alt="tag"
+            width={16}
+            height={16}
+          />
+          <span>{blog.category}</span>
+        </div>
+
       </div>
 
-      {/* WORKING TIME */}
-      <div className="flex items-start gap-5">
-        <Clock className="w-6 h-6 mt-1" />
+      {/* TITLE */}
+      <h2 className="text-[24px] font-semibold text-black leading-snug">
+        {blog.title}
+      </h2>
 
-        <div>
-          <h3 className="text-lg font-semibold mb-1">Working Time</h3>
-          <p className="text-[15px] text-gray-500 leading-6">
-            Monday-Friday: 9:00 - 22:00 <br />
-            Saturday-Sunday: 9:00 - 21:00
-          </p>
-        </div>
-      </div>
+      {/* DESCRIPTION */}
+      <p className="text-[15px] text-gray-500 leading-relaxed max-w-[90%]">
+        {blog.description}
+      </p>
+
+      {/* READ MORE */}
+      <Button
+        asChild
+        variant="link"
+        className="p-0 h-auto text-black text-[15px] font-medium underline underline-offset-4 hover:text-[#B88E2F]"
+      >
+        <Link href={`/blog/${blog.slug}`}>
+          Read more
+        </Link>
+      </Button>
+
     </div>
   );
 }
