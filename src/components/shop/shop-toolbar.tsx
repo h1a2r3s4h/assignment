@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { SlidersHorizontal, LayoutGrid, Rows3 } from "lucide-react";
 
 type ShopToolbarProps = {
@@ -11,9 +12,48 @@ export default function ShopToolbar({
   totalResults = 32,
   visibleResults = 16,
 }: ShopToolbarProps) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <section className="w-full bg-[#F9F1E7]">
+        <div className="mx-auto flex w-full max-w-[1440px] flex-col gap-4 px-4 py-5 md:px-8 lg:flex-row lg:items-center lg:justify-between lg:px-[100px] lg:py-[22px]">
+          
+          {/* LEFT SKELETON */}
+          <div className="flex flex-wrap items-center gap-4 lg:gap-6">
+            <div className="h-5 w-[80px] bg-gray-300" />
+            <div className="h-5 w-5 bg-gray-300" />
+            <div className="h-5 w-5 bg-gray-300" />
+            <div className="hidden h-[37px] w-px bg-gray-300 md:block" />
+            <div className="h-4 w-[220px] bg-gray-300" />
+          </div>
+
+          {/* RIGHT SKELETON */}
+          <div className="flex flex-wrap items-center gap-4 md:gap-6">
+            <div className="flex items-center gap-3">
+              <div className="h-4 w-[40px] bg-gray-300" />
+              <div className="h-[55px] w-[55px] bg-gray-300" />
+            </div>
+
+            <div className="flex items-center gap-3">
+              <div className="h-4 w-[60px] bg-gray-300" />
+              <div className="h-[55px] w-[188px] bg-gray-300" />
+            </div>
+          </div>
+
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="w-full bg-[#F9F1E7]">
       <div className="mx-auto flex w-full max-w-[1440px] flex-col gap-4 px-4 py-5 md:px-8 lg:flex-row lg:items-center lg:justify-between lg:px-[100px] lg:py-[22px]">
+        
         {/* left */}
         <div className="flex flex-wrap items-center gap-4 lg:gap-6">
           <button className="flex items-center gap-2 text-[16px] font-normal leading-[150%] text-black transition-opacity hover:opacity-70">
@@ -56,6 +96,7 @@ export default function ShopToolbar({
             </div>
           </div>
         </div>
+
       </div>
     </section>
   );

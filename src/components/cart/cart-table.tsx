@@ -4,14 +4,90 @@ import Image from "next/image";
 import Link from "next/link";
 import { Trash2 } from "lucide-react";
 import { useCart } from "@/context/cart-context";
+import { useEffect, useState } from "react";
 
 export default function CartTable() {
   const { cart, updateQty, removeFromCart } = useCart();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const subtotal = cart.reduce(
     (acc, item) => acc + item.price * item.qty,
     0
   );
+
+  if (!mounted) {
+    return (
+      <div className="bg-white">
+        <div className="max-w-[1280px] mx-auto px-[100px] py-12">
+          <div className="flex gap-[80px] items-start">
+
+            {/* LEFT SIDE SKELETON */}
+            <div className="flex-1">
+
+              {/* HEADER */}
+              <div className="grid grid-cols-[2.5fr_1.2fr_1fr_1.3fr] bg-[#F9F1E7] px-8 py-5">
+                <div className="h-4 w-[80px] bg-gray-300" />
+                <div className="h-4 w-[60px] bg-gray-300" />
+                <div className="h-4 w-[80px] bg-gray-300" />
+                <div className="h-4 w-[80px] bg-gray-300" />
+              </div>
+
+              {/* ROW SKELETON */}
+              {[1, 2].map((i) => (
+                <div
+                  key={i}
+                  className="grid grid-cols-[2.5fr_1.2fr_1fr_1.3fr] items-center px-8 py-12 gap-10"
+                >
+                  {/* PRODUCT */}
+                  <div className="flex items-center gap-8">
+                    <div className="bg-gray-300 rounded-xl w-[130px] h-[130px]" />
+                    <div className="h-4 w-[150px] bg-gray-300" />
+                  </div>
+
+                  {/* PRICE */}
+                  <div className="h-4 w-[80px] bg-gray-300" />
+
+                  {/* QUANTITY */}
+                  <div className="w-[65px] h-[45px] bg-gray-300 rounded-md" />
+
+                  {/* SUBTOTAL */}
+                  <div className="flex items-center justify-between pr-4">
+                    <div className="h-4 w-[80px] bg-gray-300" />
+                    <div className="h-5 w-5 bg-gray-300 ml-8" />
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* RIGHT SIDE SKELETON */}
+            <div className="bg-[#F9F1E7] w-[400px] shrink-0 px-10 py-12 flex flex-col">
+
+              <div className="h-7 w-[160px] bg-gray-300 mb-10" />
+
+              <div className="space-y-6 mb-12">
+                <div className="flex justify-between">
+                  <div className="h-4 w-[80px] bg-gray-300" />
+                  <div className="h-4 w-[100px] bg-gray-300" />
+                </div>
+
+                <div className="flex justify-between">
+                  <div className="h-5 w-[80px] bg-gray-300" />
+                  <div className="h-5 w-[100px] bg-gray-300" />
+                </div>
+              </div>
+
+              <div className="w-full h-[52px] bg-gray-300 rounded-xl" />
+            </div>
+
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-white">
@@ -21,7 +97,6 @@ export default function CartTable() {
           {/* LEFT SIDE */}
           <div className="flex-1">
 
-            {/* HEADER */}
             <div className="grid grid-cols-[2.5fr_1.2fr_1fr_1.3fr] bg-[#F9F1E7] px-8 py-5 text-[15px] font-medium text-gray-700">
               <p>Product</p>
               <p>Price</p>
@@ -29,7 +104,6 @@ export default function CartTable() {
               <p>Subtotal</p>
             </div>
 
-            {/* ✅ DYNAMIC ROWS */}
             {cart.length === 0 ? (
               <p className="p-8 text-gray-500">Your cart is empty</p>
             ) : (
@@ -38,7 +112,6 @@ export default function CartTable() {
                   key={item.id}
                   className="grid grid-cols-[2.5fr_1.2fr_1fr_1.3fr] items-center px-8 py-12 gap-10"
                 >
-                  {/* PRODUCT */}
                   <div className="flex items-center gap-8">
                     <div className="bg-[#F9F1E7] rounded-xl w-[130px] h-[130px] flex items-center justify-center">
                       <Image
@@ -55,12 +128,10 @@ export default function CartTable() {
                     </p>
                   </div>
 
-                  {/* PRICE */}
                   <p className="text-gray-400 text-[15px]">
                     Rs. {item.price}
                   </p>
 
-                  {/* QUANTITY */}
                   <input
                     type="number"
                     value={item.qty}
@@ -70,7 +141,6 @@ export default function CartTable() {
                     className="w-[65px] h-[45px] border border-gray-300 rounded-md text-center text-[15px]"
                   />
 
-                  {/* SUBTOTAL */}
                   <div className="flex items-center justify-between pr-4">
                     <p className="font-medium text-[15px]">
                       Rs. {item.price * item.qty}

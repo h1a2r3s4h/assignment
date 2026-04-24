@@ -1,3 +1,7 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
 type ShopPaginationProps = {
   currentPage?: number;
   totalPages?: number;
@@ -7,7 +11,31 @@ export default function ShopPagination({
   currentPage = 1,
   totalPages = 3,
 }: ShopPaginationProps) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const pages = Array.from({ length: totalPages }, (_, index) => index + 1);
+
+  if (!mounted) {
+    return (
+      <section className="w-full bg-white">
+        <div className="mx-auto flex w-full max-w-[1440px] items-center justify-center gap-[18px] px-4 pb-[85px] md:px-8 lg:px-[100px]">
+          
+          {[1, 2, 3].map((i) => (
+            <div
+              key={i}
+              className="h-[60px] w-[60px] rounded-[10px] bg-gray-300"
+            />
+          ))}
+
+          <div className="h-[60px] min-w-[98px] rounded-[10px] bg-gray-300" />
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="w-full bg-white">

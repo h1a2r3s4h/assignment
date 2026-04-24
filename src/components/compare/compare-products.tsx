@@ -1,7 +1,67 @@
+"use client";
+
 import Image from "next/image";
 import { Star } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Compare() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // 🔴 SKELETON (FULL REPLACEMENT)
+  if (!mounted) {
+    return (
+      <div className="grid grid-cols-4 gap-10 px-16 py-14 bg-white items-start">
+        {/* Left Text */}
+        <div className="pt-6">
+          <Skeleton className="h-8 w-48 bg-gray-300" />
+          <Skeleton className="h-8 w-40 mt-2 bg-gray-300" />
+
+          <Skeleton className="mt-6 h-5 w-24 bg-gray-300" />
+        </div>
+
+        {/* Product 1 */}
+        <div>
+          <Skeleton className="h-[220px] w-full rounded-xl bg-gray-300" />
+
+          <Skeleton className="mt-5 h-5 w-40 bg-gray-300" />
+          <Skeleton className="mt-2 h-4 w-32 bg-gray-300" />
+
+          <div className="flex items-center gap-2 mt-3">
+            <Skeleton className="h-4 w-6 bg-gray-300" />
+            <Skeleton className="h-4 w-24 bg-gray-300" />
+            <Skeleton className="h-4 w-20 bg-gray-300" />
+          </div>
+        </div>
+
+        {/* Product 2 */}
+        <div>
+          <Skeleton className="h-[220px] w-full rounded-xl bg-gray-300" />
+
+          <Skeleton className="mt-5 h-5 w-40 bg-gray-300" />
+          <Skeleton className="mt-2 h-4 w-32 bg-gray-300" />
+
+          <div className="flex items-center gap-2 mt-3">
+            <Skeleton className="h-4 w-6 bg-gray-300" />
+            <Skeleton className="h-4 w-24 bg-gray-300" />
+            <Skeleton className="h-4 w-20 bg-gray-300" />
+          </div>
+        </div>
+
+        {/* Add Product */}
+        <div className="pt-6">
+          <Skeleton className="h-5 w-32 mb-4 bg-gray-300" />
+          <Skeleton className="h-[48px] w-full rounded-md bg-gray-300" />
+        </div>
+      </div>
+    );
+  }
+
+  // 🟢 ORIGINAL UI
   return (
     <div className="grid grid-cols-4 gap-10 px-16 py-14 bg-white items-start">
       {/* Left Text */}

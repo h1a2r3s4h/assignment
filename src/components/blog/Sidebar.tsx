@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import { Search } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type Category = {
   name: string;
@@ -51,9 +53,61 @@ const posts: Post[] = [
 ];
 
 export default function Sidebar() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // 🔴 SKELETON (FULL REPLACEMENT)
+  if (!mounted) {
+    return (
+      <aside className="w-full max-w-[320px] ml-auto">
+        {/* SEARCH */}
+        <div className="relative mb-12">
+          <Skeleton className="w-full h-[52px] rounded-xl bg-gray-300" />
+        </div>
+
+        {/* CATEGORIES */}
+        <div className="mb-14">
+          <Skeleton className="h-6 w-32 mb-8 bg-gray-300" />
+
+          <div className="space-y-6">
+            {[1, 2, 3, 4, 5].map((i) => (
+              <div key={i} className="flex justify-between items-center">
+                <Skeleton className="h-4 w-24 bg-gray-300" />
+                <Skeleton className="h-4 w-6 bg-gray-300" />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* RECENT POSTS */}
+        <div>
+          <Skeleton className="h-6 w-36 mb-6 bg-gray-300" />
+
+          <div className="space-y-6">
+            {[1, 2, 3, 4, 5].map((i) => (
+              <div key={i} className="flex gap-4 items-start">
+                {/* IMAGE */}
+                <Skeleton className="w-[80px] h-[80px] rounded-xl bg-gray-300 flex-shrink-0" />
+
+                {/* TEXT */}
+                <div className="flex-1 space-y-2">
+                  <Skeleton className="h-4 w-full bg-gray-300" />
+                  <Skeleton className="h-3 w-24 bg-gray-300" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </aside>
+    );
+  }
+
+  // 🟢 ORIGINAL UI
   return (
     <aside className="w-full max-w-[320px] ml-auto">
-
       {/* SEARCH */}
       <div className="relative mb-12">
         <input
@@ -125,7 +179,6 @@ export default function Sidebar() {
           ))}
         </div>
       </div>
-
     </aside>
   );
 }

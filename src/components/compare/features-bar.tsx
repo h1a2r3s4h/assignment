@@ -1,11 +1,40 @@
+"use client";
+
 import { Trophy, ShieldCheck, Truck, Headphones } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function FeaturesBar() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // 🔴 SKELETON (FULL REPLACEMENT)
+  if (!mounted) {
+    return (
+      <div className="bg-[#F9F1E7] border-t border-gray-200">
+        <div className="max-w-[1200px] mx-auto px-6 py-10 grid grid-cols-4 gap-10">
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="flex items-center gap-4">
+              <Skeleton className="w-10 h-10 bg-gray-300" />
+
+              <div className="space-y-2">
+                <Skeleton className="h-5 w-32 bg-gray-300" />
+                <Skeleton className="h-4 w-28 bg-gray-300" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  // 🟢 ORIGINAL UI
   return (
     <div className="bg-[#F9F1E7] border-t border-gray-200">
-      
       <div className="max-w-[1200px] mx-auto px-6 py-10 grid grid-cols-4 gap-10">
-
         {/* Item 1 */}
         <div className="flex items-center gap-4">
           <Trophy size={40} className="text-black" />
@@ -61,7 +90,6 @@ export default function FeaturesBar() {
             </p>
           </div>
         </div>
-
       </div>
     </div>
   );

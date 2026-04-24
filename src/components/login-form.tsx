@@ -1,19 +1,77 @@
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+"use client";
+
+import { useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Field,
   FieldDescription,
   FieldGroup,
   FieldLabel,
   FieldSeparator,
-} from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
+} from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <div className={cn("flex flex-col gap-6", className)} {...props}>
+        <Card className="overflow-hidden p-0 border border-gray-300 rounded-md">
+          <CardContent className="grid p-0 md:grid-cols-2">
+
+            {/* LEFT FORM SKELETON */}
+            <div className="p-6 md:p-8">
+              <div className="flex flex-col items-center gap-2 text-center">
+                <div className="h-7 w-[160px] bg-gray-300" />
+                <div className="h-4 w-[220px] bg-gray-300" />
+              </div>
+
+              <div className="mt-6 space-y-6">
+                <div>
+                  <div className="h-4 w-[60px] bg-gray-300 mb-2" />
+                  <div className="h-11 w-full bg-gray-300 rounded-md" />
+                </div>
+
+                <div>
+                  <div className="flex justify-between items-center mb-2">
+                    <div className="h-4 w-[80px] bg-gray-300" />
+                    <div className="h-3 w-[120px] bg-gray-300" />
+                  </div>
+                  <div className="h-11 w-full bg-gray-300 rounded-md" />
+                </div>
+
+                <div className="h-11 w-full bg-gray-300 rounded-md" />
+
+                <div className="h-4 w-full bg-gray-300" />
+
+                <div className="h-11 w-full bg-gray-300 rounded-md" />
+
+                <div className="h-4 w-[200px] mx-auto bg-gray-300" />
+              </div>
+            </div>
+
+            {/* RIGHT IMAGE SKELETON */}
+            <div className="relative hidden md:block bg-gray-300" />
+          </CardContent>
+        </Card>
+
+        <div className="px-6 text-center">
+          <div className="h-4 w-[260px] mx-auto bg-gray-300" />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card className="overflow-hidden p-0 border border-gray-300 rounded-md">
@@ -50,7 +108,6 @@ export function LoginForm({
                 <Input id="password" type="password" required />
               </Field>
 
-              {/* ✅ LOGIN BUTTON FIX */}
               <Field>
                 <Button
                   type="submit"
@@ -65,8 +122,6 @@ export function LoginForm({
               </FieldSeparator>
 
               <Field className="grid grid-cols-3 gap-4">
-
-                {/* ✅ GOOGLE BUTTON FIX */}
                 <Button
                   variant="outline"
                   type="button"
@@ -80,7 +135,6 @@ export function LoginForm({
                   </svg>
                   <span>Continue with Google</span>
                 </Button>
-
               </Field>
 
               <FieldDescription className="text-center">
@@ -104,5 +158,5 @@ export function LoginForm({
         and <a href="#">Privacy Policy</a>.
       </FieldDescription>
     </div>
-  )
+  );
 }

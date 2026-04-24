@@ -1,3 +1,8 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
+
 const specs = [
   {
     title: "General",
@@ -56,6 +61,64 @@ const specs = [
 ];
 
 export default function CompareTable() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // 🔴 SKELETON (FULL REPLACEMENT)
+  if (!mounted) {
+    return (
+      <div className="max-w-4xl mx-auto pb-20 bg-white">
+        <div className="border-t border-gray-200">
+          {[1, 2, 3, 4].map((section) => (
+            <div key={section}>
+              {/* Section Title */}
+              <div className="grid grid-cols-[180px_1fr_1fr] pt-8 pb-5">
+                <Skeleton className="h-5 w-24 ml-4 bg-gray-300" />
+                <div />
+                <div />
+              </div>
+
+              {/* Rows */}
+              {[1, 2, 3, 4, 5].map((row) => (
+                <div
+                  key={row}
+                  className="grid grid-cols-[180px_1fr_1fr] border-b border-gray-100"
+                >
+                  <div className="py-4 pl-4 pr-3">
+                    <Skeleton className="h-4 w-28 bg-gray-300" />
+                  </div>
+
+                  <div className="py-4 px-8 border-l border-gray-200">
+                    <Skeleton className="h-4 w-full bg-gray-300" />
+                  </div>
+
+                  <div className="py-4 px-8 border-l border-gray-200">
+                    <Skeleton className="h-4 w-full bg-gray-300" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+
+        {/* Buttons */}
+        <div className="grid grid-cols-[180px_1fr_1fr] mt-10">
+          <div />
+          <div className="px-8">
+            <Skeleton className="w-full h-[44px] rounded bg-gray-300" />
+          </div>
+          <div className="px-8">
+            <Skeleton className="w-full h-[44px] rounded bg-gray-300" />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // 🟢 ORIGINAL UI
   return (
     <div className="max-w-4xl mx-auto pb-20 bg-white">
       <div className="border-t border-gray-200">
@@ -63,7 +126,9 @@ export default function CompareTable() {
           <div key={i}>
             {/* Section Title */}
             <div className="grid grid-cols-[180px_1fr_1fr] pt-8 pb-5">
-              <h2 className="text-lg font-semibold text-gray-900 pl-4">{section.title}</h2>
+              <h2 className="text-lg font-semibold text-gray-900 pl-4">
+                {section.title}
+              </h2>
               <div />
               <div />
             </div>
@@ -78,10 +143,12 @@ export default function CompareTable() {
                 <div className="py-4 pl-4 pr-3 text-sm text-gray-600 leading-relaxed">
                   {row[0]}
                 </div>
+
                 {/* Product 1 */}
                 <div className="py-4 px-8 text-sm text-gray-700 leading-relaxed border-l border-gray-200">
                   {row[1]}
                 </div>
+
                 {/* Product 2 */}
                 <div className="py-4 px-8 text-sm text-gray-700 leading-relaxed border-l border-gray-200">
                   {row[2]}

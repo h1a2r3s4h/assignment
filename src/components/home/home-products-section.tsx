@@ -1,12 +1,12 @@
 "use client";
 
 import { useCart } from "@/context/cart-context";
+import { useWishlist } from "@/context/wishlist-context";
 import Link from "next/link";
 import Image from "next/image";
 import { Share2, ArrowLeftRight, Heart } from "lucide-react";
 import { toast } from "sonner";
-
-import { useWishlist } from "@/context/wishlist-context";
+import { useEffect, useState } from "react";
 
 const toastStyle = {
   style: {
@@ -16,6 +16,7 @@ const toastStyle = {
     boxShadow: "0 8px 20px rgba(0,0,0,0.1)",
   },
 };
+
 type Product = {
   id: number;
   name: string;
@@ -100,8 +101,57 @@ const products: Product[] = [
 
 export default function HomeProductsSection() {
   const { addToCart } = useCart();
-
   const { wishlist, addToWishlist } = useWishlist();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // SKELETON (FULL REPLACEMENT)
+  if (!mounted) {
+    return (
+      <div className="w-full bg-white">
+        <section className="mx-auto max-w-[1440px] px-[102px] pb-[69px] pt-[56px]">
+          <div className="mx-auto max-w-[1236px]">
+
+            {/* TITLE */}
+            <div className="h-[40px] w-[260px] bg-gray-300 rounded mx-auto" />
+
+            {/* GRID */}
+            <div className="mt-8 grid grid-cols-4 gap-x-8 gap-y-8">
+              {Array.from({ length: 8 }).map((_, i) => (
+                <div key={i} className="bg-[#F4F5F7] overflow-hidden">
+
+                  {/* IMAGE */}
+                  <div className="relative h-[301px] w-full bg-gray-300" />
+
+                  {/* TEXT */}
+                  <div className="px-4 pb-[30px] pt-4 space-y-3">
+                    <div className="h-[24px] w-[140px] bg-gray-300 rounded" />
+                    <div className="h-[16px] w-[180px] bg-gray-300 rounded" />
+
+                    <div className="flex gap-4">
+                      <div className="h-[20px] w-[100px] bg-gray-300 rounded" />
+                      <div className="h-[16px] w-[80px] bg-gray-300 rounded" />
+                    </div>
+                  </div>
+
+                </div>
+              ))}
+            </div>
+
+            {/* BUTTON */}
+            <div className="mt-8 flex justify-center">
+              <div className="h-12 w-[245px] bg-gray-300 rounded" />
+            </div>
+
+          </div>
+        </section>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full bg-white">
       <section className="mx-auto max-w-[1440px] px-[102px] pb-[69px] pt-[56px]">
@@ -123,6 +173,7 @@ export default function HomeProductsSection() {
                     href={`/product/${product.id}`}
                     className="absolute inset-0 z-10"
                   />
+
                   <div className="relative h-[301px] w-full">
                     <Image
                       src={product.image}
@@ -161,41 +212,21 @@ export default function HomeProductsSection() {
                             image: product.image,
                           });
                           toast.success("Added to cart 🛒", toastStyle);
-                          document.activeElement instanceof HTMLElement &&
-                            document.activeElement.blur();
                         }}
-                        className="flex h-12 w-[202px] items-center justify-center bg-white text-base font-semibold text-[#B88E2F] cursor-pointer transition-all duration-200 hover:bg-[#f8f8f8] hover:shadow-lg active:scale-95 active:shadow-inner"
+                        className="flex h-12 w-[202px] items-center justify-center bg-white text-base font-semibold text-[#B88E2F]"
                       >
                         Add to cart
                       </button>
 
                       <div className="mt-6 flex items-center gap-5 text-white">
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            e.preventDefault();
-                            const url = `${window.location.origin}/product/${product.id}`;
-
-                            if (navigator.share) {
-                              navigator.share({
-                                title: product.name,
-                                text: product.subtitle,
-                                url: url,
-                              });
-                            } else {
-                              navigator.clipboard.writeText(url);
-                              toast.success("Link copied 🔗", toastStyle);
-                            }
-                          }}
-                          className="flex items-center gap-1 text-base font-semibold cursor-pointer"
-                        >
+                        <button className="flex items-center gap-1 text-base font-semibold">
                           <Share2 className="h-4 w-4" />
                           Share
                         </button>
 
                         <Link
                           href="/compare"
-                          className="flex items-center gap-1 text-base font-semibold cursor-pointer"
+                          className="flex items-center gap-1 text-base font-semibold"
                         >
                           <ArrowLeftRight className="h-4 w-4" />
                           Compare
@@ -205,33 +236,25 @@ export default function HomeProductsSection() {
                           onClick={(e) => {
                             e.stopPropagation();
                             e.preventDefault();
-                            const isLiked = wishlist.some(
-                              (i) => i.id === product.id,
-                            );
 
                             addToWishlist({
                               id: product.id,
                               name: product.name,
-                              price: Number(product.price.replace(/[^0-9]/g, "")), // ✅ FIXED
+                              price: Number(product.price.replace(/[^0-9]/g, "")),
                               image: product.image,
                             });
 
-                            if (isLiked) {
-                              toast.success(
-                                `${product.name} Removed from wishlist ❌`,
-                                toastStyle,
-                              );
-                            } else {
-                              toast.success(
-                                `${product.name} Added to wishlist ❤️`,
-                                toastStyle,
-                              );
-                            }
+                            toast.success(
+                              isLiked
+                                ? "Removed from wishlist ❌"
+                                : "Added to wishlist ❤️",
+                              toastStyle,
+                            );
                           }}
-                          className="flex items-center cursor-pointer gap-1 text-base font-semibold"
+                          className="flex items-center gap-1 text-base font-semibold"
                         >
                           <Heart
-                            className={`h-4 w-4  ${
+                            className={`h-4 w-4 ${
                               isLiked ? "fill-red-500 text-red-500" : ""
                             }`}
                           />
@@ -270,11 +293,12 @@ export default function HomeProductsSection() {
           <div className="mt-8 flex justify-center">
             <Link
               href="/shop"
-              className="flex h-12 w-[245px] items-center justify-center border border-[#B88E2F] bg-white text-base font-semibold text-[#B88E2F] transition hover:bg-[#B88E2F] hover:text-white"
+              className="flex h-12 w-[245px] items-center justify-center border border-[#B88E2F] bg-white text-base font-semibold text-[#B88E2F]"
             >
               Show More
             </Link>
           </div>
+
         </div>
       </section>
     </div>

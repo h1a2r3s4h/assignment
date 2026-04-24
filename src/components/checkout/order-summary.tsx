@@ -1,18 +1,77 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { useCart } from "@/context/cart-context";
 
 export default function OrderSummary({ isValid }: any) {
+  const [mounted, setMounted] = useState(false);
   const { cart } = useCart();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const total = cart.reduce(
     (acc, item) => acc + item.price * item.qty,
     0
   );
 
+  // 🔴 SKELETON (FULL REPLACEMENT)
+  if (!mounted) {
+    return (
+      <div className="max-w-[420px] ml-auto animate-pulse">
+        {/* Header */}
+        <div className="flex justify-between mb-6">
+          <div className="h-4 w-24 bg-gray-300 rounded" />
+          <div className="h-4 w-24 bg-gray-300 rounded" />
+        </div>
+
+        {/* Items */}
+        <div className="space-y-3 mb-4">
+          {[1, 2].map((i) => (
+            <div key={i} className="flex justify-between">
+              <div className="h-4 w-40 bg-gray-300 rounded" />
+              <div className="h-4 w-20 bg-gray-300 rounded" />
+            </div>
+          ))}
+        </div>
+
+        {/* Subtotal */}
+        <div className="flex justify-between mb-3">
+          <div className="h-4 w-24 bg-gray-300 rounded" />
+          <div className="h-4 w-20 bg-gray-300 rounded" />
+        </div>
+
+        {/* Total */}
+        <div className="flex justify-between items-center mb-6">
+          <div className="h-5 w-20 bg-gray-300 rounded" />
+          <div className="h-6 w-24 bg-gray-300 rounded" />
+        </div>
+
+        {/* Divider */}
+        <div className="h-[1px] bg-gray-300 my-6" />
+
+        {/* Payment Options */}
+        <div className="space-y-4">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="flex items-center gap-3">
+              <div className="w-4 h-4 bg-gray-300 rounded-full" />
+              <div className="h-4 w-40 bg-gray-300 rounded" />
+            </div>
+          ))}
+
+          <div className="h-3 w-full bg-gray-300 rounded mt-2" />
+        </div>
+
+        {/* Button */}
+        <div className="mt-6 w-full h-[48px] bg-gray-300 rounded-lg" />
+      </div>
+    );
+  }
+
+  // 🟢 ORIGINAL UI
   return (
     <div className="max-w-[420px] ml-auto">
-
       <div className="flex justify-between text-[16px] font-medium mb-6">
         <span>Product</span>
         <span>Subtotal</span>
@@ -80,12 +139,23 @@ export default function OrderSummary({ isValid }: any) {
       </div>
 
       <button
-        type="submit"
-        form="checkout-form"
+        type="button"
         disabled={cart.length === 0 || !isValid}
         className="mt-6 w-full border border-black py-3 rounded-lg
         disabled:opacity-50 disabled:cursor-not-allowed
         hover:bg-black hover:text-white cursor-pointer"
+        onClick={() => {
+          const orderData = {
+            id: "ORD-" + Math.floor(Math.random() * 100000),
+            items: cart,
+            total,
+            date: new Date().toLocaleString(),
+            status: "delivery",
+          };
+
+          localStorage.setItem("order", JSON.stringify(orderData));
+          window.location.href = "/order-confirmation";
+        }}
       >
         Place order
       </button>

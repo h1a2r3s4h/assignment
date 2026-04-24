@@ -1,19 +1,62 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 
 export default function ProductTabs() {
+  const [mounted, setMounted] = useState(false);
   const [active, setActive] = useState("desc");
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const descImages = [
     "/images/products/Cloud sofa three seater + ottoman_1 1.png",
     "/images/products/Cloud sofa three seater + ottoman_2 1.png",
   ];
 
+  // 🔴 SKELETON (FULL REPLACEMENT)
+  if (!mounted) {
+    return (
+      <div className="max-w-[1000px] mx-auto px-4 py-6 font-sans animate-pulse">
+        {/* Tabs */}
+        <div className="flex gap-8 border-b border-gray-200 mb-7">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="h-4 w-32 bg-gray-300 rounded" />
+          ))}
+        </div>
+
+        {/* Text */}
+        <div className="space-y-3 mb-6">
+          <div className="h-4 w-full bg-gray-300 rounded" />
+          <div className="h-4 w-[95%] bg-gray-300 rounded" />
+          <div className="h-4 w-[90%] bg-gray-300 rounded" />
+          <div className="h-4 w-[85%] bg-gray-300 rounded" />
+        </div>
+
+        <div className="space-y-3 mb-6">
+          <div className="h-4 w-full bg-gray-300 rounded" />
+          <div className="h-4 w-[92%] bg-gray-300 rounded" />
+          <div className="h-4 w-[88%] bg-gray-300 rounded" />
+        </div>
+
+        {/* Images */}
+        <div className="grid grid-cols-2 gap-6">
+          {[1, 2].map((i) => (
+            <div
+              key={i}
+              className="rounded-xl h-[260px] bg-gray-300"
+            />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  // 🟢 ORIGINAL UI
   return (
     <div className="max-w-[1000px] mx-auto px-4 py-6 font-sans">
-
       {/* Tabs */}
       <div className="flex gap-8 border-b border-gray-200 mb-7">
         {[
@@ -25,7 +68,11 @@ export default function ProductTabs() {
             key={tab.id}
             onClick={() => setActive(tab.id)}
             className={`relative pb-3 text-sm transition 
-              ${active === tab.id ? "text-black font-semibold" : "text-gray-400"}`}
+              ${
+                active === tab.id
+                  ? "text-black font-semibold"
+                  : "text-gray-400"
+              }`}
           >
             {tab.label}
 
@@ -55,25 +102,24 @@ export default function ProductTabs() {
 
           {/* Images */}
           <div className="grid grid-cols-2 gap-6">
-  {descImages.map((src, i) => (
-    <div
-      key={i}
-      className="bg-[#F9F1E7] rounded-xl h-[260px] flex items-center justify-center"
-    >
-      <Image
-        src={src}
-        alt={`sofa-${i}`}
-        width={600}
-        height={400}
-        className="object-contain max-h-[220px] w-auto"
-        priority
-      />
-    </div>
-  ))}
-</div>
+            {descImages.map((src, i) => (
+              <div
+                key={i}
+                className="bg-[#F9F1E7] rounded-xl h-[260px] flex items-center justify-center"
+              >
+                <Image
+                  src={src}
+                  alt={`sofa-${i}`}
+                  width={600}
+                  height={400}
+                  className="object-contain max-h-[220px] w-auto"
+                  priority
+                />
+              </div>
+            ))}
+          </div>
         </div>
       )}
-      
     </div>
   );
 }

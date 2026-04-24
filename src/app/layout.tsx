@@ -6,6 +6,7 @@ import Footer from "@/components/shared/layout/footer";
 import { CartProvider } from "@/context/cart-context";
 import { Toaster } from "@/components/ui/sonner";
 import { WishlistProvider } from "@/context/wishlist-context";
+import { OrderProvider } from "@/context/order-context";
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
@@ -41,24 +42,27 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
       <body
-  className={`${poppins.className} min-h-screen bg-[#FFFFFF] text-[#111111] antialiased`}
->
+        className={`${poppins.className} min-h-screen bg-[#FFFFFF] text-[#111111] antialiased`}
+      >
         <CartProvider>
           <WishlistProvider>
-          <div className="flex min-h-screen flex-col">
-            <Navbar />
-            <main className="flex-1">{children}</main>
-            <Toaster position="top-right" richColors/>
-            <Footer />
+            <OrderProvider> {/* ✅ FIXED: moved here */}
+              <div className="flex min-h-screen flex-col">
+                <Navbar />
+                
+                <main className="flex-1">{children}</main>
 
-  
-          </div>
+                <Toaster position="top-right" richColors />
+
+                <Footer />
+              </div>
+            </OrderProvider>
           </WishlistProvider>
         </CartProvider>
       </body>
