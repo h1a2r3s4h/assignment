@@ -11,7 +11,7 @@ export default function HeroSection() {
 useEffect(() => {
   const timer = setTimeout(() => {
     setMounted(true);
-  }, 500); // 300–800ms is enough
+  }, 500);
 
   return () => clearTimeout(timer);
 }, []);
