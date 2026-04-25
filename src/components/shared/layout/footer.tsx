@@ -23,7 +23,13 @@ export default function Footer() {
 
   useEffect(() => {
     setMounted(true);
-  }, []);
+  }, []);useEffect(() => {
+  const timer = setTimeout(() => {
+    setMounted(true);
+  }, 500); // 300–800ms is enough
+
+  return () => clearTimeout(timer);
+}, []);
 
   const loading = !mounted;
 
