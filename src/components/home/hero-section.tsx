@@ -8,9 +8,13 @@ import { useEffect, useState } from "react";
 export default function HeroSection() {
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
+useEffect(() => {
+  const timer = setTimeout(() => {
     setMounted(true);
-  }, []);
+  }, 500); // 300–800ms is enough
+
+  return () => clearTimeout(timer);
+}, []);
 
   const loading = !mounted;
 
