@@ -26,7 +26,11 @@ export default function BrowseRangeSection() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, 500);
+
+    return () => clearTimeout(timer);
   }, []);
 
   const loading = !mounted;
@@ -35,7 +39,6 @@ export default function BrowseRangeSection() {
     <div className="w-full bg-white">
       <section className="mx-auto max-w-[1440px] px-[131px] pb-[56px] pt-[56px]">
         <div className="mx-auto">
-
           {/* Heading */}
           <div className="text-center">
             {loading ? (
@@ -80,7 +83,6 @@ export default function BrowseRangeSection() {
                   </div>
                 ))}
           </div>
-
         </div>
       </section>
     </div>

@@ -7,7 +7,11 @@ export default function CompareHeader() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, 500);
+
+    return () => clearTimeout(timer);
   }, []);
 
   if (!mounted) {
@@ -28,7 +32,6 @@ export default function CompareHeader() {
 
   return (
     <div className="relative w-full h-[300px]">
-
       {/* Background Image */}
       <Image
         src="/images/compare/1461f3d6ff74c027a1888544144abe4be6e02cbf.jpg"
@@ -43,7 +46,6 @@ export default function CompareHeader() {
 
       {/* Content */}
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-        
         <Image
           src="/images/compare/2727769ba74736d502746301ed573ed8940fc322.png"
           alt="Logo"
@@ -52,16 +54,13 @@ export default function CompareHeader() {
           className="mb-3"
         />
 
-        <h1 className="text-4xl font-semibold text-black">
-          Cart
-        </h1>
+        <h1 className="text-4xl font-semibold text-black">Cart</h1>
 
         <p className="mt-2 text-gray-700 text-sm flex items-center gap-2">
           <span>Home</span>
           <span>&gt;</span>
           <span className="text-black font-medium">Cart</span>
         </p>
-
       </div>
     </div>
   );

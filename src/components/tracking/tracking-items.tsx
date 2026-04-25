@@ -6,14 +6,17 @@ export default function TrackingItems({ items }: any) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, 500);
+
+    return () => clearTimeout(timer);
   }, []);
 
   // Skeleton (fully replaces UI)
   if (!mounted) {
     return (
       <div className="border border-[#E5E5E5] rounded-2xl p-6 bg-white">
-        
         {/* TITLE */}
         <div className="h-[16px] w-[200px] bg-gray-300 rounded mb-5" />
 
@@ -21,10 +24,8 @@ export default function TrackingItems({ items }: any) {
         <div className="space-y-5">
           {[1, 2, 3].map((i) => (
             <div key={i} className="flex justify-between items-center">
-
               {/* LEFT */}
               <div className="flex gap-3 items-center">
-                
                 {/* IMAGE */}
                 <div className="w-[56px] h-[56px] bg-gray-300 rounded-lg" />
 
@@ -37,18 +38,15 @@ export default function TrackingItems({ items }: any) {
 
               {/* PRICE */}
               <div className="h-[14px] w-[60px] bg-gray-300 rounded" />
-
             </div>
           ))}
         </div>
-
       </div>
     );
   }
 
   return (
     <div className="border border-[#E5E5E5] rounded-2xl p-6 bg-white">
-      
       {/* TITLE */}
       <p className="text-[16px] font-medium text-[#171717] mb-5">
         Items in this shipment
@@ -58,10 +56,8 @@ export default function TrackingItems({ items }: any) {
       <div className="space-y-5">
         {items.map((item: any) => (
           <div key={item.id} className="flex justify-between items-center">
-
             {/* LEFT */}
             <div className="flex gap-3 items-center">
-              
               {/* IMAGE */}
               <div className="w-[56px] h-[56px] bg-[#F5F5F5] rounded-lg" />
 
@@ -81,7 +77,6 @@ export default function TrackingItems({ items }: any) {
             <p className="text-[14px] font-medium text-[#171717]">
               ₹{item.price}
             </p>
-
           </div>
         ))}
       </div>

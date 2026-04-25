@@ -8,7 +8,11 @@ export default function FeaturesBar() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, 500);
+
+    return () => clearTimeout(timer);
   }, []);
 
   // 🔴 SKELETON (FULL REPLACEMENT)
@@ -40,12 +44,8 @@ export default function FeaturesBar() {
           <Trophy size={40} className="text-black" />
 
           <div>
-            <p className="font-semibold text-lg text-black">
-              High Quality
-            </p>
-            <p className="text-gray-500 text-sm">
-              crafted from top materials
-            </p>
+            <p className="font-semibold text-lg text-black">High Quality</p>
+            <p className="text-gray-500 text-sm">crafted from top materials</p>
           </div>
         </div>
 
@@ -57,9 +57,7 @@ export default function FeaturesBar() {
             <p className="font-semibold text-lg text-black">
               Warranty Protection
             </p>
-            <p className="text-gray-500 text-sm">
-              Over 2 years
-            </p>
+            <p className="text-gray-500 text-sm">Over 2 years</p>
           </div>
         </div>
 
@@ -68,12 +66,8 @@ export default function FeaturesBar() {
           <Truck size={40} className="text-black" />
 
           <div>
-            <p className="font-semibold text-lg text-black">
-              Free Shipping
-            </p>
-            <p className="text-gray-500 text-sm">
-              Order over 150 $
-            </p>
+            <p className="font-semibold text-lg text-black">Free Shipping</p>
+            <p className="text-gray-500 text-sm">Order over 150 $</p>
           </div>
         </div>
 
@@ -82,12 +76,8 @@ export default function FeaturesBar() {
           <Headphones size={40} className="text-black" />
 
           <div>
-            <p className="font-semibold text-lg text-black">
-              24 / 7 Support
-            </p>
-            <p className="text-gray-500 text-sm">
-              Dedicated support
-            </p>
+            <p className="font-semibold text-lg text-black">24 / 7 Support</p>
+            <p className="text-gray-500 text-sm">Dedicated support</p>
           </div>
         </div>
       </div>

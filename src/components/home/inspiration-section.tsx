@@ -9,7 +9,11 @@ export default function InspirationSection() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, 500);
+
+    return () => clearTimeout(timer);
   }, []);
 
   if (!mounted) {
@@ -17,7 +21,6 @@ export default function InspirationSection() {
       <div className="w-full bg-[#FCF8F3]">
         <section className="mx-auto max-w-[1440px] px-[100px] py-[44px]">
           <div className="grid min-h-[670px] grid-cols-[422px_404px_372px] items-center gap-x-6">
-            
             {/* Left Content Skeleton */}
             <div className="max-w-[422px]">
               <div className="h-[96px] w-full bg-gray-300" />
@@ -39,7 +42,7 @@ export default function InspirationSection() {
             {/* Right Side Skeleton */}
             <div className="relative flex h-[486px] flex-col justify-between">
               <div className="relative h-[486px] w-[372px] overflow-hidden bg-gray-300" />
-              
+
               <div className="absolute right-[20px] top-1/2 z-20 h-12 w-12 -translate-y-1/2 rounded-full bg-gray-300" />
 
               <div className="mt-[40px] flex items-center gap-5">
@@ -49,7 +52,6 @@ export default function InspirationSection() {
                 <div className="h-[11px] w-[11px] rounded-full bg-gray-300" />
               </div>
             </div>
-
           </div>
         </section>
       </div>
@@ -60,14 +62,13 @@ export default function InspirationSection() {
     <div className="w-full bg-[#FCF8F3]">
       <section className="mx-auto max-w-[1440px] px-[100px] py-[44px]">
         <div className="grid min-h-[670px] grid-cols-[422px_404px_372px] items-center gap-x-6">
-          
           <div className="max-w-[422px]">
             <h2 className="text-[40px] font-bold leading-[120%] text-[#3A3A3A]">
               50+ Beautiful rooms inspiration
             </h2>
             <p className="mt-[7px] max-w-[368px] text-base font-medium leading-[150%] text-[#616161]">
-              Our designer already made a lot of beautiful prototipe of rooms that
-              inspire you
+              Our designer already made a lot of beautiful prototipe of rooms
+              that inspire you
             </p>
             <Link
               href="/shop"
@@ -128,7 +129,6 @@ export default function InspirationSection() {
               <span className="h-[11px] w-[11px] rounded-full bg-[#D8D8D8]" />
             </div>
           </div>
-
         </div>
       </section>
     </div>

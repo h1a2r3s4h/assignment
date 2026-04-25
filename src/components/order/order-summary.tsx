@@ -6,14 +6,17 @@ export default function OrderSummary({ total }: any) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, 500);
+
+    return () => clearTimeout(timer);
   }, []);
 
   // Skeleton (fully replaces UI)
   if (!mounted) {
     return (
       <div className="border border-[#E5E5E5] rounded-2xl p-6 bg-white mb-6">
-        
         {/* TITLE */}
         <div className="h-[16px] w-[130px] bg-gray-300 rounded mb-5" />
 
@@ -43,14 +46,12 @@ export default function OrderSummary({ total }: any) {
           <div className="h-[14px] w-[50px] bg-gray-300 rounded" />
           <div className="h-[14px] w-[60px] bg-gray-300 rounded" />
         </div>
-
       </div>
     );
   }
 
   return (
     <div className="border border-[#E5E5E5] rounded-2xl p-6 bg-white mb-6">
-      
       {/* TITLE */}
       <p className="text-[16px] font-medium text-[#171717] mb-5">
         Order Summary
@@ -58,7 +59,6 @@ export default function OrderSummary({ total }: any) {
 
       {/* ROWS */}
       <div className="space-y-3">
-        
         <div className="flex justify-between text-[14px] text-[#737373]">
           <span>Subtotal</span>
           <span>₹{total}</span>
@@ -73,7 +73,6 @@ export default function OrderSummary({ total }: any) {
           <span>Tax</span>
           <span>₹0</span>
         </div>
-
       </div>
 
       {/* DIVIDER */}
@@ -84,7 +83,6 @@ export default function OrderSummary({ total }: any) {
         <span>Total</span>
         <span>₹{total}</span>
       </div>
-
     </div>
   );
 }

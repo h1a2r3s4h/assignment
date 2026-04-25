@@ -11,23 +11,22 @@ export default function CartTable() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, 500);
+
+    return () => clearTimeout(timer);
   }, []);
 
-  const subtotal = cart.reduce(
-    (acc, item) => acc + item.price * item.qty,
-    0
-  );
+  const subtotal = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
 
   if (!mounted) {
     return (
       <div className="bg-white">
         <div className="max-w-[1280px] mx-auto px-[100px] py-12">
           <div className="flex gap-[80px] items-start">
-
             {/* LEFT SIDE SKELETON */}
             <div className="flex-1">
-
               {/* HEADER */}
               <div className="grid grid-cols-[2.5fr_1.2fr_1fr_1.3fr] bg-[#F9F1E7] px-8 py-5">
                 <div className="h-4 w-[80px] bg-gray-300" />
@@ -65,7 +64,6 @@ export default function CartTable() {
 
             {/* RIGHT SIDE SKELETON */}
             <div className="bg-[#F9F1E7] w-[400px] shrink-0 px-10 py-12 flex flex-col">
-
               <div className="h-7 w-[160px] bg-gray-300 mb-10" />
 
               <div className="space-y-6 mb-12">
@@ -82,7 +80,6 @@ export default function CartTable() {
 
               <div className="w-full h-[52px] bg-gray-300 rounded-xl" />
             </div>
-
           </div>
         </div>
       </div>
@@ -93,10 +90,8 @@ export default function CartTable() {
     <div className="bg-white">
       <div className="max-w-[1280px] mx-auto px-[100px] py-12">
         <div className="flex gap-[80px] items-start">
-
           {/* LEFT SIDE */}
           <div className="flex-1">
-
             <div className="grid grid-cols-[2.5fr_1.2fr_1fr_1.3fr] bg-[#F9F1E7] px-8 py-5 text-[15px] font-medium text-gray-700">
               <p>Product</p>
               <p>Price</p>
@@ -123,21 +118,15 @@ export default function CartTable() {
                       />
                     </div>
 
-                    <p className="text-gray-500 text-[15px]">
-                      {item.name}
-                    </p>
+                    <p className="text-gray-500 text-[15px]">{item.name}</p>
                   </div>
 
-                  <p className="text-gray-400 text-[15px]">
-                    Rs. {item.price}
-                  </p>
+                  <p className="text-gray-400 text-[15px]">Rs. {item.price}</p>
 
                   <input
                     type="number"
                     value={item.qty}
-                    onChange={(e) =>
-                      updateQty(item.id, Number(e.target.value))
-                    }
+                    onChange={(e) => updateQty(item.id, Number(e.target.value))}
                     className="w-[65px] h-[45px] border border-gray-300 rounded-md text-center text-[15px]"
                   />
 
@@ -159,10 +148,7 @@ export default function CartTable() {
 
           {/* RIGHT SIDE */}
           <div className="bg-[#F9F1E7] w-[400px] shrink-0 px-10 py-12 flex flex-col">
-
-            <h2 className="text-[28px] font-semibold mb-10">
-              Cart Totals
-            </h2>
+            <h2 className="text-[28px] font-semibold mb-10">Cart Totals</h2>
 
             <div className="space-y-6 mb-12">
               <div className="flex justify-between text-gray-500 text-[15px]">
@@ -183,7 +169,6 @@ export default function CartTable() {
               Check Out
             </Link>
           </div>
-
         </div>
       </div>
     </div>

@@ -29,7 +29,11 @@ export default function ProductCard({ product, className }: ProductCardProps) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, 500);
+
+    return () => clearTimeout(timer);
   }, []);
 
   // 🔴 SKELETON (FULL REPLACEMENT)
@@ -174,13 +178,9 @@ export default function ProductCard({ product, className }: ProductCardProps) {
 
       {/* CONTENT */}
       <div className="px-4 pb-[30px] pt-4">
-        <h3 className="text-[24px] font-semibold text-[#3A3A3A]">
-          {name}
-        </h3>
+        <h3 className="text-[24px] font-semibold text-[#3A3A3A]">{name}</h3>
 
-        <p className="mt-2 text-[16px] text-[#898989]">
-          {shortDescription}
-        </p>
+        <p className="mt-2 text-[16px] text-[#898989]">{shortDescription}</p>
 
         <div className="mt-2 flex gap-4">
           <span className="text-[20px] font-semibold text-[#3A3A3A]">

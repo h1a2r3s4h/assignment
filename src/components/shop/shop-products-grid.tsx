@@ -8,13 +8,15 @@ type ShopProductsGridProps = {
   products: Product[];
 };
 
-export default function ShopProductsGrid({
-  products,
-}: ShopProductsGridProps) {
+export default function ShopProductsGrid({ products }: ShopProductsGridProps) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, 500);
+
+    return () => clearTimeout(timer);
   }, []);
 
   if (!mounted) {
@@ -22,7 +24,6 @@ export default function ShopProductsGrid({
       <section className="w-full bg-white">
         <div className="mx-auto w-full max-w-[1440px] px-4 pb-[48px] pt-[46px] md:px-8 md:pb-[56px] lg:px-[100px] lg:pb-[70px] lg:pt-[63px]">
           <div className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2 md:gap-x-6 md:gap-y-8 lg:grid-cols-4 lg:gap-x-8 lg:gap-y-10">
-            
             {Array.from({ length: 8 }).map((_, i) => (
               <div key={i} className="w-full">
                 <div className="w-full h-[300px] bg-gray-300 rounded-md" />
@@ -31,7 +32,6 @@ export default function ShopProductsGrid({
                 <div className="mt-2 h-4 w-[50%] bg-gray-300" />
               </div>
             ))}
-
           </div>
         </div>
       </section>

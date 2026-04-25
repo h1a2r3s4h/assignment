@@ -7,7 +7,11 @@ export default function TrackingHistory() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, 500);
+
+    return () => clearTimeout(timer);
   }, []);
 
   const history = [
@@ -43,7 +47,6 @@ export default function TrackingHistory() {
   if (!mounted) {
     return (
       <div className="border border-[#E5E5E5] rounded-2xl p-6 bg-white mb-10">
-        
         {/* TITLE */}
         <div className="h-[16px] w-[160px] bg-gray-300 rounded mb-6" />
 
@@ -54,7 +57,6 @@ export default function TrackingHistory() {
           <div className="space-y-8">
             {[1, 2, 3, 4, 5].map((i) => (
               <div key={i} className="flex gap-3 items-start">
-
                 {/* DOT */}
                 <div className="w-[10px] h-[10px] rounded-full bg-gray-300 shrink-0 mt-[5px]" />
 
@@ -64,7 +66,6 @@ export default function TrackingHistory() {
                   <div className="h-[13px] w-[180px] bg-gray-300 rounded" />
                   <div className="h-[12px] w-[120px] bg-gray-300 rounded" />
                 </div>
-
               </div>
             ))}
           </div>
@@ -82,11 +83,10 @@ export default function TrackingHistory() {
       <div className="relative">
         {/* Vertical Line */}
         <div className="absolute left-[4.5px] top-[6px] bottom-[6px] w-[1px] bg-[#E5E5E5]" />
-        
+
         <div className="space-y-8">
           {history.map((item, i) => (
             <div key={i} className="flex gap-3 items-start relative">
-
               {/* Dot */}
               <div
                 className={`w-[10px] h-[10px] rounded-full shrink-0 mt-[5px] ${
@@ -109,7 +109,6 @@ export default function TrackingHistory() {
                   <span>{item.time}</span>
                 </div>
               </div>
-
             </div>
           ))}
         </div>

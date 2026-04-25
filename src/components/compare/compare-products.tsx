@@ -9,7 +9,11 @@ export default function Compare() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, 500);
+
+    return () => clearTimeout(timer);
   }, []);
 
   // 🔴 SKELETON (FULL REPLACEMENT)

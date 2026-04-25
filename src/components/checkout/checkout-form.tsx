@@ -2,11 +2,46 @@
 
 import { useState, useEffect } from "react";
 
+const indianStates = [
+  "Andhra Pradesh",
+  "Arunachal Pradesh",
+  "Assam",
+  "Bihar",
+  "Chhattisgarh",
+  "Goa",
+  "Gujarat",
+  "Haryana",
+  "Himachal Pradesh",
+  "Jharkhand",
+  "Karnataka",
+  "Kerala",
+  "Madhya Pradesh",
+  "Maharashtra",
+  "Manipur",
+  "Meghalaya",
+  "Mizoram",
+  "Nagaland",
+  "Odisha",
+  "Punjab",
+  "Rajasthan",
+  "Sikkim",
+  "Tamil Nadu",
+  "Telangana",
+  "Tripura",
+  "Uttar Pradesh",
+  "Uttarakhand",
+  "West Bengal",
+].sort();
+
 export default function CheckoutForm({ setIsValid }: any) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, 500);
+
+    return () => clearTimeout(timer);
   }, []);
 
   const handleChange = (e: any) => {
@@ -51,11 +86,7 @@ export default function CheckoutForm({ setIsValid }: any) {
 
   // 🟢 ORIGINAL UI
   return (
-    <form
-      id="checkout-form"
-      className="max-w-[520px]"
-      onChange={handleChange}
-    >
+    <form id="checkout-form" className="max-w-[520px]" onChange={handleChange}>
       <h2 className="text-[28px] font-semibold mb-8">Billing details</h2>
 
       <div className="space-y-6">
@@ -80,7 +111,7 @@ export default function CheckoutForm({ setIsValid }: any) {
           <label className="text-sm font-medium">Country / Region</label>
           <select className="input mt-2" required>
             <option value="">Select Country</option>
-            <option>Sri Lanka</option>
+            <option>India</option>
           </select>
         </div>
 
@@ -95,10 +126,14 @@ export default function CheckoutForm({ setIsValid }: any) {
         </div>
 
         <div>
-          <label className="text-sm font-medium">Province</label>
+          <label className="text-sm font-medium">State</label>
           <select className="input mt-2" required>
-            <option value="">Select Province</option>
-            <option>Western Province</option>
+            <option value="">Select State</option>
+            {indianStates.map((state) => (
+              <option key={state} value={state}>
+                {state}
+              </option>
+            ))}
           </select>
         </div>
 

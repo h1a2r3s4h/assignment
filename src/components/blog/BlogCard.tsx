@@ -10,14 +10,17 @@ export default function BlogCard({ blog }: { blog: Blog }) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, 500);
+
+    return () => clearTimeout(timer);
   }, []);
 
   // SKELETON (FULL REPLACEMENT)
   if (!mounted) {
     return (
       <div className="space-y-5">
-
         {/* IMAGE */}
         <div className="w-full h-[420px] bg-gray-300 rounded-2xl" />
 
@@ -39,14 +42,12 @@ export default function BlogCard({ blog }: { blog: Blog }) {
 
         {/* BUTTON */}
         <div className="h-[18px] w-[100px] bg-gray-300 rounded" />
-
       </div>
     );
   }
 
   return (
     <div className="space-y-5">
-
       {/* IMAGE */}
       <div className="w-full h-[420px] relative rounded-2xl overflow-hidden">
         <Image
@@ -60,7 +61,6 @@ export default function BlogCard({ blog }: { blog: Blog }) {
 
       {/* META */}
       <div className="flex items-center gap-5 text-sm text-gray-400">
-        
         {/* USER */}
         <div className="flex items-center gap-2">
           <Image
@@ -85,15 +85,9 @@ export default function BlogCard({ blog }: { blog: Blog }) {
 
         {/* CATEGORY */}
         <div className="flex items-center gap-2">
-          <Image
-            src="/images/icons/tag.svg"
-            alt="tag"
-            width={16}
-            height={16}
-          />
+          <Image src="/images/icons/tag.svg" alt="tag" width={16} height={16} />
           <span>{blog.category}</span>
         </div>
-
       </div>
 
       {/* TITLE */}
@@ -112,11 +106,8 @@ export default function BlogCard({ blog }: { blog: Blog }) {
         variant="link"
         className="p-0 h-auto text-black text-[15px] font-medium underline underline-offset-4 hover:text-[#B88E2F]"
       >
-        <Link href={`/blog/${blog.slug}`}>
-          Read more
-        </Link>
+        <Link href={`/blog/${blog.slug}`}>Read more</Link>
       </Button>
-
     </div>
   );
 }

@@ -12,7 +12,11 @@ export default function ContactPage() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, 500);
+
+    return () => clearTimeout(timer);
   }, []);
 
   // 🔴 SKELETON (FULL PAGE REPLACEMENT)
@@ -80,13 +84,12 @@ export default function ContactPage() {
 
       {/* TITLE */}
       <div className="text-center max-w-[600px] mx-auto mt-16 px-4">
-        <h2 className="text-[32px] font-semibold">
-          Get In Touch With Us
-        </h2>
+        <h2 className="text-[32px] font-semibold">Get In Touch With Us</h2>
 
         <p className="text-gray-400 mt-4 leading-7 text-[15px]">
-          For More Information About Our Product & Services. Please Feel Free To Drop Us
-          An Email. Our Staff Always Be There To Help You Out. Do Not Hesitate!
+          For More Information About Our Product & Services. Please Feel Free To
+          Drop Us An Email. Our Staff Always Be There To Help You Out. Do Not
+          Hesitate!
         </p>
       </div>
 

@@ -7,14 +7,17 @@ export default function OrderInfo({ order }: any) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, 500);
+
+    return () => clearTimeout(timer);
   }, []);
 
   // Skeleton (fully replaces UI)
   if (!mounted) {
     return (
       <div className="border border-[#E5E5E5] rounded-2xl p-6 bg-white">
-        
         {/* TOP ROW SKELETON */}
         <div className="flex justify-between mb-4">
           <div>
@@ -40,17 +43,14 @@ export default function OrderInfo({ order }: any) {
             <div className="h-[14px] w-[140px] bg-gray-300 rounded" />
           </div>
         </div>
-
       </div>
     );
   }
 
   return (
     <div className="border border-[#E5E5E5] rounded-2xl p-6 bg-white">
-      
       {/* TOP ROW */}
       <div className="flex justify-between mb-4">
-        
         <div>
           <p className="text-[12px] text-[#737373]">Order Number</p>
           <p className="text-[14px] font-medium text-[#171717] mt-[2px]">
@@ -64,7 +64,6 @@ export default function OrderInfo({ order }: any) {
             {order.date}
           </p>
         </div>
-
       </div>
 
       {/* DIVIDER */}
@@ -72,9 +71,7 @@ export default function OrderInfo({ order }: any) {
 
       {/* DELIVERY */}
       <div>
-        <p className="text-[12px] text-[#737373]">
-          Estimated Delivery
-        </p>
+        <p className="text-[12px] text-[#737373]">Estimated Delivery</p>
 
         <div className="flex items-center gap-2 mt-[4px]">
           <Truck className="w-[16px] h-[16px] text-[#737373]" strokeWidth={2} />
@@ -83,7 +80,6 @@ export default function OrderInfo({ order }: any) {
           </p>
         </div>
       </div>
-
     </div>
   );
 }

@@ -56,7 +56,11 @@ export default function Sidebar() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, 500);
+
+    return () => clearTimeout(timer);
   }, []);
 
   // 🔴 SKELETON (FULL REPLACEMENT)
@@ -123,9 +127,7 @@ export default function Sidebar() {
 
       {/* CATEGORIES */}
       <div className="mb-14">
-        <h3 className="text-[20px] font-semibold mb-8">
-          Categories
-        </h3>
+        <h3 className="text-[20px] font-semibold mb-8">Categories</h3>
 
         <ul className="space-y-6 text-[15px] text-gray-500">
           {categories.map((item) => (
@@ -134,9 +136,7 @@ export default function Sidebar() {
               className="flex justify-between items-center cursor-pointer hover:text-black transition"
             >
               <span>{item.name}</span>
-              <span className="text-gray-400">
-                {item.count}
-              </span>
+              <span className="text-gray-400">{item.count}</span>
             </li>
           ))}
         </ul>
@@ -144,9 +144,7 @@ export default function Sidebar() {
 
       {/* RECENT POSTS */}
       <div>
-        <h3 className="text-[20px] font-semibold mb-6">
-          Recent Posts
-        </h3>
+        <h3 className="text-[20px] font-semibold mb-6">Recent Posts</h3>
 
         <div className="space-y-6">
           {posts.map((post, i) => (
@@ -171,9 +169,7 @@ export default function Sidebar() {
                   {post.title}
                 </p>
 
-                <p className="text-[13px] text-gray-400 mt-1">
-                  {post.date}
-                </p>
+                <p className="text-[13px] text-gray-400 mt-1">{post.date}</p>
               </div>
             </div>
           ))}

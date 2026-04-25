@@ -22,14 +22,19 @@ export default function Footer() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
-  }, []);useEffect(() => {
-  const timer = setTimeout(() => {
-    setMounted(true);
-  }, 500); // 300–800ms is enough
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, 500);
 
-  return () => clearTimeout(timer);
-}, []);
+    return () => clearTimeout(timer);
+  }, []);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, 500); // 300–800ms is enough
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const loading = !mounted;
 
@@ -37,7 +42,6 @@ export default function Footer() {
     <footer className="w-full border-t border-[#D9D9D9] bg-white">
       <div className="mx-auto max-w-[1440px] px-[100px] pb-[38px] pt-[48px]">
         <div className="grid grid-cols-[2fr_1fr_1fr_1.4fr] gap-x-[72px] border-b border-[#D9D9D9] pb-[48px]">
-
           {/* Column 1 */}
           <div>
             {loading ? (
@@ -122,7 +126,9 @@ export default function Footer() {
               </>
             ) : (
               <>
-                <p className="text-base font-medium text-[#9F9F9F]">Newsletter</p>
+                <p className="text-base font-medium text-[#9F9F9F]">
+                  Newsletter
+                </p>
                 <form className="mt-[53px] flex items-start gap-[11px]">
                   <input
                     type="email"

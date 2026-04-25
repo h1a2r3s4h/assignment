@@ -7,7 +7,11 @@ export default function CompareHeader() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, 500);
+
+    return () => clearTimeout(timer);
   }, []);
 
   // 🔴 SKELETON (FULL REPLACEMENT)
@@ -52,9 +56,7 @@ export default function CompareHeader() {
           className="mb-3"
         />
 
-        <h1 className="text-4xl font-semibold text-black">
-          Contact
-        </h1>
+        <h1 className="text-4xl font-semibold text-black">Contact</h1>
 
         <p className="mt-2 text-gray-700 text-sm flex items-center gap-2">
           <span>Home</span>

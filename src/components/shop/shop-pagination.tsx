@@ -14,7 +14,11 @@ export default function ShopPagination({
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, 500);
+
+    return () => clearTimeout(timer);
   }, []);
 
   const pages = Array.from({ length: totalPages }, (_, index) => index + 1);
@@ -23,7 +27,6 @@ export default function ShopPagination({
     return (
       <section className="w-full bg-white">
         <div className="mx-auto flex w-full max-w-[1440px] items-center justify-center gap-[18px] px-4 pb-[85px] md:px-8 lg:px-[100px]">
-          
           {[1, 2, 3].map((i) => (
             <div
               key={i}

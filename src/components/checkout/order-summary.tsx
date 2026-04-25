@@ -8,13 +8,14 @@ export default function OrderSummary({ isValid }: any) {
   const { cart } = useCart();
 
   useEffect(() => {
-    setMounted(true);
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, 500);
+
+    return () => clearTimeout(timer);
   }, []);
 
-  const total = cart.reduce(
-    (acc, item) => acc + item.price * item.qty,
-    0
-  );
+  const total = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
 
   // 🔴 SKELETON (FULL REPLACEMENT)
   if (!mounted) {
@@ -84,13 +85,9 @@ export default function OrderSummary({ isValid }: any) {
           <div key={item.id} className="flex justify-between text-sm mb-3">
             <span className="text-gray-600">
               {item.name}{" "}
-              <span className="text-black font-medium">
-                × {item.qty}
-              </span>
+              <span className="text-black font-medium">× {item.qty}</span>
             </span>
-            <span className="text-gray-600">
-              Rs. {item.price * item.qty}
-            </span>
+            <span className="text-gray-600">Rs. {item.price * item.qty}</span>
           </div>
         ))
       )}
@@ -132,9 +129,7 @@ export default function OrderSummary({ isValid }: any) {
 
         <p className="text-xs text-gray-500 pt-2">
           Your personal data will be used according to our{" "}
-          <span className="font-semibold text-black">
-            privacy policy
-          </span>.
+          <span className="font-semibold text-black">privacy policy</span>.
         </p>
       </div>
 

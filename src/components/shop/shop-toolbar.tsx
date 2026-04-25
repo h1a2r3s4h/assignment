@@ -15,14 +15,17 @@ export default function ShopToolbar({
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, 500);
+
+    return () => clearTimeout(timer);
   }, []);
 
   if (!mounted) {
     return (
       <section className="w-full bg-[#F9F1E7]">
         <div className="mx-auto flex w-full max-w-[1440px] flex-col gap-4 px-4 py-5 md:px-8 lg:flex-row lg:items-center lg:justify-between lg:px-[100px] lg:py-[22px]">
-          
           {/* LEFT SKELETON */}
           <div className="flex flex-wrap items-center gap-4 lg:gap-6">
             <div className="h-5 w-[80px] bg-gray-300" />
@@ -44,7 +47,6 @@ export default function ShopToolbar({
               <div className="h-[55px] w-[188px] bg-gray-300" />
             </div>
           </div>
-
         </div>
       </section>
     );
@@ -53,16 +55,21 @@ export default function ShopToolbar({
   return (
     <section className="w-full bg-[#F9F1E7]">
       <div className="mx-auto flex w-full max-w-[1440px] flex-col gap-4 px-4 py-5 md:px-8 lg:flex-row lg:items-center lg:justify-between lg:px-[100px] lg:py-[22px]">
-        
         {/* left */}
         <div className="flex flex-wrap items-center gap-4 lg:gap-6">
           <button className="flex items-center gap-2 text-[16px] font-normal leading-[150%] text-black transition-opacity hover:opacity-70">
-            <SlidersHorizontal className="h-[20px] w-[20px]" strokeWidth={1.8} />
+            <SlidersHorizontal
+              className="h-[20px] w-[20px]"
+              strokeWidth={1.8}
+            />
             <span>Filter</span>
           </button>
 
           <button className="transition-opacity hover:opacity-70">
-            <LayoutGrid className="h-[20px] w-[20px] text-black" strokeWidth={1.8} />
+            <LayoutGrid
+              className="h-[20px] w-[20px] text-black"
+              strokeWidth={1.8}
+            />
           </button>
 
           <button className="transition-opacity hover:opacity-70">
@@ -96,7 +103,6 @@ export default function ShopToolbar({
             </div>
           </div>
         </div>
-
       </div>
     </section>
   );

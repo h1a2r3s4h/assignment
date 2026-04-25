@@ -6,7 +6,11 @@ export default function ContactForm() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, 500);
+
+    return () => clearTimeout(timer);
   }, []);
 
   // 🔴 SKELETON (FULL REPLACEMENT)
@@ -48,9 +52,7 @@ export default function ContactForm() {
     <form className="flex flex-col gap-6">
       {/* NAME */}
       <div>
-        <label className="text-sm font-medium text-gray-800">
-          Your name
-        </label>
+        <label className="text-sm font-medium text-gray-800">Your name</label>
         <input
           placeholder="Abc"
           className="w-full h-[55px] mt-2 px-4 rounded-lg border border-gray-300 outline-none focus:border-black transition"
@@ -70,9 +72,7 @@ export default function ContactForm() {
 
       {/* SUBJECT */}
       <div>
-        <label className="text-sm font-medium text-gray-800">
-          Subject
-        </label>
+        <label className="text-sm font-medium text-gray-800">Subject</label>
         <input
           placeholder="This is an optional"
           className="w-full h-[55px] mt-2 px-4 rounded-lg border border-gray-300 outline-none focus:border-black transition"
@@ -81,9 +81,7 @@ export default function ContactForm() {
 
       {/* MESSAGE */}
       <div>
-        <label className="text-sm font-medium text-gray-800">
-          Message
-        </label>
+        <label className="text-sm font-medium text-gray-800">Message</label>
         <textarea
           placeholder="Hi! i’d like to ask about"
           className="w-full h-[140px] mt-2 px-4 py-3 rounded-lg border border-gray-300 outline-none focus:border-black resize-none transition"

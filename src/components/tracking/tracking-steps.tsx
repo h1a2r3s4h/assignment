@@ -15,7 +15,11 @@ export default function TrackingSteps({ status }: any) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, 500);
+
+    return () => clearTimeout(timer);
   }, []);
 
   const current = steps.findIndex((s) => s.key === status);
@@ -24,7 +28,6 @@ export default function TrackingSteps({ status }: any) {
   if (!mounted) {
     return (
       <div className="border border-[#E5E5E5] rounded-2xl p-6 bg-white mb-10">
-        
         {/* TOP */}
         <div className="flex justify-between mb-6">
           <div>
@@ -40,7 +43,6 @@ export default function TrackingSteps({ status }: any) {
 
         {/* TRACK SKELETON */}
         <div className="relative flex items-center justify-between">
-
           {/* BASE LINE */}
           <div className="absolute top-[20px] left-0 right-0 h-[2px] bg-[#E5E5E5]" />
 
@@ -65,7 +67,6 @@ export default function TrackingSteps({ status }: any) {
 
   return (
     <div className="border border-[#E5E5E5] rounded-2xl p-6 bg-white mb-10">
-      
       {/* TOP */}
       <div className="flex justify-between mb-6">
         <div>
@@ -85,7 +86,6 @@ export default function TrackingSteps({ status }: any) {
 
       {/* TRACK */}
       <div className="relative flex items-center justify-between">
-        
         {/* BASE LINE */}
         <div className="absolute top-[20px] left-0 right-0 h-[2px] bg-[#E5E5E5]" />
 

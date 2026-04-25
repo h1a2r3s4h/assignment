@@ -6,7 +6,11 @@ export default function TrackingHeader({ order }: any) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, 500);
+
+    return () => clearTimeout(timer);
   }, []);
 
   // Skeleton (fully replaces UI)
@@ -22,9 +26,7 @@ export default function TrackingHeader({ order }: any) {
   return (
     <div className="mb-6">
       <h2 className="text-xl font-semibold">Track Your Order</h2>
-      <p className="text-gray-500 text-sm">
-        Order #{order.id}
-      </p>
+      <p className="text-gray-500 text-sm">Order #{order.id}</p>
     </div>
   );
 }

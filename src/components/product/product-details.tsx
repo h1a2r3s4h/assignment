@@ -20,13 +20,18 @@ const images = [
   "/images/products/Outdoor sofa set_2 1.png",
 ];
 
-const BASE_PRICE = 250000;
 
-export default function ProductDetails() {
+
+export default function ProductDetails({ product }: any) {
+  const BASE_PRICE = product.price;
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, 500);
+
+    return () => clearTimeout(timer);
   }, []);
 
   const router = useRouter();
@@ -120,9 +125,7 @@ export default function ProductDetails() {
                 onClick={() => setSelectedImage(img)}
                 className={`w-20 h-20 rounded-lg cursor-pointer border 
                 ${
-                  selectedImage === img
-                    ? "border-black"
-                    : "border-transparent"
+                  selectedImage === img ? "border-black" : "border-transparent"
                 }`}
               >
                 <Image
@@ -149,7 +152,7 @@ export default function ProductDetails() {
 
         {/* RIGHT SIDE */}
         <div className="flex-1 space-y-5">
-          <h1 className="text-[32px] font-semibold">Asgaard sofa</h1>
+          <h1 className="text-[32px] font-semibold">{product.name}</h1>
 
           <p className="text-[20px] text-[#9F9F9F]">
             {formatPrice(totalPrice)}
@@ -221,7 +224,7 @@ export default function ProductDetails() {
               onClick={() => {
                 addToCart({
                   id: 1,
-                  name: "Asgaard sofa",
+                  name: product.name,
                   price: BASE_PRICE,
                   image: selectedImage,
                 });

@@ -39,7 +39,11 @@ const specs = [
   {
     title: "Warranty",
     items: [
-      ["Warranty Summary", "1 Year Manufacturing Warranty", "1.2 Year Manufacturing Warranty"],
+      [
+        "Warranty Summary",
+        "1 Year Manufacturing Warranty",
+        "1.2 Year Manufacturing Warranty",
+      ],
       [
         "Warranty Service Type",
         "For Warranty Claims or Any Product Related Issues Please Email at operations@trevifurniture.com",
@@ -64,7 +68,11 @@ export default function CompareTable() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, 500);
+
+    return () => clearTimeout(timer);
   }, []);
 
   // 🔴 SKELETON (FULL REPLACEMENT)

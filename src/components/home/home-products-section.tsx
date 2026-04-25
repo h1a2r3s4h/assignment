@@ -105,7 +105,11 @@ export default function HomeProductsSection() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, 500);
+
+    return () => clearTimeout(timer);
   }, []);
 
   // SKELETON (FULL REPLACEMENT)
@@ -114,7 +118,6 @@ export default function HomeProductsSection() {
       <div className="w-full bg-white">
         <section className="mx-auto max-w-[1440px] px-[102px] pb-[69px] pt-[56px]">
           <div className="mx-auto max-w-[1236px]">
-
             {/* TITLE */}
             <div className="h-[40px] w-[260px] bg-gray-300 rounded mx-auto" />
 
@@ -122,7 +125,6 @@ export default function HomeProductsSection() {
             <div className="mt-8 grid grid-cols-4 gap-x-8 gap-y-8">
               {Array.from({ length: 8 }).map((_, i) => (
                 <div key={i} className="bg-[#F4F5F7] overflow-hidden">
-
                   {/* IMAGE */}
                   <div className="relative h-[301px] w-full bg-gray-300" />
 
@@ -136,7 +138,6 @@ export default function HomeProductsSection() {
                       <div className="h-[16px] w-[80px] bg-gray-300 rounded" />
                     </div>
                   </div>
-
                 </div>
               ))}
             </div>
@@ -145,7 +146,6 @@ export default function HomeProductsSection() {
             <div className="mt-8 flex justify-center">
               <div className="h-12 w-[245px] bg-gray-300 rounded" />
             </div>
-
           </div>
         </section>
       </div>
@@ -219,14 +219,14 @@ export default function HomeProductsSection() {
                       </button>
 
                       <div className="mt-6 flex items-center gap-5 text-white">
-                        <button className="flex items-center gap-1 text-base font-semibold">
+                        <button className="flex items-center cursor-pointer gap-1 text-base font-semibold">
                           <Share2 className="h-4 w-4" />
                           Share
                         </button>
 
                         <Link
                           href="/compare"
-                          className="flex items-center gap-1 text-base font-semibold"
+                          className="flex items-center cursor-pointer gap-1 text-base font-semibold"
                         >
                           <ArrowLeftRight className="h-4 w-4" />
                           Compare
@@ -240,7 +240,9 @@ export default function HomeProductsSection() {
                             addToWishlist({
                               id: product.id,
                               name: product.name,
-                              price: Number(product.price.replace(/[^0-9]/g, "")),
+                              price: Number(
+                                product.price.replace(/[^0-9]/g, ""),
+                              ),
                               image: product.image,
                             });
 
@@ -251,7 +253,7 @@ export default function HomeProductsSection() {
                               toastStyle,
                             );
                           }}
-                          className="flex items-center gap-1 text-base font-semibold"
+                          className="flex items-center cursor-pointer gap-1 text-base font-semibold"
                         >
                           <Heart
                             className={`h-4 w-4 ${
@@ -298,7 +300,6 @@ export default function HomeProductsSection() {
               Show More
             </Link>
           </div>
-
         </div>
       </section>
     </div>
