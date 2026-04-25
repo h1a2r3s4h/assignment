@@ -20,9 +20,13 @@ export default function Navbar() {
 
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    setMounted(true); // 👈 only for hydration
-  }, []);
+useEffect(() => {
+  const timer = setTimeout(() => {
+    setMounted(true);
+  }, 500); // 300–800ms is enough
+
+  return () => clearTimeout(timer);
+}, []);
 
   // ✅ NO TIMER → only mount-based
   const loading = !mounted;
