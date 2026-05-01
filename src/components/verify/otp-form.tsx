@@ -22,7 +22,7 @@ export default function OTPForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
 
-  const email = searchParams.get("email")
+  const email = searchParams.get("email") || "";
   const type = searchParams.get("type") || "login";
 
   const handleVerify = async () => {
