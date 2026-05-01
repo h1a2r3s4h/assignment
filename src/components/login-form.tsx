@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+
+              import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -12,13 +14,15 @@ import {
   FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-
+import { useRouter } from "next/navigation";
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const router = useRouter();
   const [mounted, setMounted] = useState(false);
-
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   useEffect(() => {
     const timer = setTimeout(() => {
       setMounted(true);
@@ -79,7 +83,41 @@ export function LoginForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card className="overflow-hidden p-0 border border-gray-300 rounded-md">
         <CardContent className="grid p-0 md:grid-cols-2">
-          <form className="p-6 md:p-8">
+          <form
+  className="p-6 md:p-8"
+  onSubmit={async (e) => {
+    e.preventDefault();
+
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+          credentials: "include",
+        }
+      );
+
+      const data = await res.json();
+      console.log("LOGIN RESPONSE:", data);
+
+      if (data.success) {
+  router.push("/"); // or wherever after login
+} else if (data.isVerified === false) {
+  router.push(`/otp-verify?email=${email}&type=login`);
+} else {
+  alert(data.message || "Login failed");
+}
+
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong");
+    }
+  }}
+>
             <FieldGroup>
               <div className="flex flex-col items-center gap-2 text-center">
                 <h1 className="text-2xl font-bold">Welcome back</h1>
@@ -94,22 +132,33 @@ export function LoginForm({
                   id="email"
                   type="email"
                   placeholder="m@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   required
                 />
               </Field>
 
-              <Field>
-                <div className="flex items-center">
-                  <FieldLabel htmlFor="password">Password</FieldLabel>
-                  <a
-                    href="#"
-                    className="ml-auto text-sm underline-offset-2 hover:underline"
-                  >
-                    Forgot your password?
-                  </a>
-                </div>
-                <Input id="password" type="password" required />
-              </Field>
+
+<Field>
+  <div className="flex items-center">
+    <FieldLabel htmlFor="password">Password</FieldLabel>
+
+    <Link
+      href="/forgot-password"
+      className="ml-auto text-sm underline-offset-2 hover:underline"
+    >
+      Forgot your password?
+    </Link>
+  </div>
+
+  <Input
+    id="password"
+    type="password"
+    value={password}
+    onChange={(e) => setPassword(e.target.value)}
+    required
+  />
+</Field>
 
               <Field>
                 <Button
