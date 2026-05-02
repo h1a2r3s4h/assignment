@@ -28,7 +28,7 @@ export default function OTPForm() {
   const handleVerify = async () => {
     try {
       const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/verify-otp`, {
+      `${process.env.NEXT_PUBLIC_API_URL}/auth/verify-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
