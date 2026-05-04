@@ -57,44 +57,45 @@ const data = {
 
     // ORDER MANAGEMENT
     {
-      title: "Order Management",
-      icon: <BotIcon />,
+  title: "Order Management",
+  icon: <BotIcon />,
+  items: [
+    {
+      title: "Orders",
       items: [
-        {
-          title: "Orders",
-          items: [
-            { title: "All", url: "/orders/all" },
-            { title: "Pending", url: "/orders/pending" },
-            { title: "Confirmed", url: "/orders/confirmed" },
-            { title: "Packing", url: "/orders/packing" },
-            { title: "Out for delivery", url: "/orders/out" },
-            { title: "Delivered", url: "/orders/delivered" },
-            { title: "Returned", url: "/orders/returned" },
-            { title: "Cancelled", url: "/orders/cancelled" },
-          ],
-        },
-        {
-          title: "Refund Requests",
-          items: [
-            { title: "All", url: "/refund/all" },
-            { title: "Pending", url: "/refund/pending" },
-            { title: "Approved", url: "/refund/approved" },
-            { title: "Refunded", url: "/refund/refunded" },
-            { title: "Rejected", url: "/refund/rejected" },
-          ],
-        },
+        { title: "All", url: "/dashboard/orders?status=all" },
+{ title: "Pending", url: "/dashboard/orders?status=pending" },
+{ title: "Confirmed", url: "/dashboard/orders?status=confirmed" },
+{ title: "Packing", url: "/dashboard/orders?status=packing" },
+{ title: "Out for delivery", url: "/dashboard/orders?status=out" },
+{ title: "Delivered", url: "/dashboard/orders?status=delivered" },
+{ title: "Returned", url: "/dashboard/orders?status=returned" },
+{ title: "Cancelled", url: "/dashboard/orders?status=cancelled" },
       ],
     },
+    {
+      title: "Refund Requests",
+      items: [
+        { title: "All", url: "/dashboard/refunds?status=all" },
+        { title: "Pending", url: "/dashboard/refunds?status=pending" },
+        { title: "Approved", url: "/dashboard/refunds?status=approved" },
+        { title: "Refunded", url: "/dashboard/refunds?status=refunded" },
+        { title: "Rejected", url: "/dashboard/refunds?status=rejected" },
+      ],
+    },
+  ],
+},
 
     // CATEGORY SETUP
     {
       title: "Category Setup",
       icon: <Settings2Icon />,
       items: [
-        { title: "Categories", url: "/categories" },
-        { title: "Sub Categories", url: "/sub-categories" },
+        { title: "Categories", url: "/dashboard/categories" },
+        { title: "Sub Categories", url: "/dashboard/categories/subcategories" },
       ],
     },
+
 
     // PRODUCT MANAGEMENT
     {

@@ -13,68 +13,68 @@ import {
   RotateCcw,
 } from "lucide-react"
 
-export function DashboardCards() {
+export default function RefundStats() {
   return (
     <div className="space-y-6">
 
       {/* TOP CARDS */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <TopCard icon={Gift} title="Total Vendors" value="154" change="↗ 12.5% vs last month" />
         <TopCard icon={Store} title="Active Shops" value="89" change="↗ 5.2% vs last month" />
         <TopCard icon={Clock} title="Pending Orders" value="23" change="↘ 2.1% vs last month" />
         <TopCard icon={IndianRupee} title="Daily Turnover" value="₹ 1,25,000"/>
-      </div>
+      </div> */}
 
       {/* STATUS CARDS */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <SmallCard icon={Clock} label="Pending" value="1250" />
-        <SmallCard icon={CheckCircle} label="Confirmed" value="15" />
-        <SmallCard icon={Package} label="Packing" value="42" />
-        <SmallCard icon={Truck} label="Out for delivery" value="1250" />
-        <SmallCard icon={Package} label="Delivered" value="1250" />
+        <SmallCard icon={CheckCircle} label="Approved" value="15" />
+        <SmallCard icon={Package} label="Refunded" value="42" />
+        <SmallCard icon={Truck} label="Rejected" value="1250" />
+        {/* <SmallCard icon={Package} label="Delivered" value="1250" />
         <SmallCard icon={XCircle} label="Cancelled" value="15" />
         <SmallCard icon={RotateCcw} label="Returned" value="42" />
-        <SmallCard icon={XCircle} label="Failed to deliver" value="1250" />
+        <SmallCard icon={XCircle} label="Failed to deliver" value="1250" /> */}
       </div>
 
     </div>
   )
 }
 
-function TopCard({ icon: Icon, title, value, change }: any) {
-  return (
-    <Card className="rounded-xl border border-gray-300 bg-white shadow-sm hover:shadow-md transition-all duration-200 h-[130px]">
-      <CardContent className="p-5 h-full flex flex-col justify-center gap-6">
+// function TopCard({ icon: Icon, title, value, change }: any) {
+//   return (
+//     <Card className="rounded-xl border border-gray-300 bg-white shadow-sm hover:shadow-md transition-all duration-200 h-[130px]">
+//       <CardContent className="p-5 h-full flex flex-col justify-between">
 
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <p className="text-sm font-semibold text-gray-800">
-            {title}
-          </p>
+//         {/* Header */}
+//         <div className="flex items-center justify-between">
+//           <p className="text-sm font-semibold text-gray-800">
+//             {title}
+//           </p>
 
-          <div className="p-2 rounded-lg bg-gray-100">
-            <Icon className="w-5 h-5 text-gray-700" />
-          </div>
-        </div>
+//           <div className="p-2 rounded-lg bg-gray-100">
+//             <Icon className="w-5 h-5 text-gray-700" />
+//           </div>
+//         </div>
 
-        {/* Value + Change */}
-        <div className="flex items-end justify-between">
+//         {/* Value + Change */}
+//         <div className="flex items-end justify-between">
 
-          {/* FIX: prevent ₹ breaking */}
-          <h2 className="text-3xl font-bold text-gray-900 leading-none whitespace-nowrap">
-            {value}
-          </h2>
+//           {/* FIX: prevent ₹ breaking */}
+//           <h2 className="text-3xl font-bold text-gray-900 leading-none whitespace-nowrap">
+//             {value}
+//           </h2>
 
-          <p className="text-sm text-gray-600 font-medium whitespace-nowrap">
-            {change}
-          </p>
+//           <p className="text-sm text-gray-600 font-medium whitespace-nowrap">
+//             {change}
+//           </p>
 
-        </div>
+//         </div>
 
-      </CardContent>
-    </Card>
-  )
-}
+//       </CardContent>
+//     </Card>
+//   )
+//}
 function SmallCard({ icon: Icon, label, value }: any) {
   return (
     <Card className="rounded-lg border border-gray-300 bg-white shadow-sm hover:shadow-md transition-all duration-200">

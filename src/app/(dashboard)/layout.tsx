@@ -1,3 +1,4 @@
+import { Suspense } from "react"
 import { AppSidebar } from "@/components/app-sidebar"
 import {
   Breadcrumb,
@@ -21,7 +22,11 @@ export default function DashboardLayout({
 }) {
   return (
     <SidebarProvider>
-      <AppSidebar />
+
+      {/* ✅ FIX HERE */}
+      <Suspense fallback={<div className="w-64" />}>
+        <AppSidebar />
+      </Suspense>
 
       <SidebarInset>
         {/* HEADER */}
