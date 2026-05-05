@@ -1,12 +1,6 @@
 import OrdersStats from "@/components/orders/OrderStats"
 import OrderTable from "@/components/orders/OrderTable"
 
-type Props = {
-  searchParams?: {
-    status?: string
-  }
-}
-
 export default async function OrdersPage({
   searchParams,
 }: {
@@ -16,9 +10,14 @@ export default async function OrdersPage({
   const currentStatus = status ?? "all"
 
   return (
-    <div className="space-y-6 p-6">
-      <OrdersStats />
-      <OrderTable status={currentStatus} />
+    <div className="p-6  min-h-screen">
+      <div className="max-w-7xl mx-auto space-y-6">
+        
+        <OrdersStats />
+        
+        <OrderTable status={currentStatus} />
+
+      </div>
     </div>
   )
 }
