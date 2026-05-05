@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -22,6 +23,7 @@ const products = [
     type: "Physical",
     price: 2999,
     stock: 50,
+    stockStatus: true,
     featured: true,
     status: true,
     image: "https://placehold.co/36x36",
@@ -32,6 +34,7 @@ const products = [
     type: "Digital",
     price: 499,
     stock: 50,
+    stockStatus: true,
     featured: false,
     status: true,
     image: "https://placehold.co/36x36",
@@ -42,6 +45,7 @@ const products = [
     type: "Physical",
     price: 1599,
     stock: 50,
+    stockStatus: false,
     featured: true,
     status: true,
     image: "https://placehold.co/36x36",
@@ -52,6 +56,7 @@ const products = [
     type: "Physical",
     price: 899,
     stock: 50,
+    stockStatus: true,
     featured: false,
     status: true,
     image: "https://placehold.co/36x36",
@@ -62,6 +67,7 @@ const products = [
     type: "Physical",
     price: 799,
     stock: 50,
+    stockStatus: false,
     featured: true,
     status: false,
     image: "https://placehold.co/36x36",
@@ -69,6 +75,26 @@ const products = [
 ];
 
 export default function ProductTable() {
+  const [productList, setProductList] = useState(products);
+
+  const toggleFeatured = (id: number) => {
+    setProductList((prev) =>
+      prev.map((p) => (p.id === id ? { ...p, featured: !p.featured } : p))
+    );
+  };
+
+  const toggleStockStatus = (id: number) => {
+    setProductList((prev) =>
+      prev.map((p) => (p.id === id ? { ...p, stockStatus: !p.stockStatus } : p))
+    );
+  };
+
+  const toggleStatus = (id: number) => {
+    setProductList((prev) =>
+      prev.map((p) => (p.id === id ? { ...p, status: !p.status } : p))
+    );
+  };
+
   return (
     <Card className="rounded-2xl border border-gray-100 bg-white shadow-sm overflow-hidden">
       {/* Header */}
@@ -76,7 +102,7 @@ export default function ProductTable() {
         <CardTitle className="text-lg font-semibold flex items-center gap-2">
           In House Product List
           <span className="text-xs font-normal bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">
-            {products.length}
+            {productList.length}
           </span>
         </CardTitle>
       </CardHeader>
@@ -102,7 +128,7 @@ export default function ProductTable() {
 
             {/* Body */}
             <TableBody>
-              {products.map((p) => (
+              {productList.map((p) => (
                 <TableRow
                   key={p.id}
                   className="border-b border-gray-200 hover:bg-gray-50 transition-colors"
@@ -137,27 +163,36 @@ export default function ProductTable() {
                     ₹{p.price.toLocaleString()}
                   </TableCell>
 
-                  <TableCell className="text-center text-sm">
-                    {p.stock}
+                  <TableCell className="text-center">
+                    <div className="flex flex-col items-center gap-1">
+                      <span className="text-sm">{p.stock}</span>
+                      <Switch
+                        checked={p.stockStatus}
+                        onCheckedChange={() => toggleStockStatus(p.id)}
+                        size="sm"
+                        className="data-[state=checked]:bg-indigo-600"
+                      />
+                    </div>
                   </TableCell>
 
                   <TableCell className="text-center">
-  <div className="flex items-center justify-center h-full">
-    <Checkbox
-      checked={p.featured}
-      className="pointer-events-none"
-    />
-  </div>
-</TableCell>
+                    <div className="flex items-center justify-center h-full">
+                      <Checkbox
+                        checked={p.featured}
+                        onCheckedChange={() => toggleFeatured(p.id)}
+                      />
+                    </div>
+                  </TableCell>
 
                   <TableCell className="text-center">
-  <div className="flex justify-center">
-    <Switch
-      checked={p.status}
-      className="pointer-events-none data-[state=checked]:bg-gray-900 data-[state=unchecked]:bg-gray-200"
-    />
-  </div>
-</TableCell>
+                    <div className="flex justify-center">
+                      <Switch
+                        checked={p.status}
+                        onCheckedChange={() => toggleStatus(p.id)}
+                        className="data-[state=checked]:bg-gray-900 data-[state=unchecked]:bg-gray-200"
+                      />
+                    </div>
+                  </TableCell>
 
                   <TableCell className="w-32 text-center">
   <div className="flex items-center justify-center gap-3">
@@ -187,7 +222,7 @@ export default function ProductTable() {
         {/* Footer */}
         <div className="flex items-center justify-between px-6 py-3 text-sm text-gray-500 border-t border-gray-100 bg-gray-50">
           <span>
-            Showing {products.length} of {products.length} products
+            Showing {productList.length} of {productList.length} products
           </span>
 
           <div className="flex items-center gap-2">
