@@ -31,7 +31,7 @@ export default function SubCategoryForm({
   const [category, setCategory] = useState("")
 
   return (
-    <div className="bg-white border border-gray-200 rounded-xl p-6">
+    <div className="w-full bg-white border border-gray-200 rounded-xl p-6">
       
       {/* TITLE */}
       <h2 className="text-lg font-semibold text-gray-800 mb-6 flex items-center gap-2">

@@ -42,7 +42,7 @@ export default function SubCategoryTable({
   }
 
   return (
-    <div className="bg-white border border-gray-200 rounded-xl p-4 mt-6">
+    <div className="w-full bg-white border border-gray-200 rounded-xl p-6">
 
       {/* HEADER */}
       <div className="flex items-center justify-between mb-4">
