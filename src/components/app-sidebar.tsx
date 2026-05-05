@@ -1,19 +1,33 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
-import { NavMain } from "@/components/nav-main"
-import { NavProjects } from "@/components/nav-projects"
-import { NavUser } from "@/components/nav-user"
-import { TeamSwitcher } from "@/components/team-switcher"
+import { NavMain } from "@/components/nav-main";
+import { NavProjects } from "@/components/nav-projects";
+import { NavUser } from "@/components/nav-user";
+import { TeamSwitcher } from "@/components/team-switcher";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
-} from "@/components/ui/sidebar"
-import { GalleryVerticalEndIcon, AudioLinesIcon, TerminalIcon, TerminalSquareIcon, BotIcon, BookOpenIcon, Settings2Icon, FrameIcon, PieChartIcon, MapIcon } from "lucide-react"
+} from "@/components/ui/sidebar";
+import {
+  GalleryVerticalEndIcon,
+  AudioLinesIcon,
+  TerminalIcon,
+  TerminalSquareIcon,
+  BotIcon,
+  BookOpenIcon,
+  Settings2Icon,
+  FrameIcon,
+  PieChartIcon,
+  MapIcon,
+  PackageIcon,
+  ImageIcon,
+  SlidersIcon,
+} from "lucide-react";
 
 // This is sample data.
 const data = {
@@ -25,26 +39,17 @@ const data = {
   teams: [
     {
       name: "Acme Inc",
-      logo: (
-        <GalleryVerticalEndIcon
-        />
-      ),
+      logo: <GalleryVerticalEndIcon />,
       plan: "Enterprise",
     },
     {
       name: "Acme Corp.",
-      logo: (
-        <AudioLinesIcon
-        />
-      ),
+      logo: <AudioLinesIcon />,
       plan: "Startup",
     },
     {
       name: "Evil Corp.",
-      logo: (
-        <TerminalIcon
-        />
-      ),
+      logo: <TerminalIcon />,
       plan: "Free",
     },
   ],
@@ -57,34 +62,34 @@ const data = {
 
     // ORDER MANAGEMENT
     {
-  title: "Order Management",
-  icon: <BotIcon />,
-  items: [
-    {
-      title: "Orders",
+      title: "Order Management",
+      icon: <BotIcon />,
       items: [
-        { title: "All", url: "/dashboard/orders?status=all" },
-{ title: "Pending", url: "/dashboard/orders?status=pending" },
-{ title: "Confirmed", url: "/dashboard/orders?status=confirmed" },
-{ title: "Packing", url: "/dashboard/orders?status=packing" },
-{ title: "Out for delivery", url: "/dashboard/orders?status=out" },
-{ title: "Delivered", url: "/dashboard/orders?status=delivered" },
-{ title: "Returned", url: "/dashboard/orders?status=returned" },
-{ title: "Cancelled", url: "/dashboard/orders?status=cancelled" },
+        {
+          title: "Orders",
+          items: [
+            { title: "All", url: "/dashboard/orders?status=all" },
+            { title: "Pending", url: "/dashboard/orders?status=pending" },
+            { title: "Confirmed", url: "/dashboard/orders?status=confirmed" },
+            { title: "Packing", url: "/dashboard/orders?status=packing" },
+            { title: "Out for delivery", url: "/dashboard/orders?status=out" },
+            { title: "Delivered", url: "/dashboard/orders?status=delivered" },
+            { title: "Returned", url: "/dashboard/orders?status=returned" },
+            { title: "Cancelled", url: "/dashboard/orders?status=cancelled" },
+          ],
+        },
+        {
+          title: "Refund Requests",
+          items: [
+            { title: "All", url: "/dashboard/refunds?status=all" },
+            { title: "Pending", url: "/dashboard/refunds?status=pending" },
+            { title: "Approved", url: "/dashboard/refunds?status=approved" },
+            { title: "Refunded", url: "/dashboard/refunds?status=refunded" },
+            { title: "Rejected", url: "/dashboard/refunds?status=rejected" },
+          ],
+        },
       ],
     },
-    {
-      title: "Refund Requests",
-      items: [
-        { title: "All", url: "/dashboard/refunds?status=all" },
-        { title: "Pending", url: "/dashboard/refunds?status=pending" },
-        { title: "Approved", url: "/dashboard/refunds?status=approved" },
-        { title: "Refunded", url: "/dashboard/refunds?status=refunded" },
-        { title: "Rejected", url: "/dashboard/refunds?status=rejected" },
-      ],
-    },
-  ],
-},
 
     // CATEGORY SETUP
     {
@@ -96,17 +101,53 @@ const data = {
       ],
     },
 
-
     // PRODUCT MANAGEMENT
     {
-      title: "Product Management",
-      icon: <BookOpenIcon />,
+  title: "Product Management",
+  icon: <BookOpenIcon />,
+  items: [
+    {
+      title: "In House Products",
+      // icon: <PackageIcon />,
       items: [
-        { title: "In House Products", url: "/products/inhouse" },
-        { title: "Product Gallery", url: "/products/gallery" },
-        { title: "Product Attribute Set", url: "/products/attributes" },
+        {
+  title: "Product List",
+  url: "/dashboard/products/list",
+},
+{
+  title: "Add New Product",
+  url: "/dashboard/products/add",
+},
+{
+  title: "Limited Stocks",
+  url: "/dashboard/products/stocks",
+},
+{
+  title: "Bulk Import",
+  url: "/dashboard/products/import",
+},
+{
+  title: "Product Gallery",
+  url: "/dashboard/products/gallery",
+},
+{
+  title: "Product Attribute Set",
+  url: "/dashboard/products/attributes",
+},
       ],
     },
+    {
+      title: "Product Gallery",
+      icon: <ImageIcon />,
+      url: "/products/gallery",
+    },
+    {
+      title: "Product Attribute Set",
+      icon: <SlidersIcon />,
+      url: "/products/attributes",
+    },
+  ],
+},
 
     // SYSTEM SETTINGS
     {
@@ -136,29 +177,20 @@ const data = {
     {
       name: "Design Engineering",
       url: "#",
-      icon: (
-        <FrameIcon
-        />
-      ),
+      icon: <FrameIcon />,
     },
     {
       name: "Sales & Marketing",
       url: "#",
-      icon: (
-        <PieChartIcon
-        />
-      ),
+      icon: <PieChartIcon />,
     },
     {
       name: "Travel",
       url: "#",
-      icon: (
-        <MapIcon
-        />
-      ),
+      icon: <MapIcon />,
     },
   ],
-}
+};
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
@@ -175,5 +207,5 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
-  )
+  );
 }

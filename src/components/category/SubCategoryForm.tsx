@@ -76,12 +76,12 @@ export default function SubCategoryForm({
       </button>
     </DropdownMenuTrigger>
 
-    <DropdownMenuContent className="w-full rounded-lg border-gray-200 shadow-md">
+    <DropdownMenuContent className="z-50 min-w-[var(--radix-dropdown-menu-trigger-width)] bg-white rounded-lg border border-gray-200 shadow-xl p-1">
       {categories.map((cat) => (
         <DropdownMenuItem
           key={cat.id}
           onClick={() => setCategory(String(cat.id))}
-          className="cursor-pointer"
+          className="cursor-pointer hover:bg-gray-50 focus:bg-gray-100 px-3 py-2 text-sm rounded-md transition-colors"
         >
           {cat.name}
         </DropdownMenuItem>
