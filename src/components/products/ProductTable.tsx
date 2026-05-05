@@ -23,7 +23,6 @@ const products = [
     type: "Physical",
     price: 2999,
     stock: 50,
-    stockStatus: true,
     featured: true,
     status: true,
     image: "https://placehold.co/36x36",
@@ -34,7 +33,6 @@ const products = [
     type: "Digital",
     price: 499,
     stock: 50,
-    stockStatus: true,
     featured: false,
     status: true,
     image: "https://placehold.co/36x36",
@@ -45,7 +43,6 @@ const products = [
     type: "Physical",
     price: 1599,
     stock: 50,
-    stockStatus: false,
     featured: true,
     status: true,
     image: "https://placehold.co/36x36",
@@ -56,7 +53,6 @@ const products = [
     type: "Physical",
     price: 899,
     stock: 50,
-    stockStatus: true,
     featured: false,
     status: true,
     image: "https://placehold.co/36x36",
@@ -67,7 +63,6 @@ const products = [
     type: "Physical",
     price: 799,
     stock: 50,
-    stockStatus: false,
     featured: true,
     status: false,
     image: "https://placehold.co/36x36",
@@ -80,12 +75,6 @@ export default function ProductTable() {
   const toggleFeatured = (id: number) => {
     setProductList((prev) =>
       prev.map((p) => (p.id === id ? { ...p, featured: !p.featured } : p))
-    );
-  };
-
-  const toggleStockStatus = (id: number) => {
-    setProductList((prev) =>
-      prev.map((p) => (p.id === id ? { ...p, stockStatus: !p.stockStatus } : p))
     );
   };
 
@@ -163,16 +152,8 @@ export default function ProductTable() {
                     ₹{p.price.toLocaleString()}
                   </TableCell>
 
-                  <TableCell className="text-center">
-                    <div className="flex flex-col items-center gap-1">
-                      <span className="text-sm">{p.stock}</span>
-                      <Switch
-                        checked={p.stockStatus}
-                        onCheckedChange={() => toggleStockStatus(p.id)}
-                        size="sm"
-                        className="data-[state=checked]:bg-indigo-600"
-                      />
-                    </div>
+                  <TableCell className="text-center text-sm">
+                    {p.stock}
                   </TableCell>
 
                   <TableCell className="text-center">
