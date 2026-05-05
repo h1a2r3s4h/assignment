@@ -37,7 +37,7 @@ export default function CategoryTable({ data }: { data: Category[] }) {
 
   return (
     <div className="w-full">
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-4">
+  <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 w-full">
         <h2 className="text-lg font-semibold mb-4">Category List</h2>
 
         <Table>
