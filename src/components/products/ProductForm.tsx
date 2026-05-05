@@ -1,6 +1,9 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
+import { useEffect, useRef } from "react";
+import "quill/dist/quill.snow.css";
+
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,7 +13,9 @@ import { Switch } from "@/components/ui/switch";
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -42,6 +47,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+
 
 // ─── Section Wrapper ────────────────────────────────────────────────────────
 
@@ -155,143 +161,23 @@ function ImageUploadBox({ hint, tall }: { hint?: string; tall?: boolean }) {
 
 // ─── Rich Text Toolbar ────────────────────────────────────────────────────────
 
-function RichTextToolbar() {
-  const iconBtn =
-    "p-1.5 rounded hover:bg-gray-100 text-gray-500 hover:text-gray-900 transition-colors flex items-center justify-center";
-  return (
-    <div className="border border-gray-200 rounded-t-lg bg-gray-50/30">
-      <div className="flex flex-wrap items-center gap-1.5 px-3 py-2.5 border-b border-gray-200">
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-8 text-[11px] gap-2 px-3 bg-white border-gray-200 font-medium"
-            >
-              Sans Serif <ChevronDown className="w-3 h-3 text-gray-400" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="start" className="z-50 min-w-[150px] bg-white border border-gray-200 rounded-lg shadow-xl p-1">
-            <DropdownMenuItem className="cursor-pointer hover:bg-gray-50 focus:bg-gray-100 px-3 py-2 text-xs rounded-md transition-colors font-sans">
-              Sans Serif
-            </DropdownMenuItem>
-            <DropdownMenuItem className="cursor-pointer hover:bg-gray-50 focus:bg-gray-100 px-3 py-2 text-xs rounded-md transition-colors font-serif">
-              Serif
-            </DropdownMenuItem>
-            <DropdownMenuItem className="cursor-pointer hover:bg-gray-50 focus:bg-gray-100 px-3 py-2 text-xs rounded-md transition-colors font-mono">
-              Monospace
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
 
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-8 text-[11px] gap-2 px-3 bg-white border-gray-200 font-medium"
-            >
-              Normal <ChevronDown className="w-3 h-3 text-gray-400" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="start" className="z-50 min-w-[150px] bg-white border border-gray-200 rounded-lg shadow-xl p-1">
-            <DropdownMenuItem className="cursor-pointer hover:bg-gray-50 focus:bg-gray-100 px-3 py-2 text-xs rounded-md transition-colors font-normal">
-              Normal
-            </DropdownMenuItem>
-            <DropdownMenuItem className="cursor-pointer hover:bg-gray-50 focus:bg-gray-100 px-3 py-2 text-sm rounded-md transition-colors font-bold">
-              Heading 1
-            </DropdownMenuItem>
-            <DropdownMenuItem className="cursor-pointer hover:bg-gray-50 focus:bg-gray-100 px-3 py-2 text-xs rounded-md transition-colors font-bold">
-              Heading 2
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-
-        <div className="w-px h-6 bg-gray-200 mx-1.5" />
-
-        <div className="flex items-center gap-0.5">
-          <button className={iconBtn} title="Bold">
-            <Bold className="w-4 h-4" />
-          </button>
-          <button className={iconBtn} title="Italic">
-            <Italic className="w-4 h-4" />
-          </button>
-          <button className={iconBtn} title="Underline">
-            <Underline className="w-4 h-4" />
-          </button>
-          <button className={iconBtn} title="Strikethrough">
-            <Strikethrough className="w-4 h-4" />
-          </button>
-        </div>
-
-        <div className="w-px h-6 bg-gray-200 mx-1.5" />
-
-        <div className="flex items-center gap-0.5">
-          <button className={iconBtn} title="Quote">
-            <Quote className="w-4 h-4" />
-          </button>
-          <button className={iconBtn} title="Code">
-            <Code className="w-4 h-4" />
-          </button>
-        </div>
-
-        <div className="w-px h-6 bg-gray-200 mx-1.5" />
-
-        <div className="flex items-center gap-0.5">
-          <button className={iconBtn} title="Link">
-            <Link className="w-4 h-4" />
-          </button>
-          <button className={iconBtn} title="Image">
-            <ImageIcon className="w-4 h-4" />
-          </button>
-        </div>
-
-        <div className="w-px h-6 bg-gray-200 mx-1.5" />
-
-        <div className="flex items-center gap-0.5">
-          <button className={iconBtn} title="Align Left">
-            <AlignLeft className="w-4 h-4" />
-          </button>
-          <button className={iconBtn} title="Align Center">
-            <AlignCenter className="w-4 h-4" />
-          </button>
-          <button className={iconBtn} title="Align Right">
-            <AlignRight className="w-4 h-4" />
-          </button>
-        </div>
-
-        <div className="w-px h-6 bg-gray-200 mx-1.5" />
-
-        <div className="flex items-center gap-0.5">
-          <button className={iconBtn} title="Bullet List">
-            <List className="w-4 h-4" />
-          </button>
-          <button className={iconBtn} title="Numbered List">
-            <ListOrdered className="w-4 h-4" />
-          </button>
-        </div>
-      </div>
-      <div className="flex items-center gap-1.5 px-3 py-2 bg-white/40">
-        <button className={iconBtn} title="Subscript">
-          <Subscript className="w-4 h-4" />
-        </button>
-        <button className={iconBtn} title="Superscript">
-          <Superscript className="w-4 h-4" />
-        </button>
-        <button
-          className={`${iconBtn} italic line-through text-[11px] font-bold`}
-          title="Clear Formatting"
-        >
-          T
-        </button>
-      </div>
-    </div>
-  );
-}
 
 // ─── Main Page ────────────────────────────────────────────────────────────────
 
 export default function AddProductPage() {
+  const quillRef = useRef<HTMLDivElement>(null);
+
+useEffect(() => {
+  if (!quillRef.current) return;
+
+  const Quill = require("quill").default;
+
+  new Quill(quillRef.current, {
+    theme: "snow",
+    placeholder: "Type here...",
+  });
+}, []);
   const [tags, setTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState("");
   const [variationEnabled, setVariationEnabled] = useState(false);
@@ -341,10 +227,9 @@ export default function AddProductPage() {
 
               <div>
                 <FieldLabel label="Product Description" />
-                <RichTextToolbar />
-                <div className="border border-t-0 border-gray-200 rounded-b-lg min-h-[380px] px-4 py-3 text-sm text-gray-400 bg-white w-full">
-                  <p className="italic text-gray-300">Type here...</p>
-                </div>
+                <div className="bg-white border border-gray-200 rounded-lg">
+  <div ref={quillRef} className="min-h-[380px]" />
+</div>
               </div>
             </div>
 
@@ -376,38 +261,27 @@ export default function AddProductPage() {
     {/* Row 1 */}
     <div className="grid grid-cols-3 gap-5">
       {/* Product Type (Dropdown Fixed) */}
-      <div>
-        <div className="flex items-center gap-1.5 mb-1.5">
-          <Label className="text-sm font-medium text-gray-800">
-            Product Type <span className="text-red-500">*</span>
-          </Label>
-        </div>
+      <div className="w-full">
+  {/* Label */}
+  <label className="block text-sm font-medium text-gray-800 mb-1.5">
+    Product Type <span className="text-red-500">*</span>
+  </label>
 
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button
-              variant="outline"
-              className="w-full justify-between border-gray-200 h-10 text-gray-800 bg-white hover:bg-gray-50 font-normal shadow-sm"
-            >
-              {productType} <ChevronDown className="w-4 h-4 text-gray-400" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="start" className="z-50 min-w-[160px] bg-white border border-gray-200 rounded-lg shadow-xl p-1">
-            <DropdownMenuItem 
-              className="cursor-pointer hover:bg-gray-50 focus:bg-gray-100 px-3 py-2 text-sm rounded-md transition-colors"
-              onClick={() => setProductType("Physical")}
-            >
-              Physical
-            </DropdownMenuItem>
-            <DropdownMenuItem 
-              className="cursor-pointer hover:bg-gray-50 focus:bg-gray-100 px-3 py-2 text-sm rounded-md transition-colors"
-              onClick={() => setProductType("Digital")}
-            >
-              Digital
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
+  {/* Select */}
+  <Select>
+    <SelectTrigger className="w-full h-11 rounded-lg border border-gray-300 bg-white px-3 text-sm">
+      <SelectValue placeholder="Select product type" />
+    </SelectTrigger>
+
+    <SelectContent>
+      <SelectGroup>
+        <SelectLabel>Product Type </SelectLabel>
+        <SelectItem value="digital">Digital</SelectItem>
+        <SelectItem value="physical">Physical</SelectItem>
+      </SelectGroup>
+    </SelectContent>
+  </Select>
+</div>
 
       {/* Category */}
       <div>
