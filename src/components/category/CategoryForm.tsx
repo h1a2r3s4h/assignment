@@ -1,28 +1,27 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
+import { useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 export default function CategoryForm() {
-  const [preview, setPreview] = useState<string | null>(null)
-  const [name, setName] = useState("")
+  const [preview, setPreview] = useState<string | null>(null);
+  const [name, setName] = useState("");
 
   const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
+    const file = e.target.files?.[0];
     if (file) {
-      setPreview(URL.createObjectURL(file))
+      setPreview(URL.createObjectURL(file));
     }
-  }
+  };
 
   const handleReset = () => {
-    setName("")
-    setPreview(null)
-  }
+    setName("");
+    setPreview(null);
+  };
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 p-8 max-w-5xl mx-auto">
-
+    <div className="w-full bg-white rounded-xl border border-gray-200 p-8">
       {/* TITLE */}
       <h2 className="text-lg font-semibold text-gray-700 mb-8 flex items-center gap-2">
         <span className="text-indigo-600 text-xl">+</span>
@@ -30,7 +29,6 @@ export default function CategoryForm() {
       </h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
-
         {/* LEFT */}
         <div className="space-y-6">
           <div>
@@ -83,7 +81,6 @@ export default function CategoryForm() {
 
         {/* RIGHT */}
         <div className="flex flex-col items-center w-full">
-
           {/* Preview Card */}
           <div className="w-full border border-dashed border-gray-200 rounded-xl bg-gray-50 p-6 flex flex-col items-center">
             <div className="w-44 h-44 rounded-xl border bg-white shadow-sm flex items-center justify-center overflow-hidden">
@@ -100,9 +97,7 @@ export default function CategoryForm() {
               )}
             </div>
 
-            <p className="text-xs text-gray-400 mt-3">
-              Logo Preview
-            </p>
+            <p className="text-xs text-gray-400 mt-3">Logo Preview</p>
           </div>
 
           {/* BUTTON GROUP */}
@@ -122,5 +117,5 @@ export default function CategoryForm() {
         </div>
       </div>
     </div>
-  )
+  );
 }
