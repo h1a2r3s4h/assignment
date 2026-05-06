@@ -19,9 +19,9 @@ import { Eye, Pencil, Trash } from "lucide-react";
 const products = [
   {
     id: 1,
-    name: "Wireless Bluetooth Headphones",
+    name: "Syltherine",
     type: "Physical",
-    price: 2999,
+    price: 29999,
     stock: 50,
     featured: true,
     status: true,
@@ -29,9 +29,9 @@ const products = [
   },
   {
     id: 2,
-    name: "Cotton T-Shirt",
-    type: "Digital",
-    price: 499,
+    name: "Leviosa",
+    type: "Physical",
+    price: 49999,
     stock: 50,
     featured: false,
     status: true,
@@ -39,9 +39,9 @@ const products = [
   },
   {
     id: 3,
-    name: "Garden Tool Set",
+    name: "Lolito",
     type: "Physical",
-    price: 1599,
+    price: 15999,
     stock: 50,
     featured: true,
     status: true,
@@ -49,9 +49,9 @@ const products = [
   },
   {
     id: 4,
-    name: "Yoga Mat Premium",
+    name: "Respira",
     type: "Physical",
-    price: 899,
+    price: 8999,
     stock: 50,
     featured: false,
     status: true,
@@ -59,9 +59,9 @@ const products = [
   },
   {
     id: 5,
-    name: "Programming Guide Book",
+    name: "Grifa",
     type: "Physical",
-    price: 799,
+    price: 7999,
     stock: 50,
     featured: true,
     status: false,
@@ -170,7 +170,7 @@ export default function ProductTable() {
                       <Switch
                         checked={p.status}
                         onCheckedChange={() => toggleStatus(p.id)}
-                        className="data-[state=checked]:bg-gray-900 data-[state=unchecked]:bg-gray-200"
+                        className="data-[state=checked]:bg-gray-900 cursor-pointer data-[state=unchecked]:bg-gray-200"
                       />
                     </div>
                   </TableCell>

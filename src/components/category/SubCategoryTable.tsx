@@ -94,32 +94,32 @@ export default function SubCategoryTable({
 
               {/* STATUS */}
               <TableCell>
-                <div className="flex items-center gap-3">
-                  <Badge
-                    variant="outline"
-                    className={
-                      item.status
-                        ? "text-green-600 border-green-300"
-                        : "text-red-500 border-red-300"
-                    }
-                  >
-                    {item.status ? "Active" : "Inactive"}
-                  </Badge>
-
-                  <Switch
-                    checked={item.status}
-                    onCheckedChange={() => toggleStatus(item.id)}
-                  />
-                </div>
-              </TableCell>
+  <Badge
+    variant="outline"
+    className={`w-[90px] justify-center flex ${
+      item.status
+        ? "text-green-600 border-green-300"
+        : "text-red-500 border-red-300"
+    }`}
+  >
+    {item.status ? "Active" : "Inactive"}
+  </Badge>
+</TableCell>
 
               {/* ACTION */}
               <TableCell>
-                <div className="flex items-center justify-center gap-4">
-                  <Pencil className="w-4 h-4 cursor-pointer text-gray-600" />
-                  <Trash2 className="w-4 h-4 text-red-500 cursor-pointer" />
-                </div>
-              </TableCell>
+  <div className="flex items-center justify-center gap-4">
+    <Pencil className="w-4 h-4 cursor-pointer text-gray-600" />
+
+    <Switch
+  className="cursor-pointer"
+  checked={item.status}
+  onCheckedChange={() => toggleStatus(item.id)}
+/>
+
+    <Trash2 className="w-4 h-4 text-red-500 cursor-pointer" />
+  </div>
+</TableCell>
             </TableRow>
           ))}
         </TableBody>

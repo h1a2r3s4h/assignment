@@ -69,15 +69,15 @@ export default function CategoryTable({ data }: { data: Category[] }) {
 
                 <TableCell>
                   <Badge
-                    variant="outline"
-                    className={
-                      item.status
-                        ? "text-green-600 border-green-300"
-                        : "text-red-500 border-red-300"
-                    }
-                  >
-                    {item.status ? "Active" : "Inactive"}
-                  </Badge>
+  variant="outline"
+  className={`w-[90px] justify-center flex ${
+    item.status
+      ? "text-green-600 border-green-300"
+      : "text-red-500 border-red-300"
+  }`}
+>
+  {item.status ? "Active" : "Inactive"}
+</Badge>
                 </TableCell>
 
                 <TableCell>
@@ -85,6 +85,7 @@ export default function CategoryTable({ data }: { data: Category[] }) {
                     <Pencil className="w-4 h-4 cursor-pointer text-gray-600" />
 
                     <Switch
+                    className="cursor-pointer"
                       checked={item.status}
                       onCheckedChange={() => toggleStatus(item.id)}
                     />

@@ -103,51 +103,43 @@ const data = {
 
     // PRODUCT MANAGEMENT
     {
-  title: "Product Management",
-  icon: <BookOpenIcon />,
-  items: [
-    {
-      title: "In House Products",
-      // icon: <PackageIcon />,
+      title: "Product Management",
+      icon: <BookOpenIcon />,
       items: [
         {
-  title: "Product List",
-  url: "/dashboard/products/list",
-},
-{
-  title: "Add New Product",
-  url: "/dashboard/products/add",
-},
-{
-  title: "Limited Stocks",
-  url: "/dashboard/products/stocks",
-},
-{
-  title: "Bulk Import",
-  url: "/dashboard/products/import",
-},
-{
-  title: "Product Gallery",
-  url: "/dashboard/products/gallery",
-},
-{
-  title: "Product Attribute Set",
-  url: "/dashboard/products/attributes",
-},
+          title: "In House Products",
+          // icon: <PackageIcon />,
+          items: [
+            {
+              title: "Product List",
+              url: "/dashboard/products/list",
+            },
+            {
+              title: "Add New Product",
+              url: "/dashboard/products/add",
+            },
+            {
+              title: "Limited Stocks",
+              url: "/dashboard/products/stocks",
+            },
+            {
+              title: "Bulk Import",
+              url: "/dashboard/products/import",
+            },
+          ],
+        },
+        {
+          title: "Product Gallery",
+          icon: <ImageIcon />,
+          url: "/dashboard/gallery",
+        },
+        {
+          title: "Product Attribute Set",
+          icon: <SlidersIcon />,
+          url: "/dashboard/attributes",
+        },
       ],
     },
-    {
-      title: "Product Gallery",
-      icon: <ImageIcon />,
-      url: "/products/gallery",
-    },
-    {
-      title: "Product Attribute Set",
-      icon: <SlidersIcon />,
-      url: "/products/attributes",
-    },
-  ],
-},
 
     // SYSTEM SETTINGS
     {

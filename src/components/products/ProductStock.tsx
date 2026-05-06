@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
+import { Badge } from "@/components/ui/badge";
 import {
   Table,
   TableBody,
@@ -29,9 +30,9 @@ import {
 const initialProducts = [
   {
     id: 1,
-    name: "Cotton T-Shirt",
+    name: "Lolito",
     image: "/images/cotton-tshirt.jpg",
-    price: 499,
+    price: 49999,
     verifyStatus: "Approved",
     quantity: 3,
     orders: 45,
@@ -39,9 +40,9 @@ const initialProducts = [
   },
   {
     id: 2,
-    name: "Garden Tool Set",
+    name: "Syltherine",
     image: "/images/garden-tool.jpg",
-    price: 1599,
+    price: 159999,
     verifyStatus: "Approved",
     quantity: 0,
     orders: 12,
@@ -180,10 +181,10 @@ export default function ProductList() {
               </TableCell>
 
               <TableCell className="align-middle">
-                <span className="px-3 py-1 text-xs font-semibold text-green-600 border border-green-400 rounded">
-                  {product.verifyStatus}
-                </span>
-              </TableCell>
+  <Badge className="bg-green-100 text-green-700 hover:bg-green-100 border border-green-300">
+    {product.verifyStatus}
+  </Badge>
+</TableCell>
 
               <TableCell className="text-sm font-semibold text-orange-500 align-middle">
                 {product.quantity}
@@ -199,7 +200,7 @@ export default function ProductList() {
                   <Switch
                     checked={product.active}
                     onCheckedChange={() => toggleActive(product.id)}
-                    className="data-[state=checked]:bg-indigo-600"
+                    className=" cursor-pointer "
                   />
                 </div>
               </TableCell>

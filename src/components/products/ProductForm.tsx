@@ -228,7 +228,7 @@ useEffect(() => {
               <div>
                 <FieldLabel label="Product Description" />
                 <div className="bg-white border border-gray-200 rounded-lg">
-  <div ref={quillRef} className="min-h-[380px]" />
+  <div ref={quillRef} className="min-h-[280px]" />
 </div>
               </div>
             </div>
@@ -249,39 +249,36 @@ useEffect(() => {
           </div>
         </Section>
 
-        {/* ── General Setup ── */}
-        {/* ── General Setup ── */}
+        
 {/* ── General Setup ── */}
+
+
 {/* ── General Setup ── */}
 <Section
-  title="General Setup"
+  title=" Setup"
   description="Here you can setup the foundational details required for product creation."
 >
   <div className="space-y-5">
     {/* Row 1 */}
     <div className="grid grid-cols-3 gap-5">
-      {/* Product Type (Dropdown Fixed) */}
+
+      {/* Product Type */}
       <div className="w-full">
-  {/* Label */}
-  <label className="block text-sm font-medium text-gray-800 mb-1.5">
-    Product Type <span className="text-red-500">*</span>
-  </label>
+        <label className="block text-sm font-medium text-gray-800 mb-1.5">
+          Product Type <span className="text-red-500">*</span>
+        </label>
 
-  {/* Select */}
-  <Select>
-    <SelectTrigger className="w-full h-11 rounded-lg border border-gray-300 bg-white px-3 text-sm">
-      <SelectValue placeholder="Select product type" />
-    </SelectTrigger>
+        <Select>
+          <SelectTrigger className="w-full h-11 rounded-lg border border-gray-300 bg-white px-3 text-sm">
+            <SelectValue placeholder="Select product type" />
+          </SelectTrigger>
 
-    <SelectContent>
-      <SelectGroup>
-        <SelectLabel>Product Type </SelectLabel>
-        <SelectItem value="digital">Digital</SelectItem>
-        <SelectItem value="physical">Physical</SelectItem>
-      </SelectGroup>
-    </SelectContent>
-  </Select>
-</div>
+          <SelectContent>
+            <SelectItem value="digital">Digital</SelectItem>
+            <SelectItem value="physical">Physical</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
 
       {/* Category */}
       <div>
@@ -290,38 +287,18 @@ useEffect(() => {
             Category <span className="text-red-500">*</span>
           </Label>
         </div>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button
-              variant="outline"
-              className={`w-full justify-between border-gray-200 h-10 bg-white hover:bg-gray-50 font-normal shadow-sm ${
-                category ? "text-gray-800" : "text-gray-500"
-              }`}
-            >
-              {category || "Select category"} <ChevronDown className="w-4 h-4 text-gray-400" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="start" className="z-50 min-w-[160px] bg-white border border-gray-200 rounded-lg shadow-xl p-1">
-            <DropdownMenuItem 
-              className="cursor-pointer hover:bg-gray-50 focus:bg-gray-100 px-3 py-2 text-sm rounded-md transition-colors"
-              onClick={() => setCategory("Electronics")}
-            >
-              Electronics
-            </DropdownMenuItem>
-            <DropdownMenuItem 
-              className="cursor-pointer hover:bg-gray-50 focus:bg-gray-100 px-3 py-2 text-sm rounded-md transition-colors"
-              onClick={() => setCategory("Clothing")}
-            >
-              Clothing
-            </DropdownMenuItem>
-            <DropdownMenuItem 
-              className="cursor-pointer hover:bg-gray-50 focus:bg-gray-100 px-3 py-2 text-sm rounded-md transition-colors"
-              onClick={() => setCategory("Food")}
-            >
-              Food
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+
+        <Select onValueChange={setCategory}>
+          <SelectTrigger className="w-full h-10 border-gray-200 bg-white text-sm">
+            <SelectValue placeholder="Select category" />
+          </SelectTrigger>
+
+          <SelectContent>
+            <SelectItem value="Electronics">Electronics</SelectItem>
+            <SelectItem value="Clothing">Clothing</SelectItem>
+            <SelectItem value="Food">Food</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
 
       {/* Sub Category */}
@@ -331,37 +308,23 @@ useEffect(() => {
             Sub Category
           </Label>
         </div>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button
-              variant="outline"
-              className={`w-full justify-between border-gray-200 h-10 bg-white hover:bg-gray-50 font-normal shadow-sm ${
-                subCategory ? "text-gray-800" : "text-gray-500"
-              }`}
-            >
-              {subCategory || "Select Sub Category"} <ChevronDown className="w-4 h-4 text-gray-400" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="start" className="z-50 min-w-[160px] bg-white border border-gray-200 rounded-lg shadow-xl p-1">
-            <DropdownMenuItem 
-              className="cursor-pointer hover:bg-gray-50 focus:bg-gray-100 px-3 py-2 text-sm rounded-md transition-colors"
-              onClick={() => setSubCategory("Mobile")}
-            >
-              Mobile
-            </DropdownMenuItem>
-            <DropdownMenuItem 
-              className="cursor-pointer hover:bg-gray-50 focus:bg-gray-100 px-3 py-2 text-sm rounded-md transition-colors"
-              onClick={() => setSubCategory("Laptop")}
-            >
-              Laptop
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+
+        <Select onValueChange={setSubCategory}>
+          <SelectTrigger className="w-full h-10 border-gray-200 bg-white text-sm">
+            <SelectValue placeholder="Select Sub Category" />
+          </SelectTrigger>
+
+          <SelectContent>
+            <SelectItem value="Mobile">Mobile</SelectItem>
+            <SelectItem value="Laptop">Laptop</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
     </div>
 
     {/* Row 2 */}
     <div className="grid grid-cols-3 gap-5">
+
       {/* Brand */}
       <div>
         <div className="flex items-center gap-1.5 mb-1.5">
@@ -369,32 +332,17 @@ useEffect(() => {
             Brand
           </Label>
         </div>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button
-              variant="outline"
-              className={`w-full justify-between border-gray-200 h-10 bg-white hover:bg-gray-50 font-normal shadow-sm ${
-                brand ? "text-gray-800" : "text-gray-500"
-              }`}
-            >
-              {brand || "Select Brand"} <ChevronDown className="w-4 h-4 text-gray-400" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="start" className="z-50 min-w-[160px] bg-white border border-gray-200 rounded-lg shadow-xl p-1">
-            <DropdownMenuItem 
-              className="cursor-pointer hover:bg-gray-50 focus:bg-gray-100 px-3 py-2 text-sm rounded-md transition-colors"
-              onClick={() => setBrand("Samsung")}
-            >
-              Samsung
-            </DropdownMenuItem>
-            <DropdownMenuItem 
-              className="cursor-pointer hover:bg-gray-50 focus:bg-gray-100 px-3 py-2 text-sm rounded-md transition-colors"
-              onClick={() => setBrand("Apple")}
-            >
-              Apple
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+
+        <Select onValueChange={setBrand}>
+          <SelectTrigger className="w-full h-10 border-gray-200 bg-white text-sm">
+            <SelectValue placeholder="Select Brand" />
+          </SelectTrigger>
+
+          <SelectContent>
+            <SelectItem value="Samsung">Samsung</SelectItem>
+            <SelectItem value="Apple">Apple</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
 
       {/* SKU */}
@@ -406,10 +354,12 @@ useEffect(() => {
             </Label>
             <Info className="w-3.5 h-3.5 text-gray-400" />
           </div>
+
           <button className="text-xs text-blue-500 font-medium hover:underline">
             Generate Code
           </button>
         </div>
+
         <Input
           defaultValue="123412"
           className="w-full border-gray-200 text-gray-800 h-10 focus-visible:ring-gray-300"
@@ -423,36 +373,18 @@ useEffect(() => {
             Unit <span className="text-red-500">*</span>
           </Label>
         </div>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button
-              variant="outline"
-              className="w-full justify-between border-gray-200 h-10 text-gray-800 bg-white hover:bg-gray-50 font-normal shadow-sm"
-            >
-              {unit} <ChevronDown className="w-4 h-4 text-gray-400" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="start" className="z-50 min-w-[100px] bg-white border border-gray-200 rounded-lg shadow-xl p-1">
-            <DropdownMenuItem 
-              className="cursor-pointer hover:bg-gray-50 focus:bg-gray-100 px-3 py-2 text-sm rounded-md transition-colors"
-              onClick={() => setUnit("kg")}
-            >
-              kg
-            </DropdownMenuItem>
-            <DropdownMenuItem 
-              className="cursor-pointer hover:bg-gray-50 focus:bg-gray-100 px-3 py-2 text-sm rounded-md transition-colors"
-              onClick={() => setUnit("pcs")}
-            >
-              pcs
-            </DropdownMenuItem>
-            <DropdownMenuItem 
-              className="cursor-pointer hover:bg-gray-50 focus:bg-gray-100 px-3 py-2 text-sm rounded-md transition-colors"
-              onClick={() => setUnit("ltr")}
-            >
-              ltr
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+
+        <Select onValueChange={setUnit}>
+          <SelectTrigger className="w-full h-10 border-gray-200 bg-white text-sm">
+            <SelectValue placeholder="Select Unit" />
+          </SelectTrigger>
+
+          <SelectContent>
+            <SelectItem value="kg">kg</SelectItem>
+            <SelectItem value="pcs">pcs</SelectItem>
+            <SelectItem value="ltr">ltr</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
     </div>
 
@@ -463,6 +395,7 @@ useEffect(() => {
           <Label className="text-sm font-medium text-gray-800">
             Search Tags
           </Label>
+
           <Info className="w-3.5 h-3.5 text-gray-400" />
         </div>
 
@@ -474,9 +407,10 @@ useEffect(() => {
               className="bg-gray-100 text-gray-700 text-xs flex items-center gap-1 pl-2 pr-1"
             >
               {tag}
+
               <button
                 onClick={() => removeTag(tag)}
-                className="hover:text-gray-900"
+                className="hover:text-gray-900 cursor-pointer"
               >
                 <X className="w-3 h-3" />
               </button>
@@ -601,28 +535,7 @@ useEffect(() => {
           </div>
         </Section>
 
-        {/* ── Product Variation Setup ── */}
-        <Section
-          title="Product Variation Setup"
-          description="Enable and manage different variations of a product."
-        >
-          <div className="flex items-center justify-between">
-            <span className="text-sm text-gray-500">
-              Enable product variations
-            </span>
-            <Switch
-              checked={variationEnabled}
-              onCheckedChange={setVariationEnabled}
-              className="data-[state=checked]:bg-indigo-600"
-            />
-          </div>
-
-          {variationEnabled && (
-            <div className="mt-4 p-4 bg-gray-50 border border-gray-200 rounded-md text-sm text-gray-500 text-center">
-              Variation options will appear here once enabled.
-            </div>
-          )}
-        </Section>
+        
 
         {/* ── Product Additional Images ── */}
         <Section

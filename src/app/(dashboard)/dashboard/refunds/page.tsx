@@ -17,7 +17,7 @@ export default async function RefundPage({
   const currentStatus = status ?? "all"
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 p-6 bg-muted/40 min-h-screen">
       <RefundStats />
       <RefundTable status={currentStatus} />
     </div>
