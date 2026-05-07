@@ -148,18 +148,39 @@ const data = {
       items: [
         {
           title: "Business Setup",
+          icon: <PackageIcon />,
           items: [
-            { title: "Business Settings", url: "/settings/business" },
-            { title: "System Setup", url: "/settings/system" },
+            {
+              title: "Business Settings",
+              url: "/dashboard/settings/business-settings",
+            },
+            {
+              title: "System Setup",
+              url: "/dashboard/settings/system",
+            },
           ],
         },
+
         {
           title: "Pages & Media",
+          icon: <ImageIcon />,
           items: [
-            { title: "Business Pages", url: "/pages/business" },
-            { title: "Social Media Links", url: "/pages/social" },
-            { title: "Site Settings", url: "/pages/site" },
-            { title: "Email Templates", url: "/pages/email" },
+            {
+              title: "Business Pages",
+              url: "/dashboard/settings/pages-media/business-pages",
+            },
+            {
+              title: "Social Media Links",
+              url: "/dashboard/settings/pages-media/social-media-links",
+            },
+            {
+              title: "Site Settings",
+              url: "/dashboard/settings/pages-media/site-settings",
+            },
+            {
+              title: "Email Templates",
+              url: "/dashboard/settings/pages-media/email-templates",
+            },
           ],
         },
       ],
