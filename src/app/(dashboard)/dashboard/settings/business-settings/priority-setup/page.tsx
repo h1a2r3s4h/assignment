@@ -4,6 +4,7 @@ import SettingsTabs from "@/components/settings/shared/SettingsTabs"
 
 export default function PrioritySetupPage() {
   return (
+    <div className="p-6 space-y-6 bg-muted/40 min-h-screen">
 
 
     <div className="space-y-6 p-4">
@@ -82,6 +83,7 @@ export default function PrioritySetupPage() {
         title="Products list (Search Bar)"
         description="The product list (Search Bar) is the list of those products which appear during search bsed on product availability."
       />
+    </div>
     </div>
   )
 }

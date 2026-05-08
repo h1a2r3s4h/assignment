@@ -10,8 +10,8 @@ export default async function OrdersPage({
   const currentStatus = status ?? "all"
 
   return (
-    <div className="p-6  min-h-screen">
-      <div className="max-w-7xl mx-auto space-y-6">
+    <div className="p-6 space-y-6 bg-muted/40 min-h-screen">
+      <div className="space-y-6">
         
         <OrdersStats />
         
