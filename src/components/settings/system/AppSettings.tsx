@@ -1,14 +1,29 @@
+"use client";
+
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
-import { Save } from "lucide-react"
+import { Save, Loader2 } from "lucide-react"
 import SettingsHeader from "../shared/SettingsHeader"
 import SettingsTabs from "../shared/SettingsTabs"
+import { useState } from "react"
 
 export default function AppVersionControl() {
+  const [loading, setLoading] = useState(false);
+
+  const handleSave = async () => {
+    setLoading(true);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      // logic
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-   <div className="space-y-4">
+    <div className="space-y-4">
     
         <SettingsHeader title="System Setup" />
     
@@ -104,8 +119,12 @@ export default function AppVersionControl() {
             Reset
           </Button>
 
-          <Button className="gap-2">
-            <Save className="h-4 w-4" />
+          <Button className="gap-2" onClick={handleSave} disabled={loading}>
+            {loading ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Save className="h-4 w-4" />
+            )}
             Save Information
           </Button>
         </div>

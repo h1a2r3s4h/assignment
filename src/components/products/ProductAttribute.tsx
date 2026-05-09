@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { RotateCcw, Pencil, Trash2, Search } from "lucide-react"
+import { RotateCcw, Pencil, Trash2, Search, Loader2 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -17,14 +17,36 @@ import {
 
 export default function ProductAttributeSetup() {
   const [attributeName, setAttributeName] = useState("")
+  const [loading, setLoading] = useState(false)
+  const [loadingId, setLoadingId] = useState<number | null>(null)
 
   const attributes = [
     { id: 1, name: "size" },
     { id: 2, name: "type" },
   ]
 
+  const handleSubmit = async () => {
+    setLoading(true)
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 2000))
+      // logic
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleDelete = async (id: number) => {
+    setLoadingId(id)
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 2000))
+      // logic
+    } finally {
+      setLoadingId(null)
+    }
+  }
+
   return (
-    <div className="min-h-screen p-3 md:p-4 space-y-4">
+    <div className="min-h-screen space-y-6">
       {/* Heading */}
       <div>
         <h1 className="text-[28px] font-bold tracking-tight text-[#111827]">
@@ -34,7 +56,7 @@ export default function ProductAttributeSetup() {
 
       {/* Form Card */}
       <Card className="rounded-2xl border border-gray-200 shadow-sm bg-white">
-        <CardContent className="p-4 md:p-5">
+        <CardContent className="md:p-5">
           <div className="space-y-6">
             {/* Input */}
             <div className="space-y-2">
@@ -59,12 +81,18 @@ export default function ProductAttributeSetup() {
               <Button
                 variant="secondary"
                 className="h-9 px-5 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 text-[13px] font-medium shadow-none"
+                onClick={() => setAttributeName("")}
               >
                 <RotateCcw className="w-4 h-4 mr-2" />
                 Reset
               </Button>
 
-              <Button className="h-9 px-6 rounded-lg bg-[#4f46e5] hover:bg-[#4338ca] text-white text-[13px] font-medium">
+              <Button
+                className="h-9 px-6 rounded-lg bg-[#4f46e5] hover:bg-[#4338ca] text-white text-[13px] font-medium"
+                onClick={handleSubmit}
+                disabled={!attributeName || loading}
+              >
+                {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 Submit
               </Button>
             </div>
@@ -138,9 +166,19 @@ export default function ProductAttributeSetup() {
                       </button>
 
                       {/* Delete */}
-                      <button className="flex items-center justify-center w-9 h-9 rounded-lg border border-red-200 hover:bg-red-50 transition cursor-pointer">
-                        <Trash2 className="w-4 h-4 text-red-500" />
-                      </button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="w-9 h-9 rounded-lg border border-red-200 hover:bg-red-50 transition cursor-pointer"
+                        disabled={loadingId === item.id}
+                        onClick={() => handleDelete(item.id)}
+                      >
+                        {loadingId === item.id ? (
+                          <Loader2 className="w-4 h-4 animate-spin text-red-500" />
+                        ) : (
+                          <Trash2 className="w-4 h-4 text-red-500" />
+                        )}
+                      </Button>
                     </div>
                   </TableCell>
                 </TableRow>

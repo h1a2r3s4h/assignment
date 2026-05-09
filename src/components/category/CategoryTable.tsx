@@ -13,37 +13,54 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+import type { CategoryType } from "@/app/(dashboard)/dashboard/categories/page";
 
-type Category = {
-  id: number;
-  name: string;
-  status: boolean;
-};
+export default function CategoryTable({
+  data,
+  onToggleStatus,
+}: {
+  data: CategoryType[];
+  onToggleStatus: (id: number) => void;
+}) {
+  const [page, setPage] = useState(1);
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
 
-export default function CategoryTable({ data }: { data: Category[] }) {
-  const [tableData, setTableData] = useState<Category[]>([]);
+ const ITEMS_PER_PAGE = 10;
+
+  const sortedData = [...data].sort((a, b) =>
+    sortOrder === "desc" ? b.id - a.id : a.id - b.id
+  );
+
+  const totalPages = Math.ceil(sortedData.length / ITEMS_PER_PAGE);
+
+  const paginatedData = sortedData.slice(
+    (page - 1) * ITEMS_PER_PAGE,
+    page * ITEMS_PER_PAGE
+  );
 
   useEffect(() => {
-    setTableData(data);
-  }, [data]);
-
-  const toggleStatus = (id: number) => {
-    setTableData((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, status: !item.status } : item,
-      ),
-    );
-  };
+    if (page > totalPages) {
+      setPage(totalPages || 1);
+    }
+  }, [data, page, totalPages]);
 
   return (
     <div className="w-full">
-  <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 w-full">
+      <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 w-full">
         <h2 className="text-lg font-semibold mb-4">Category List</h2>
 
         <Table>
           <TableHeader>
             <TableRow className="bg-gray-50 border-b border-gray-200">
-              <TableHead>ID</TableHead>
+              <TableHead
+                className="cursor-pointer select-none"
+                onClick={() => {
+                  setSortOrder((prev) => (prev === "desc" ? "asc" : "desc"));
+                  setPage(1);
+                }}
+              >
+                ID {sortOrder === "desc" ? "↓" : "↑"}
+              </TableHead>
               <TableHead>LOGO</TableHead>
               <TableHead>CATEGORY NAME</TableHead>
               <TableHead>STATUS</TableHead>
@@ -52,7 +69,7 @@ export default function CategoryTable({ data }: { data: Category[] }) {
           </TableHeader>
 
           <TableBody>
-            {tableData.map((item) => (
+            {paginatedData.map((item) => (
               <TableRow
                 key={item.id}
                 className="hover:bg-gray-50 border-b border-gray-200 last:border-0"
@@ -60,8 +77,25 @@ export default function CategoryTable({ data }: { data: Category[] }) {
                 <TableCell>{item.id}</TableCell>
 
                 <TableCell>
-                  <div className="w-10 h-10 rounded-md border bg-gray-100 flex items-center justify-center">
-                    📦
+                  <div className="flex items-center gap-2">
+                    {item.images.slice(0, 3).map((img, index) => (
+                      <div
+                        key={index}
+                        className="w-10 h-10 rounded-md border bg-gray-100 overflow-hidden"
+                      >
+                        <img
+                          src={img.url}
+                          alt={img.name}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    ))}
+
+                    {item.images.length > 3 && (
+                      <span className="text-xs text-gray-500">
+                        +{item.images.length - 3}
+                      </span>
+                    )}
                   </div>
                 </TableCell>
 
@@ -69,15 +103,15 @@ export default function CategoryTable({ data }: { data: Category[] }) {
 
                 <TableCell>
                   <Badge
-  variant="outline"
-  className={`w-[90px] justify-center flex ${
-    item.status
-      ? "text-green-600 border-green-300"
-      : "text-red-500 border-red-300"
-  }`}
->
-  {item.status ? "Active" : "Inactive"}
-</Badge>
+                    variant="outline"
+                    className={`w-[90px] justify-center flex ${
+                      item.status
+                        ? "text-green-600 border-green-300"
+                        : "text-red-500 border-red-300"
+                    }`}
+                  >
+                    {item.status ? "Active" : "Inactive"}
+                  </Badge>
                 </TableCell>
 
                 <TableCell>
@@ -85,9 +119,9 @@ export default function CategoryTable({ data }: { data: Category[] }) {
                     <Pencil className="w-4 h-4 cursor-pointer text-gray-600" />
 
                     <Switch
-                    className="cursor-pointer"
+                      className="cursor-pointer"
                       checked={item.status}
-                      onCheckedChange={() => toggleStatus(item.id)}
+                      onCheckedChange={() => onToggleStatus(item.id)}
                     />
 
                     <Trash className="w-4 h-4 text-red-500 cursor-pointer" />
@@ -101,19 +135,34 @@ export default function CategoryTable({ data }: { data: Category[] }) {
         {/* Footer */}
         <div className="flex items-center justify-between mt-4 text-sm text-gray-500">
           <p>
-            Showing 1 to {tableData.length} of {tableData.length} categories
+            {data.length === 0
+              ? "No categories found"
+              : `Showing ${(page - 1) * ITEMS_PER_PAGE + 1} to ${Math.min(
+                  page * ITEMS_PER_PAGE,
+                  sortedData.length
+                )} of ${sortedData.length} categories`}
           </p>
 
           <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm">
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={page === 1}
+              onClick={() => setPage((prev) => prev - 1)}
+            >
               Previous
             </Button>
 
             <Button size="sm" className="bg-indigo-600 text-white">
-              1
+              {page}
             </Button>
 
-            <Button variant="outline" size="sm">
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={page === totalPages || totalPages === 0}
+              onClick={() => setPage((prev) => prev + 1)}
+            >
               Next
             </Button>
           </div>

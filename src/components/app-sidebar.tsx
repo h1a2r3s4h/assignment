@@ -112,31 +112,31 @@ const data = {
           items: [
             {
               title: "Product List",
-              url: "/dashboard/products/list",
+              url: "/dashboard/products/product-list",
             },
             {
               title: "Add New Product",
-              url: "/dashboard/products/add",
+              url: "/dashboard/products/add-new-product",
             },
             {
               title: "Limited Stocks",
-              url: "/dashboard/products/stocks",
+              url: "/dashboard/products/limited-stocks",
             },
             {
               title: "Bulk Import",
-              url: "/dashboard/products/import",
+              url: "/dashboard/products/bulk-import",
             },
           ],
         },
         {
           title: "Product Gallery",
           icon: <ImageIcon />,
-          url: "/dashboard/gallery",
+          url: "/dashboard/product-gallery",
         },
         {
           title: "Product Attribute Set",
           icon: <SlidersIcon />,
-          url: "/dashboard/attributes",
+          url: "/dashboard/product-attribute-set",
         },
       ],
     },
@@ -156,7 +156,7 @@ const data = {
             },
             {
               title: "System Setup",
-              url: "/dashboard/settings/system",
+              url: "/dashboard/settings/system-setup",
             },
           ],
         },
@@ -186,23 +186,7 @@ const data = {
       ],
     },
   ],
-  projects: [
-    {
-      name: "Design Engineering",
-      url: "#",
-      icon: <FrameIcon />,
-    },
-    {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: <PieChartIcon />,
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: <MapIcon />,
-    },
-  ],
+  // 
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -213,7 +197,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
+        {/* <NavProjects projects={data.projects} /> */}
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Plus, Pencil, Trash2, ChevronLeft, ChevronRight } from "lucide-react";
+import { Plus, Pencil, Trash2, ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -45,6 +45,31 @@ const sliderData = [
 export default function BannerSliderPage() {
   const [banners, setBanners] = useState(bannerData);
   const [sliders, setSliders] = useState(sliderData);
+  const [loadingType, setLoadingType] = useState<string | null>(null);
+  const [loadingId, setLoadingId] = useState<number | null>(null);
+
+  const handleAdd = async (type: string) => {
+    setLoadingType(type);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      // logic
+    } finally {
+      setLoadingType(null);
+    }
+  };
+
+  const handleDelete = async (id: number, type: string) => {
+    setLoadingId(id);
+    setLoadingType(type);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      // logic
+    } finally {
+      setLoadingId(null);
+      setLoadingType(null);
+    }
+  };
+
   return (
     <div className="space-y-5">
       <SettingsHeader title="Site Settings" />
@@ -79,8 +104,17 @@ export default function BannerSliderPage() {
       <CardHeader className="flex flex-row items-center justify-between p-4">
         <h2 className="text-xl font-semibold">Banner Table</h2>
 
-        <Button size="sm" className="cursor-pointe">
-          <Plus className="h-4 w-4" />
+        <Button
+          size="sm"
+          className="cursor-pointer"
+          disabled={loadingType === "add_banner"}
+          onClick={() => handleAdd("add_banner")}
+        >
+          {loadingType === "add_banner" ? (
+            <Loader2 className="h-4 w-4 animate-spin" />
+          ) : (
+            <Plus className="h-4 w-4" />
+          )}
           Add Banner
         </Button>
       </CardHeader>
@@ -140,8 +174,18 @@ export default function BannerSliderPage() {
                       <Pencil className="h-4 w-4 text-blue-600" />
                     </Button>
 
-                    <Button variant="ghost" size="icon" className="cursor-pointer">
-                      <Trash2 className="h-4 w-4 text-red-500" />
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="cursor-pointer"
+                      disabled={loadingId === item.id && loadingType === "del_banner"}
+                      onClick={() => handleDelete(item.id, "del_banner")}
+                    >
+                      {loadingId === item.id && loadingType === "del_banner" ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : (
+                        <Trash2 className="h-4 w-4 text-red-500" />
+                      )}
                     </Button>
                   </div>
                 </TableCell>
@@ -168,8 +212,17 @@ export default function BannerSliderPage() {
       <CardHeader className="flex flex-row items-center justify-between p-4">
         <h2 className="text-xl font-semibold">Slider Table</h2>
 
-        <Button size="sm" className="cursor-pointer">
-          <Plus className="h-4 w-4" />
+        <Button
+          size="sm"
+          className="cursor-pointer"
+          disabled={loadingType === "add_slider"}
+          onClick={() => handleAdd("add_slider")}
+        >
+          {loadingType === "add_slider" ? (
+            <Loader2 className="h-4 w-4 animate-spin" />
+          ) : (
+            <Plus className="h-4 w-4" />
+          )}
           Add Slider
         </Button>
       </CardHeader>
@@ -229,8 +282,18 @@ export default function BannerSliderPage() {
                       <Pencil className="h-4 w-4  text-blue-600" />
                     </Button>
 
-                    <Button variant="ghost" size="icon" className="cursor-pointer">
-                      <Trash2 className="h-4 w-4  text-red-500" />
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="cursor-pointer"
+                      disabled={loadingId === item.id && loadingType === "del_slider"}
+                      onClick={() => handleDelete(item.id, "del_slider")}
+                    >
+                      {loadingId === item.id && loadingType === "del_slider" ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : (
+                        <Trash2 className="h-4 w-4 text-red-500" />
+                      )}
                     </Button>
                   </div>
                 </TableCell>

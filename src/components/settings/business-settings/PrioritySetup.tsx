@@ -34,7 +34,7 @@ export default function PrioritySetupCard({
   const [customSort, setCustomSort] = useState(showAdvanced);
 
   return (
-    <Card className="overflow-hidden rounded-2xl border border-gray-200 shadow-sm py-0">
+    <Card className="overflow-hidden rounded-2xl border border-gray-200 shadow-sm">
       <CardContent className="p-0 h-full">
         <div className="flex h-full min-h-[280px] items-stretch">
           <div className="flex-1 border-r border-gray-200 p-5">
@@ -113,7 +113,7 @@ export default function PrioritySetupCard({
                         </div>
                       )}
 
-                      <RadioGroup defaultValue="latest" className="space-y-5">
+                      <RadioGroup defaultValue="latest">
                         {[
                           "Sort by latest created",
                           "Sort by first created",

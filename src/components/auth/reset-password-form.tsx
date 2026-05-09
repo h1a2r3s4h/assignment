@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
+import { Loader2 } from "lucide-react";
 
 export default function ResetPasswordForm() {
   const router = useRouter();
@@ -13,9 +14,12 @@ export default function ResetPasswordForm() {
   const email = searchParams.get("email"); // ✅ GET EMAIL
 
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleReset = async () => {
+    setLoading(true);
     try {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/auth/reset-password`,
         {
@@ -40,6 +44,8 @@ export default function ResetPasswordForm() {
       }
     } catch (err) {
       alert("Something went wrong");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -60,7 +66,9 @@ export default function ResetPasswordForm() {
         <Button
           className="w-full bg-black text-white hover:bg-gray-800 cursor-pointer"
           onClick={handleReset}
+          disabled={!password || loading}
         >
+          {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           Reset Password
         </Button>
       </CardContent>

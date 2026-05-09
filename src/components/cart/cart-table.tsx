@@ -1,14 +1,16 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
-import { Trash2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Loader2, Trash2 } from "lucide-react";
 import { useCart } from "@/context/cart-context";
 import { useEffect, useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function CartTable() {
   const { cart, updateQty, removeFromCart } = useCart();
   const [mounted, setMounted] = useState(false);
+  const [loadingId, setLoadingId] = useState<number | null>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -19,6 +21,16 @@ export default function CartTable() {
   }, []);
 
   const subtotal = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
+
+  const handleDelete = async (id: number) => {
+    setLoadingId(id);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      removeFromCart(id);
+    } finally {
+      setLoadingId(null);
+    }
+  };
 
   if (!mounted) {
     return (
@@ -135,11 +147,19 @@ export default function CartTable() {
                       Rs. {item.price * item.qty}
                     </p>
 
-                    <Trash2
-                      size={22}
-                      onClick={() => removeFromCart(item.id)}
-                      className="text-yellow-700 cursor-pointer ml-8"
-                    />
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      disabled={loadingId === item.id}
+                      onClick={() => handleDelete(item.id)}
+                      className="ml-8 cursor-pointer hover:bg-transparent"
+                    >
+                      {loadingId === item.id ? (
+                        <Loader2 size={22} className="text-yellow-700 animate-spin" />
+                      ) : (
+                        <Trash2 size={22} className="text-yellow-700" />
+                      )}
+                    </Button>
                   </div>
                 </div>
               ))

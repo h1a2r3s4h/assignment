@@ -40,6 +40,7 @@ import {
   X,
   Info,
   ChevronDown,
+  Loader2,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -193,6 +194,17 @@ useEffect(() => {
   const [currentStockQty, setCurrentStockQty] = useState("0");
   const [discountAmount, setDiscountAmount] = useState("0");
   const [shippingCost, setShippingCost] = useState("0");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async () => {
+    setLoading(true);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      // existing logic
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleTagKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && tagInput.trim()) {
@@ -269,13 +281,13 @@ useEffect(() => {
         </label>
 
         <Select>
-          <SelectTrigger className="w-full h-11 rounded-lg border border-gray-300 bg-white px-3 text-sm">
+          <SelectTrigger className="w-full h-11 rounded-lg border border-gray-300 bg-white px-3 text-sm cursor-pointer">
             <SelectValue placeholder="Select product type" />
           </SelectTrigger>
 
           <SelectContent>
-            <SelectItem value="digital">Digital</SelectItem>
-            <SelectItem value="physical">Physical</SelectItem>
+            <SelectItem value="digital" className="cursor-pointer">Digital</SelectItem>
+            <SelectItem value="physical" className="cursor-pointer">Physical</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -289,14 +301,14 @@ useEffect(() => {
         </div>
 
         <Select onValueChange={setCategory}>
-          <SelectTrigger className="w-full h-10 border-gray-200 bg-white text-sm">
+          <SelectTrigger className="w-full h-10 border-gray-200 bg-white text-sm cursor-pointer">
             <SelectValue placeholder="Select category" />
           </SelectTrigger>
 
           <SelectContent>
-            <SelectItem value="Electronics">Electronics</SelectItem>
-            <SelectItem value="Clothing">Clothing</SelectItem>
-            <SelectItem value="Food">Food</SelectItem>
+            <SelectItem value="Electronics" className="cursor-pointer">Electronics</SelectItem>
+            <SelectItem value="Clothing" className="cursor-pointer">Clothing</SelectItem>
+            <SelectItem value="Food" className="cursor-pointer">Food</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -310,13 +322,13 @@ useEffect(() => {
         </div>
 
         <Select onValueChange={setSubCategory}>
-          <SelectTrigger className="w-full h-10 border-gray-200 bg-white text-sm">
+          <SelectTrigger className="w-full h-10 border-gray-200 bg-white text-sm cursor-pointer">
             <SelectValue placeholder="Select Sub Category" />
           </SelectTrigger>
 
           <SelectContent>
-            <SelectItem value="Mobile">Mobile</SelectItem>
-            <SelectItem value="Laptop">Laptop</SelectItem>
+            <SelectItem value="Mobile" className="cursor-pointer">Mobile</SelectItem>
+            <SelectItem value="Laptop" className="cursor-pointer">Laptop</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -334,13 +346,13 @@ useEffect(() => {
         </div>
 
         <Select onValueChange={setBrand}>
-          <SelectTrigger className="w-full h-10 border-gray-200 bg-white text-sm">
+          <SelectTrigger className="w-full h-10 border-gray-200 bg-white text-sm cursor-pointer">
             <SelectValue placeholder="Select Brand" />
           </SelectTrigger>
 
           <SelectContent>
-            <SelectItem value="Samsung">Samsung</SelectItem>
-            <SelectItem value="Apple">Apple</SelectItem>
+            <SelectItem value="Samsung" className="cursor-pointer">Samsung</SelectItem>
+            <SelectItem value="Apple" className="cursor-pointer">Apple</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -375,14 +387,14 @@ useEffect(() => {
         </div>
 
         <Select onValueChange={setUnit}>
-          <SelectTrigger className="w-full h-10 border-gray-200 bg-white text-sm">
+          <SelectTrigger className="w-full h-10 border-gray-200 bg-white text-sm cursor-pointer">
             <SelectValue placeholder="Select Unit" />
           </SelectTrigger>
 
           <SelectContent>
-            <SelectItem value="kg">kg</SelectItem>
-            <SelectItem value="pcs">pcs</SelectItem>
-            <SelectItem value="ltr">ltr</SelectItem>
+            <SelectItem value="kg" className="cursor-pointer">kg</SelectItem>
+            <SelectItem value="pcs" className="cursor-pointer">pcs</SelectItem>
+            <SelectItem value="ltr" className="cursor-pointer">ltr</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -485,7 +497,7 @@ useEffect(() => {
                   <DropdownMenuTrigger asChild>
                     <Button
                       variant="ghost"
-                      className="h-full px-3 text-sm text-gray-600 rounded-none hover:bg-gray-50  items-center gap-1.5 font-normal"
+                      className="h-full px-3 text-sm text-gray-600 rounded-none hover:bg-gray-50  items-center gap-1.5 font-normal cursor-pointer"
                     >
                       {discountType === "flat" ? "Flat" : "Percent"}
                       <ChevronDown className="w-3.5 h-3.5 text-gray-400" />
@@ -528,7 +540,7 @@ useEffect(() => {
                 <Switch
                   checked={shippingMultiply}
                   onCheckedChange={setShippingMultiply}
-                  className="data-[state=checked]:bg-indigo-600 scale-90"
+                  className="data-[state=checked]:bg-indigo-600 scale-90 cursor-pointer"
                 />
               </div>
             </div>
@@ -603,11 +615,16 @@ useEffect(() => {
         <div className="flex justify-end gap-3 pb-4">
           <Button
             variant="outline"
-            className="border-gray-200 text-gray-700 hover:bg-gray-50 px-6"
+            className="border-gray-200 text-gray-700 hover:bg-gray-50 px-6 cursor-pointer"
           >
             Reset
           </Button>
-          <Button className="bg-indigo-600 hover:bg-indigo-700 text-white px-6">
+          <Button
+            className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 cursor-pointer"
+            onClick={handleSubmit}
+            disabled={loading}
+          >
+            {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             Submit Product
           </Button>
         </div>

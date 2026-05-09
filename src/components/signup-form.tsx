@@ -14,6 +14,8 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 
+import { Loader2 } from "lucide-react";
+
 export function SignupForm({
   className,
   ...props
@@ -23,6 +25,8 @@ export function SignupForm({
 const [email, setEmail] = useState("");
 const [password, setPassword] = useState("");
 const [confirmPassword, setConfirmPassword] = useState("");
+const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setMounted(true);
@@ -106,7 +110,9 @@ const [confirmPassword, setConfirmPassword] = useState("");
       return;
     }
 
+    setLoading(true);
     try {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
         {
@@ -130,6 +136,8 @@ const [confirmPassword, setConfirmPassword] = useState("");
     } catch (err) {
       console.error(err);
       alert("Something went wrong");
+    } finally {
+      setLoading(false);
     }
   }}
 >
@@ -190,8 +198,10 @@ const [confirmPassword, setConfirmPassword] = useState("");
               <Field>
                 <Button
                   type="submit"
-                  className="w-full h-11 cursor-pointer text-base font-medium rounded-md bg-black text-white hover:bg-black/90"
+                  disabled={!email || !password || !confirmPassword || loading}
+                  className="w-full h-11 cursor-pointer text-base font-medium rounded-md bg-black text-white hover:bg-black/90 disabled:opacity-50"
                 >
+                  {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                   Create Account
                 </Button>
               </Field>

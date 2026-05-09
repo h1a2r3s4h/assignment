@@ -68,7 +68,7 @@ export default function ProductTabs() {
           <button
             key={tab.id}
             onClick={() => setActive(tab.id)}
-            className={`relative pb-3 text-sm transition 
+            className={`relative pb-3 text-sm transition cursor-pointer
               ${
                 active === tab.id ? "text-black font-semibold" : "text-gray-400"
               }`}

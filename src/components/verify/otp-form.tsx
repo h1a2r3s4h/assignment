@@ -19,6 +19,7 @@ import {
 
 export default function OTPForm() {
   const [otp, setOtp] = useState("")
+  const [loading, setLoading] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
 
@@ -26,7 +27,9 @@ export default function OTPForm() {
   const type = searchParams.get("type") || "login";
 
   const handleVerify = async () => {
+    setLoading(true)
     try {
+      await new Promise((resolve) => setTimeout(resolve, 2000))
       const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/auth/verify-otp`, {
         method: "POST",
@@ -51,6 +54,8 @@ export default function OTPForm() {
       }
     } catch (err) {
       alert("Something went wrong")
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -76,7 +81,7 @@ export default function OTPForm() {
                 Verification Code
               </FieldLabel>
 
-              <button className="flex items-center text-xs text-black hover:text-black">
+              <button className="flex items-center text-xs text-black hover:text-black cursor-pointer">
                 <RefreshCwIcon className="h-4 w-4 mr-1" />
                 Resend
               </button>
@@ -112,8 +117,10 @@ export default function OTPForm() {
         <CardFooter className="flex cursor-pointer flex-col gap-4">
           <Button
             onClick={handleVerify}
+            disabled={otp.length !== 6 || loading}
             className="w-full cursor-pointer rounded-lg py-5 bg-black text-white hover:bg-black"
           >
+            {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             Verify
           </Button>
 

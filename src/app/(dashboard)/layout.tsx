@@ -1,5 +1,10 @@
+"use client"
+
+import { usePathname } from "next/navigation"
 import { Suspense } from "react"
+
 import { AppSidebar } from "@/components/app-sidebar"
+
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -8,7 +13,9 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
+
 import { Separator } from "@/components/ui/separator"
+
 import {
   SidebarInset,
   SidebarProvider,
@@ -20,10 +27,23 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode
 }) {
+  const pathname = usePathname()
+
+  // get last part of url
+  const pageName =
+    pathname.split("/").filter(Boolean).pop() || "dashboard"
+
+  // capitalize first letter
+ const formattedPageName = pageName
+  .split("-")
+  .map(
+    (word) =>
+      word.charAt(0).toUpperCase() + word.slice(1)
+  )
+  .join(" ")
+
   return (
     <SidebarProvider>
-
-      {/* ✅ FIX HERE */}
       <Suspense fallback={<div className="w-64" />}>
         <AppSidebar />
       </Suspense>
@@ -39,12 +59,16 @@ export default function DashboardLayout({
             <BreadcrumbList>
               <BreadcrumbItem className="hidden md:block">
                 <BreadcrumbLink href="#">
-                  Dashboard
+                  Admin
                 </BreadcrumbLink>
               </BreadcrumbItem>
+
               <BreadcrumbSeparator className="hidden md:block" />
+
               <BreadcrumbItem>
-                <BreadcrumbPage>Page</BreadcrumbPage>
+                <BreadcrumbPage>
+                  {formattedPageName}
+                </BreadcrumbPage>
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>

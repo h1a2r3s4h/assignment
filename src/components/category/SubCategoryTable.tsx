@@ -1,7 +1,12 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Pencil, Trash2 } from "lucide-react"
+import { useMemo, useState } from "react";
+import {
+  Pencil,
+  Trash2,
+  ArrowUpDown,
+} from "lucide-react";
+
 import {
   Table,
   TableBody,
@@ -9,41 +14,49 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Switch } from "@/components/ui/switch"
+} from "@/components/ui/table";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 type SubCategory = {
-  id: number
-  name: string
-  category: string
-  status?: boolean
-}
+  id: number;
+  name: string;
+  category: string;
+};
 
 export default function SubCategoryTable({
-  data: initialData,
+  data,
+  onDelete,
+  onEdit,
 }: {
-  data: SubCategory[]
+  data: SubCategory[];
+  onDelete: (id: number) => void;
+  onEdit: (item: SubCategory) => void;
 }) {
-  const [subCategories, setSubCategories] = useState(
-    initialData.map((item) => ({
-      ...item,
-      status: item.status ?? true,
-    }))
-  )
+  const [sortAsc, setSortAsc] = useState(true);
+  const [page, setPage] = useState(1);
 
-  const toggleStatus = (id: number) => {
-    setSubCategories((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, status: !item.status } : item
-      )
-    )
-  }
+  const ITEMS_PER_PAGE = 10;
+
+  // SORT BY ID
+  const sortedData = useMemo(() => {
+    return [...data].sort((a, b) =>
+      sortAsc ? a.id - b.id : b.id - a.id
+    );
+  }, [data, sortAsc]);
+
+  const totalPages = Math.ceil(
+    sortedData.length / ITEMS_PER_PAGE
+  );
+
+  const paginatedData = sortedData.slice(
+    (page - 1) * ITEMS_PER_PAGE,
+    page * ITEMS_PER_PAGE
+  );
 
   return (
     <div className="w-full bg-white border border-gray-200 rounded-xl p-6">
-
       {/* HEADER */}
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-lg font-semibold text-gray-800">
@@ -51,29 +64,41 @@ export default function SubCategoryTable({
         </h2>
 
         <Badge className="bg-gray-100 text-gray-600 border-gray-200">
-          {subCategories.length}
+          {data.length}
         </Badge>
       </div>
 
       {/* TABLE */}
       <Table>
         <TableHeader>
-  <TableRow className="bg-gray-50 border-b border-gray-200">
-    <TableHead>ID</TableHead>
-    <TableHead>SUB-CATEGORY</TableHead>
-    <TableHead>CATEGORY</TableHead>
-    <TableHead>STATUS</TableHead>
-    <TableHead className="text-center">ACTION</TableHead>
-  </TableRow>
-</TableHeader>
+          <TableRow className="bg-gray-50 border-b border-gray-200">
+            {/* SORTING ON ID */}
+            <TableHead>
+              <button
+                onClick={() => setSortAsc(!sortAsc)}
+                className="flex items-center gap-2 font-semibold"
+              >
+                ID
+                <ArrowUpDown className="w-4 h-4" />
+              </button>
+            </TableHead>
 
-<TableBody>
-  {subCategories.map((item) => (
-    <TableRow
-      key={item.id}
-      className="hover:bg-gray-50 border-b border-gray-200 last:border-0"
-    >
+            <TableHead>SUB-CATEGORY</TableHead>
 
+            <TableHead>CATEGORY</TableHead>
+
+            <TableHead className="text-center">
+              ACTION
+            </TableHead>
+          </TableRow>
+        </TableHeader>
+
+        <TableBody>
+          {paginatedData.map((item) => (
+            <TableRow
+              key={item.id}
+              className="hover:bg-gray-50 border-b border-gray-200 last:border-0"
+            >
               {/* ID */}
               <TableCell>{item.id}</TableCell>
 
@@ -92,34 +117,26 @@ export default function SubCategoryTable({
                 </Badge>
               </TableCell>
 
-              {/* STATUS */}
-              <TableCell>
-  <Badge
-    variant="outline"
-    className={`w-[90px] justify-center flex ${
-      item.status
-        ? "text-green-600 border-green-300"
-        : "text-red-500 border-red-300"
-    }`}
-  >
-    {item.status ? "Active" : "Inactive"}
-  </Badge>
-</TableCell>
-
               {/* ACTION */}
               <TableCell>
-  <div className="flex items-center justify-center gap-4">
-    <Pencil className="w-4 h-4 cursor-pointer text-gray-600" />
+                <div className="flex items-center justify-center gap-4">
+                  <Pencil
+                    className="w-4 h-4 cursor-pointer text-gray-600"
+                    onClick={() => onEdit(item)}
+                  />
 
-    <Switch
-  className="cursor-pointer"
-  checked={item.status}
-  onCheckedChange={() => toggleStatus(item.id)}
-/>
-
-    <Trash2 className="w-4 h-4 text-red-500 cursor-pointer" />
-  </div>
-</TableCell>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-8 w-8 cursor-pointer"
+                    onClick={() =>
+                      onDelete(item.id)
+                    }
+                  >
+                    <Trash2 className="w-4 h-4 text-red-500" />
+                  </Button>
+                </div>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -128,24 +145,63 @@ export default function SubCategoryTable({
       {/* FOOTER */}
       <div className="flex items-center justify-between mt-4 text-sm text-gray-500">
         <p>
-          Showing 1 to {subCategories.length} of {subCategories.length}
+          Showing {(page - 1) * ITEMS_PER_PAGE + 1} to{" "}
+          {Math.min(
+            page * ITEMS_PER_PAGE,
+            sortedData.length
+          )}{" "}
+          of {sortedData.length}
         </p>
 
         <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm">
+          <Button
+            variant="outline"
+            size="sm"
+            disabled={page === 1}
+            onClick={() =>
+              setPage((prev) => prev - 1)
+            }
+          >
             Previous
           </Button>
 
-          <Button size="sm" className="bg-indigo-600 text-white">
-            1
-          </Button>
+          {Array.from(
+            { length: totalPages },
+            (_, index) => (
+              <Button
+                key={index}
+                size="sm"
+                variant={
+                  page === index + 1
+                    ? "default"
+                    : "outline"
+                }
+                className={
+                  page === index + 1
+                    ? "bg-indigo-600 text-white"
+                    : ""
+                }
+                onClick={() =>
+                  setPage(index + 1)
+                }
+              >
+                {index + 1}
+              </Button>
+            )
+          )}
 
-          <Button variant="outline" size="sm">
+          <Button
+            variant="outline"
+            size="sm"
+            disabled={page === totalPages}
+            onClick={() =>
+              setPage((prev) => prev + 1)
+            }
+          >
             Next
           </Button>
         </div>
       </div>
-
     </div>
-  )
+  );
 }

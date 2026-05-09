@@ -9,7 +9,7 @@ import { Switch } from "@/components/ui/switch"
 
 export default function PaymentOptions() {
   return (
-    <div className="space-y-4 p-6">
+    <div className="space-y-4">
       <SettingsHeader title="Business Setup" />
 
       <SettingsTabs

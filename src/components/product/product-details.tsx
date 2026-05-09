@@ -1,30 +1,15 @@
-"use client";
-
-import Image from "next/image";
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/cart-context";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetClose,
-} from "@/components/ui/sheet";
-
-const images = [
-  "/images/products/Group 95.png",
-  "/images/products/Stuart sofa 1.png",
-  "/images/products/Outdoor sofa set_2 1 (1).png",
-  "/images/products/Outdoor sofa set_2 1.png",
-];
-
-
+import { Loader2 } from "lucide-react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { Sheet, SheetClose, SheetContent } from "../ui/sheet";
 
 export default function ProductDetails({ product }: any) {
   const BASE_PRICE = product.price;
   const [mounted, setMounted] = useState(false);
+  const [loadingType, setLoadingType] = useState<string | null>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -42,6 +27,43 @@ export default function ProductDetails({ product }: any) {
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const { cart, removeFromCart, addToCart } = useCart();
   const totalPrice = BASE_PRICE * qty;
+
+  const handleAddToCart = async () => {
+    setLoadingType("cart");
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      addToCart({
+        id: 1,
+        name: product.name,
+        price: BASE_PRICE,
+        image: selectedImage,
+      });
+      setOpenCart(true);
+    } finally {
+      setLoadingType(null);
+    }
+  };
+
+  const handleCompare = async () => {
+    setLoadingType("compare");
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      // logic
+    } finally {
+      setLoadingType(null);
+    }
+  };
+
+  const handleNavigation = async (path: string, type: string) => {
+    setLoadingType(type);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      setOpenCart(false);
+      router.push(path);
+    } finally {
+      setLoadingType(null);
+    }
+  };
 
   const formatPrice = (price: number) =>
     `Rs. ${price.toLocaleString("en-IN")}.00`;
@@ -176,7 +198,7 @@ export default function ProductDetails({ product }: any) {
                 <button
                   key={size}
                   onClick={() => setSelectedSize(size)}
-                  className={`w-8 h-8 border rounded-md text-sm transition-colors
+                  className={`w-8 h-8 border rounded-md text-sm transition-colors cursor-pointer
                     ${
                       selectedSize === size
                         ? "bg-black text-white border-black"
@@ -201,7 +223,7 @@ export default function ProductDetails({ product }: any) {
                 <button
                   key={color.name}
                   onClick={() => setSelectedColor(color.name)}
-                  className={`w-6 h-6 rounded-full ${color.bg} transition-all
+                  className={`w-6 h-6 rounded-full ${color.bg} transition-all cursor-pointer
                     ${
                       selectedColor === color.name
                         ? "ring-2 ring-offset-2 ring-black scale-110"
@@ -215,29 +237,30 @@ export default function ProductDetails({ product }: any) {
           {/* Quantity + Buttons */}
           <div className="flex items-center gap-4 mt-4">
             <div className="flex items-center justify-between border rounded-md px-6 py-3 w-[150px]">
-              <button onClick={() => setQty(Math.max(1, qty - 1))}>-</button>
+              <button className="cursor-pointer" onClick={() => setQty(Math.max(1, qty - 1))}>-</button>
               <span>{qty}</span>
-              <button onClick={() => setQty(qty + 1)}>+</button>
+              <button className="cursor-pointer" onClick={() => setQty(qty + 1)}>+</button>
             </div>
 
-            <button
-              onClick={() => {
-                addToCart({
-                  id: 1,
-                  name: product.name,
-                  price: BASE_PRICE,
-                  image: selectedImage,
-                });
-                setOpenCart(true);
-              }}
-              className="w-[180px] py-3 border rounded-md hover:bg-black hover:text-white"
+            <Button
+              onClick={handleAddToCart}
+              disabled={!!loadingType}
+              variant="outline"
+              className="w-[180px] h-[48px] py-3 border rounded-md hover:bg-black hover:text-white cursor-pointer bg-white text-black transition-colors"
             >
+              {loadingType === "cart" && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               Add To Cart
-            </button>
+            </Button>
 
-            <button className="w-[180px] py-3 border rounded-md hover:bg-black hover:text-white">
+            <Button
+              onClick={handleCompare}
+              disabled={!!loadingType}
+              variant="outline"
+              className="w-[180px] h-[48px] py-3 border rounded-md hover:bg-black hover:text-white cursor-pointer bg-white text-black transition-colors"
+            >
+              {loadingType === "compare" && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               + Compare
-            </button>
+            </Button>
           </div>
 
           <hr className="my-6" />
@@ -269,7 +292,7 @@ export default function ProductDetails({ product }: any) {
               </h2>
 
               <SheetClose asChild>
-                <button className="w-[28px] h-[28px] flex items-center justify-center text-gray-400 hover:text-black">
+                <button className="w-[28px] h-[28px] flex items-center justify-center text-gray-400 hover:text-black cursor-pointer">
                   ✕
                 </button>
               </SheetClose>
@@ -297,7 +320,7 @@ export default function ProductDetails({ product }: any) {
                     </p>
                   </div>
 
-                  <button onClick={() => removeFromCart(item.id)}>✕</button>
+                  <button className="cursor-pointer" onClick={() => removeFromCart(item.id)}>✕</button>
                 </div>
               ))}
             </div>
@@ -315,35 +338,35 @@ export default function ProductDetails({ product }: any) {
             </div>
 
             <div className="flex gap-[12px]">
-              <button
-                onClick={() => {
-                  setOpenCart(false);
-                  router.push("/cart");
-                }}
-                className="flex-1 h-[40px] border cursor-pointer border-black rounded-full text-[14px]"
+              <Button
+                variant="outline"
+                disabled={!!loadingType}
+                onClick={() => handleNavigation("/cart", "nav_cart")}
+                className="flex-1 h-[40px] border cursor-pointer border-black rounded-full text-[14px] bg-white text-black hover:bg-black hover:text-white transition-colors"
               >
+                {loadingType === "nav_cart" && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 Cart
-              </button>
+              </Button>
 
-              <button
-                onClick={() => {
-                  setOpenCart(false);
-                  router.push("/checkout");
-                }}
-                className="flex-1 h-[40px] border cursor-pointer border-black rounded-full text-[14px]"
+              <Button
+                variant="outline"
+                disabled={!!loadingType}
+                onClick={() => handleNavigation("/checkout", "nav_checkout")}
+                className="flex-1 h-[40px] border cursor-pointer border-black rounded-full text-[14px] bg-white text-black hover:bg-black hover:text-white transition-colors"
               >
+                {loadingType === "nav_checkout" && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 Checkout
-              </button>
+              </Button>
 
-              <button
-                onClick={() => {
-                  setOpenCart(false);
-                  router.push("/compare");
-                }}
-                className="flex-1 h-[40px] border cursor-pointer border-black rounded-full text-[14px]"
+              <Button
+                variant="outline"
+                disabled={!!loadingType}
+                onClick={() => handleNavigation("/compare", "nav_compare")}
+                className="flex-1 h-[40px] border cursor-pointer border-black rounded-full text-[14px] bg-white text-black hover:bg-black hover:text-white transition-colors"
               >
+                {loadingType === "nav_compare" && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 Comparison
-              </button>
+              </Button>
             </div>
           </div>
         </SheetContent>

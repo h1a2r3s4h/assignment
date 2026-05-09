@@ -5,36 +5,42 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { Loader2 } from "lucide-react";
 
 export default function ForgotPasswordForm() {
   const router = useRouter();
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
-  try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/admin/forgot-password`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email }),
+    setLoading(true);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/v1/admin/forgot-password`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email }),
+        }
+      );
+
+      const data = await res.json();
+
+      if (data.success) {
+        // ✅ go to OTP page WITH type
+        router.push(`/otp-verify?email=${email}&type=reset`);
+      } else {
+        alert(data.message);
       }
-    );
-
-    const data = await res.json();
-
-    if (data.success) {
-      // ✅ go to OTP page WITH type
-      router.push(`/otp-verify?email=${email}&type=reset`);
-    } else {
-      alert(data.message);
+    } catch (err) {
+      alert("Something went wrong");
+    } finally {
+      setLoading(false);
     }
-  } catch (err) {
-    alert("Something went wrong");
-  }
-};
+  };
 
   return (
     <Card className="w-[350px] shadow-md border">
@@ -49,7 +55,12 @@ export default function ForgotPasswordForm() {
           onChange={(e) => setEmail(e.target.value)}
         />
 
-        <Button className="w-full bg-black text-white hover:bg-gray-800 cursor-pointer" onClick={handleSubmit}>
+        <Button
+          disabled={!email || loading}
+          className="w-full bg-black text-white hover:bg-gray-800 cursor-pointer"
+          onClick={handleSubmit}
+        >
+          {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           Send Code
         </Button>
       </CardContent>

@@ -34,6 +34,7 @@ import {
   FileText,
   Download,
   ChevronDown,
+  Loader2,
 } from "lucide-react"
 
 
@@ -68,8 +69,9 @@ const categories = [
 ]
 
 export default function ProductBulkImportPage() {
-    const fileInputRef = useRef<HTMLInputElement | null>(null)
+  const fileInputRef = useRef<HTMLInputElement | null>(null)
   const [fileName, setFileName] = useState("")
+  const [loading, setLoading] = useState(false)
 
   const handleFileChange = (
     e: React.ChangeEvent<HTMLInputElement>
@@ -85,8 +87,18 @@ export default function ProductBulkImportPage() {
     fileInputRef.current?.click()
   }
 
+  const handleSubmit = async () => {
+    setLoading(true)
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 2000))
+      // existing logic
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
-    <div className="p-6 min-h-screen space-y-6">
+    <div className="min-h-screen space-y-6">
 
       {/* Steps */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -289,7 +301,12 @@ export default function ProductBulkImportPage() {
         </div>
 
         {/* Submit Button */}
-        <Button className="mt-8 bg-indigo-600 hover:bg-indigo-700 rounded-xl px-10 h-11 text-sm font-medium">
+        <Button
+          className="mt-8 bg-indigo-600 hover:bg-indigo-700 rounded-xl px-10 h-11 text-sm font-medium"
+          onClick={handleSubmit}
+          disabled={!fileName || loading}
+        >
+          {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           Submit Data
         </Button>
       </CardContent>

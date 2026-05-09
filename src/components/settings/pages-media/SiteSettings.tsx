@@ -42,6 +42,7 @@ import {
   Trash2,
   Link as LinkIcon,
   Save,
+  Loader2,
 } from "lucide-react"
 import { useState } from "react"
 
@@ -71,6 +72,29 @@ export default function SocialMediaSettings() {
     enabled: false,
   },
 ])
+  const [loading, setLoading] = useState(false);
+  const [loadingId, setLoadingId] = useState<number | null>(null);
+
+  const handleSave = async () => {
+    setLoading(true);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      // logic
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDelete = async (id: number) => {
+    setLoadingId(id);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      // logic
+    } finally {
+      setLoadingId(null);
+    }
+  };
+
   return (
     <div className="space-y-6">
       {/* Add Social Media */}
@@ -132,8 +156,12 @@ export default function SocialMediaSettings() {
           </div>
 
           <div className="flex justify-end">
-            <Button>
-              <Save className="h-4 w-4" />
+            <Button onClick={handleSave} disabled={loading}>
+              {loading ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <Save className="h-4 w-4" />
+              )}
               Save Link
             </Button>
           </div>
@@ -211,12 +239,18 @@ export default function SocialMediaSettings() {
 </Button>
 
                       <Button
-  variant="ghost"
-  size="icon"
-  className="text-red-600 cursor-pointer hover:text-red-700"
->
-  <Trash2 className="h-4 w-4" />
-</Button>
+                        variant="ghost"
+                        size="icon"
+                        className="text-red-600 cursor-pointer hover:text-red-700"
+                        onClick={() => handleDelete(item.id)}
+                        disabled={loadingId === item.id}
+                      >
+                        {loadingId === item.id ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                          <Trash2 className="h-4 w-4" />
+                        )}
+                      </Button>
                     </div>
                   </TableCell>
                 </TableRow>

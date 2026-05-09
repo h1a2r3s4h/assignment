@@ -11,7 +11,7 @@ import { Save } from "lucide-react"
 
 export default function LoginSettings() {
   return (
-    <div className="space-y-4 p-4">
+    <div className="space-y-4">
       <SettingsHeader title="Business Setup" />
 
       <SettingsTabs

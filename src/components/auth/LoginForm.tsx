@@ -89,10 +89,10 @@ export function LoginForm({
             className="p-6 md:p-8"
             onSubmit={async (e) => {
               e.preventDefault();
-
               setLoading(true);
 
               try {
+                await new Promise((resolve) => setTimeout(resolve, 2000));
                 const res = await fetch(
                   "http://localhost:5000/api/v1/admin/login",
                   {
@@ -119,10 +119,8 @@ export function LoginForm({
                 console.error(err);
                 alert("Something went wrong");
               } finally {
-  setTimeout(() => {
-    setLoading(false);
-  }, 2000); 
-}
+                setLoading(false);
+              }
             }}
           >
             <FieldGroup>
@@ -172,14 +170,8 @@ export function LoginForm({
                   disabled={!email || !password || loading}
                   className="w-full h-11 cursor-pointer text-base font-medium rounded-md bg-black text-white hover:bg-black/90 disabled:opacity-50"
                 >
-                  {loading ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Logging in...
-                    </>
-                  ) : (
-                    "Login"
-                  )}
+                  {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                  Login
                 </Button>
               </Field>
 

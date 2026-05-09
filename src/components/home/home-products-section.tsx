@@ -213,7 +213,7 @@ export default function HomeProductsSection() {
                           });
                           toast.success("Added to cart 🛒", toastStyle);
                         }}
-                        className="flex h-12 w-[202px] items-center justify-center bg-white text-base font-semibold text-[#B88E2F]"
+                        className="flex h-12 w-[202px] items-center justify-center bg-white text-base font-semibold text-[#B88E2F] cursor-pointer"
                       >
                         Add to cart
                       </button>
@@ -295,7 +295,7 @@ export default function HomeProductsSection() {
           <div className="mt-8 flex justify-center">
             <Link
               href="/shop"
-              className="flex h-12 w-[245px] items-center justify-center border border-[#B88E2F] bg-white text-base font-semibold text-[#B88E2F]"
+              className="flex h-12 w-[245px] items-center justify-center border border-[#B88E2F] bg-white text-base font-semibold text-[#B88E2F] cursor-pointer"
             >
               Show More
             </Link>

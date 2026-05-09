@@ -1,120 +1,180 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
+import {
+  Field,
+  FieldDescription,
+  FieldLabel,
+} from "@/components/ui/field"
 
-export default function CategoryForm() {
-  const [preview, setPreview] = useState<string | null>(null);
+import type {
+  CategoryType,
+  CategoryImage,
+} from "@/app/(dashboard)/dashboard/categories/page";
+
+export default function CategoryForm({
+  onCreate,
+}: {
+  onCreate: (category: Omit<CategoryType, "id">) => void;
+}) {
   const [name, setName] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [previews, setPreviews] = useState<CategoryImage[]>([]);
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setPreview(URL.createObjectURL(file));
-    }
+    const files = Array.from(e.target.files ?? []);
+    if (!files.length) return;
+    const images = files.map((f) => ({
+      url: URL.createObjectURL(f),
+      name: f.name,
+    }));
+    setPreviews(images);
   };
 
   const handleReset = () => {
     setName("");
-    setPreview(null);
+    setPreviews([]);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
+  const handleCreate = async () => {
+    if (!previews.length) return;
+
+    setLoading(true);
+
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      onCreate({
+        name,
+        status: true,
+        images: previews,
+      });
+
+      handleReset();
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="w-full bg-white rounded-xl border border-gray-200 p-8">
-      {/* TITLE */}
-      <h2 className="text-lg font-semibold text-gray-700 mb-8 flex items-center gap-2">
-        <span className="text-indigo-600 text-xl">+</span>
+    <div className="w-full rounded-2xl border bg-white p-8">
+      {/* Header */}
+      <h2 className="mb-10 flex items-center gap-3 text-[20px] font-semibold text-slate-700">
+        <span className="text-[28px] font-light text-blue-600">+</span>
         Add New Category
       </h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
-        {/* LEFT */}
-        <div className="space-y-6">
+      {/* Main Layout */}
+      <div className="grid grid-cols-2 gap-12 items-stretch">
+        {/* Left Side */}
+        <div className="space-y-8">
+          {/* Category Name */}
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
+            <label className="mb-3 block text-[15px] font-semibold text-slate-700">
               Category Name <span className="text-red-500">*</span>
             </label>
+
             <Input
               type="text"
               placeholder="e.g. Electronics"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="h-11 rounded-lg border-gray-200 focus:border-gray-300 focus:ring-0"
+              className="h-12 rounded-xl border-slate-200 text-[15px]"
             />
           </div>
 
-          {/* Upload */}
-          <div className="space-y-3">
-            <label className="block text-sm font-semibold text-gray-700">
+          {/* File Upload */}
+          <div>
+            <label className="mb-3 block text-[15px] font-semibold text-slate-700">
               Category Logo <span className="text-red-500">*</span>
-              <span className="text-gray-400 text-xs font-normal ml-2">
-                (1:1 • 500×500px)
+              <span className="ml-2 text-sm font-medium text-slate-400">
+                (Ratio 1:1, 500x500px — multiple allowed)
               </span>
             </label>
 
-            <div className="flex items-center gap-4">
-              <label className="flex items-center justify-center w-24 h-24 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-gray-400 bg-gray-50">
-                <span className="text-xs text-gray-400 text-center px-2">
-                  Upload
-                </span>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImage}
-                  className="hidden"
-                />
-              </label>
+            
 
-              {preview && (
-                <div className="w-24 h-24 rounded-lg border bg-gray-100 overflow-hidden">
-                  <img
-                    src={preview}
-                    alt="preview"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              )}
-            </div>
+
+  <Field>
+  <Input
+    ref={fileInputRef}
+    id="picture"
+    type="file"
+    accept="image/*"
+    multiple
+    onChange={handleImage}
+    className="h-12 py-2"
+  />
+</Field>
+
+
           </div>
         </div>
 
-        {/* RIGHT */}
-        <div className="flex flex-col items-center w-full">
-          {/* Preview Card */}
-          <div className="w-full border border-dashed border-gray-200 rounded-xl bg-gray-50 p-6 flex flex-col items-center">
-            <div className="w-44 h-44 rounded-xl border bg-white shadow-sm flex items-center justify-center overflow-hidden">
-              {preview ? (
-                <img
-                  src={preview}
-                  alt="preview"
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <span className="text-gray-300 text-sm font-medium">
-                  Preview
-                </span>
-              )}
-            </div>
-
-            <p className="text-xs text-gray-400 mt-3">Logo Preview</p>
-          </div>
-
-          {/* BUTTON GROUP */}
-          <div className="mt-5 flex w-full justify-end gap-3">
-            <Button className="h-10 px-6 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white">
-              Create Category
-            </Button>
-
-            <Button
-              variant="outline"
-              onClick={handleReset}
-              className="h-10 px-6 rounded-lg border-gray-200 text-gray-700 hover:bg-gray-100"
-            >
-              Reset
-            </Button>
-          </div>
+        {/* Right Side — Preview only */}
+        <div className="rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 p-6 flex flex-col items-center justify-center h-full">
+          {previews.length > 0 ? (
+            <>
+              <div className="flex flex-wrap gap-3 w-full justify-center">
+                {previews.map((img, i) => (
+                  <div
+                    key={i}
+                    className="w-[100px] h-[100px] rounded-xl overflow-hidden border bg-white shadow-sm flex-shrink-0"
+                  >
+                    <img
+                      src={img.url}
+                      alt={img.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ))}
+              </div>
+              <p className="mt-4 text-sm text-slate-500">
+                {previews.length} image{previews.length > 1 ? "s" : ""} selected
+              </p>
+            </>
+          ) : (
+            <>
+              <div className="flex h-40 w-40 items-center justify-center rounded-2xl border bg-white shadow-sm border-dashed">
+                <span className="text-slate-300 text-lg">Preview</span>
+              </div>
+              <p className="mt-5 text-base text-slate-500">Logo Preview</p>
+            </>
+          )}
         </div>
+      </div>
+
+      {/* Divider */}
+      <hr className="mt-10 border-slate-200" />
+
+      {/* Buttons — bottom right of card */}
+      <div className="flex justify-end gap-4 mt-6">
+        <Button
+          type="button"
+          variant="outline"
+          onClick={handleReset}
+          className="h-12 rounded-xl px-6 text-base"
+        >
+          Reset
+        </Button>
+
+        <Button
+          type="button"
+          onClick={handleCreate}
+          disabled={!name || !previews.length || loading}
+          className="h-12 rounded-xl bg-indigo-600 px-7 text-base hover:bg-indigo-700"
+        >
+          {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+          Create Category
+        </Button>
       </div>
     </div>
   );

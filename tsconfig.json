@@ -28,7 +28,9 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
-    "**/*.mts"
+    "**/*.mts",
+    "src/app/(dashboard)/dashboard/profile/information.",
+    "src/app/(dashboard)/dashboard/profile/password"
   ],
   "exclude": ["node_modules"]
 }

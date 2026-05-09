@@ -2,7 +2,7 @@ import GeneralSettings from "@/components/settings/business-settings/GeneralSett
 
 export default function BusinessSettingsPage() {
   return (
-    <div className="p-6 space-y-6 bg-muted/40 min-h-screen">
+    <div className=" space-y-6 bg-muted/40 min-h-screen">
       <GeneralSettings />
     </div>
   )

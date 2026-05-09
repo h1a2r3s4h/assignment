@@ -9,7 +9,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 
-import { Save } from "lucide-react";
+import { Save, Loader2 } from "lucide-react";
 
 import SettingsHeader from "../shared/SettingsHeader";
 import SettingsTabs from "../shared/SettingsTabs";
@@ -20,6 +20,7 @@ const ReactQuill = dynamic(() => import("react-quill-new"), {
 
 export default function CookiesSettingsPage() {
   const [enabled, setEnabled] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const [value, setValue] = useState(
     "<p>About Single Vendor.</p>"
@@ -41,6 +42,16 @@ export default function CookiesSettingsPage() {
     }),
     []
   );
+
+  const handleSave = async () => {
+    setLoading(true);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      // existing logic
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -105,8 +116,16 @@ export default function CookiesSettingsPage() {
 
           {/* Button */}
           <div className="flex justify-end border-t pt-5">
-            <Button className="gap-2">
-              <Save className="h-4 w-4" />
+            <Button
+              className="gap-2"
+              onClick={handleSave}
+              disabled={loading}
+            >
+              {loading ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <Save className="h-4 w-4" />
+              )}
               Save Information
             </Button>
           </div>
