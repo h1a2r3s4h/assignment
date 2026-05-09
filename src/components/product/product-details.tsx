@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/cart-context";
 import { Loader2 } from "lucide-react";
