@@ -98,9 +98,10 @@ export default function SubCategoryForm({
             placeholder="e.g. Sofa, Chair"
             value={name}
             onChange={(e) =>
+              
               setName(e.target.value)
             }
-            className="h-11 border-gray-200 rounded-lg focus:border-gray-300 focus:ring-0 shadow-none"
+            className="h-9 border-gray-200 rounded-lg focus:border-gray-300 focus:ring-0 shadow-none"
           />
         </div>
 
@@ -114,7 +115,7 @@ export default function SubCategoryForm({
             value={category}
             onValueChange={setCategory}
           >
-            <SelectTrigger size="lg" className="h-11 w-full rounded-lg border border-gray-200 bg-white px-3 text-sm shadow-none focus:ring-0 focus:border-black">
+            <SelectTrigger  className="h-16 w-full rounded-lg border border-gray-200 bg-white px-3 text-sm shadow-none focus:ring-0 focus:border-black">
   <SelectValue  placeholder="Select Main Category" />
 </SelectTrigger>
 

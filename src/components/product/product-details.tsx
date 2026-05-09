@@ -20,8 +20,13 @@ export default function ProductDetails({ product }: any) {
     return () => clearTimeout(timer);
   }, []);
 
-  const router = useRouter();
-  const [selectedImage, setSelectedImage] = useState(images[0]);
+const router = useRouter();
+
+const images: string[] = product.images || [];
+
+const [selectedImage, setSelectedImage] = useState(
+  images[0] || ""
+);
   const [qty, setQty] = useState(1);
   const [openCart, setOpenCart] = useState(false);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);

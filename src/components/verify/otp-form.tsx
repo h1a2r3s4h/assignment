@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
-import { RefreshCwIcon } from "lucide-react"
+import { Loader2, RefreshCwIcon } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
